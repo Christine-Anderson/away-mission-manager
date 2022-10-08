@@ -14,9 +14,9 @@ public class CrewMemberTest {
         testCrewMember = new CrewMember("Spock", Rank.COMMANDER, Division.SCIENCES);
     }
 
-    @Test
+    @Test //TODO ask if i need to test for "randomness" of .next boolean
     void testCrewMemberConstructor() {
-        assertEquals("Spock", testCrewMember.getName());
+        assertEquals("Spock", testCrewMember.getName()); //TODO update
         assertEquals(Rank.COMMANDER, testCrewMember.getRank());
         assertEquals(Division.SCIENCES, testCrewMember.getDivision());
         assertEquals(HealthStatus.HEALTHY, testCrewMember.getHealthStatus());

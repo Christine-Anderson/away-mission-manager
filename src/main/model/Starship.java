@@ -8,12 +8,14 @@ public class Starship {
     private static final String SHIP_NAME = "USS Intrepid";
     private static final String SHIP_ID = "NCC-74600";
 
-    private String captain;
+    private String firstNameOfCaptain;
+    private String lastNameOfCaptain;
     private List<CrewMember> crewMembers;
 
     // EFFECTS: Constructs a Starship with given captain name and an empty list of crew member
-    public Starship(String captainName) {
-        this.captain = captainName;
+    public Starship(String firstNameOfCaptain, String lastNameOfCaptain) {
+        this.firstNameOfCaptain = firstNameOfCaptain;
+        this.lastNameOfCaptain = lastNameOfCaptain;
         crewMembers = new ArrayList<>();
     }
 
@@ -22,12 +24,16 @@ public class Starship {
         return SHIP_NAME;
     }
 
-    public String getShipId() {
+    public String getShipID() {
         return SHIP_ID;
     }
 
-    public String getCaptain() {
-        return this.captain;
+    public String getFirstNameOfCaptain() {
+        return firstNameOfCaptain;
+    }
+
+    public String getLastNameOfCaptain() {
+        return lastNameOfCaptain;
     }
 
     public List<CrewMember> getCrewMembers() {
@@ -35,8 +41,12 @@ public class Starship {
     }
 
     //setters
-    public void setCaptain(String captainName) {
-        this.captain = captainName;
+    public void setFirstNameOfCaptain(String firstNameOfCaptain) {
+        this.firstNameOfCaptain = firstNameOfCaptain;
+    }
+
+    public void setLastNameOfCaptain(String lastNameOfCaptain) {
+        this.lastNameOfCaptain = lastNameOfCaptain;
     }
 
     public void setCrewMembers(List<CrewMember> newCrew) {
@@ -54,4 +64,8 @@ public class Starship {
     public void removeCrewMember(CrewMember crewMember) {
         //TODO
     }
+
+    //TODO get list of current crew members
+
+    //TODO find crewmember
 }

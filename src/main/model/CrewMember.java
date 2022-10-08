@@ -4,7 +4,8 @@ import java.util.Random;
 
 // Represents a crew member having a name, rank, division, and health, shirt colour, plot amour, and location status
 public class CrewMember {
-    private String name;
+    private String firstName;
+    private String lastName;
     private Rank rank;
     private Division division;
     private HealthStatus healthStatus;
@@ -14,9 +15,10 @@ public class CrewMember {
 
     // EFFECTS: Constructs a healthy crew member on the starship with a given name, rank, and division
     // plot amour and shirt colour are random
-    public CrewMember(String name, Rank rank, Division division) {
+    public CrewMember(String firstName, String lastName, Rank rank, Division division) {
         Random random = new Random();
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.rank = rank;
         this.division = division;
         this.healthStatus = HealthStatus.HEALTHY;
@@ -26,8 +28,11 @@ public class CrewMember {
     }
 
     // getters
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName() {
+        return lastName;
     }
 
     public Rank getRank() {
@@ -56,8 +61,12 @@ public class CrewMember {
 
 
     // setters
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setRank(Rank rank) {

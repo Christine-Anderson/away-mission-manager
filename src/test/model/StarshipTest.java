@@ -5,24 +5,37 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static model.Starship.SHIP_ID;
+import static model.Starship.SHIP_NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StarshipTest {
     private Starship testStarship;
 
     @BeforeEach
     void setUp() {
-        testStarship = new Starship("Kirk");
+        testStarship = new Starship("James T.", "Kirk");
     }
 
     @Test
     void testStarshipConstructor() {
-        assertEquals();
+        assertEquals(SHIP_NAME, testStarship.getShipName()); //TODO how to fix this?
+        assertEquals(SHIP_ID, testStarship.getShipID());
+        assertEquals("James T. Kirk", testStarship.getCaptain()); //TODO update
+        assertTrue(testStarship.getCrewMembers().isEmpty());
+    }
 
+    @Test
+    void name() {
+    }
 
-        private static final String SHIP_NAME = "USS Intrepid";
-        private static final String SHIP_ID = "NCC-74600";
-        this.captain = captainName;
-        crewMembers = new ArrayList<>();
+    @Test
+    void name() {
+    }
+
+    @Test
+    void name() {
+
     }
 }

@@ -15,8 +15,8 @@ public class AwayMission {
 
     // EFFECTS: Constructs an away mission with a unique away mission ID,
     public AwayMission() {
-        this.awayMissionID = 0; //TODO how to auto construct with a unique ID?
-        this.stardate = 0; //TODO set to 0 or do not set?
+        this.awayMissionID = 0; //TODO randomly construct 1st one them add 1 each new one?
+        this.stardate = 0; //TODO set sorta randlomly loojk up stardates
         this.isActive = false;
         this.isObjectiveComplete = false;
         this.awayTeam = new ArrayList<>();
