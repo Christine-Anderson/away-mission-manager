@@ -13,7 +13,10 @@ public class StarshipTest {
     private CrewMember cm1;
     private CrewMember cm2;
     private CrewMember cm3;
-    private List<CrewMember> testCrewMemberList;
+    private List<CrewMember> testCrewMembers;
+    private AwayMission am1;
+    private AwayMission am2;
+    private AwayMission am3;
 
     @BeforeEach
     void setUp() {
@@ -21,10 +24,11 @@ public class StarshipTest {
         cm1 = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES);
         cm2 = new CrewMember("Leonard", "McCoy", Rank.LIEUTENANT_COMMANDER, Division.MEDICAL);
         cm3 = new CrewMember("Montgomery", "Scott", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING);
-        testCrewMemberList = new ArrayList<>();
-        testCrewMemberList.add(cm1);
-        testCrewMemberList.add(cm2);
-        testCrewMemberList.add(cm3);
+        testCrewMembers = new ArrayList<>();
+        testCrewMembers.add(cm1);
+        testCrewMembers.add(cm2);
+        testCrewMembers.add(cm3);
+        //TODO create away missions
     }
 
     @Test
@@ -34,6 +38,7 @@ public class StarshipTest {
         assertEquals("James T.", testStarship.getFirstNameOfCaptain());
         assertEquals("Kirk", testStarship.getLastNameOfCaptain());
         assertTrue(testStarship.getCrewMembers().isEmpty());
+        assertTrue(testStarship.getMissionLog().isEmpty());
     }
 
     //TODO add tests for setters?
@@ -48,14 +53,12 @@ public class StarshipTest {
 
     @Test
     void testAddCrewMemberAlreadyOnStarship() {
-        testStarship.setCrewMembers(testCrewMemberList);
+        testStarship.setCrewMembers(testCrewMembers);
         assertTrue(testStarship.getCrewMembers().contains(cm1));
-        assertEquals(3, testStarship.getCrewMembers().size());
 
         testStarship.addCrewMember(cm1);
 
-        assertTrue(testStarship.getCrewMembers().contains(cm1));
-        assertEquals(3, testStarship.getCrewMembers().size());
+        assertEquals(testCrewMembers, testStarship.getCrewMembers());
     }
 
     @Test
@@ -78,7 +81,7 @@ public class StarshipTest {
 
     @Test
     void testRemoveCrewMember() {
-        testStarship.setCrewMembers(testCrewMemberList);
+        testStarship.setCrewMembers(testCrewMembers);
         assertTrue(testStarship.getCrewMembers().contains(cm1));
         assertEquals(3, testStarship.getCrewMembers().size());
 
@@ -99,12 +102,13 @@ public class StarshipTest {
         testStarship.removeCrewMember(cm3);
 
         assertFalse(testStarship.getCrewMembers().contains(cm3));
-        assertEquals(2, testStarship.getCrewMembers().size());
+        assertEquals(cm1, testStarship.getCrewMembers().get(0));
+        assertEquals(cm2, testStarship.getCrewMembers().get(1));
     }
 
     @Test
     void testRemoveCrewMemberMultipleTimes() {
-        testStarship.setCrewMembers(testCrewMemberList);
+        testStarship.setCrewMembers(testCrewMembers);
         assertTrue(testStarship.getCrewMembers().contains(cm1));
         assertTrue(testStarship.getCrewMembers().contains(cm2));
         assertTrue(testStarship.getCrewMembers().contains(cm3));
@@ -125,4 +129,30 @@ public class StarshipTest {
         assertFalse(testStarship.getCrewMembers().contains(cm3));
         assertEquals(0, testStarship.getCrewMembers().size());
     }
+//TODO test and implement mission log
+    /*@Test
+    void testAddCrewMember() {
+        testStarship.addCrewMember(cm1);
+
+        assertEquals(cm1, testStarship.getCrewMembers().get(0));
+        assertEquals(1, testStarship.getCrewMembers().size());
+    }
+
+    @Test
+    void testAddCrewMemberMultipleTimes() {
+        testStarship.addCrewMember(cm1);
+
+        assertEquals(cm1, testStarship.getCrewMembers().get(0));
+        assertEquals(1, testStarship.getCrewMembers().size());
+
+        testStarship.addCrewMember(cm2);
+
+        assertEquals(cm2, testStarship.getCrewMembers().get(1));
+        assertEquals(2, testStarship.getCrewMembers().size());
+
+        testStarship.addCrewMember(cm3);
+
+        assertEquals(cm3, testStarship.getCrewMembers().get(2));
+        assertEquals(3, testStarship.getCrewMembers().size());
+    }*/
 }

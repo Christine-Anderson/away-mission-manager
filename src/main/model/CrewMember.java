@@ -2,7 +2,7 @@ package model;
 
 import java.util.Random;
 
-// Represents a crew member having a name, rank, division, and health, shirt colour, plot amour, and location status
+// Represents a crew member having a name, rank, division, and health, shirt colour, plot armour, and location
 public class CrewMember {
     private String firstName;
     private String lastName;
@@ -10,21 +10,22 @@ public class CrewMember {
     private Division division;
     private HealthStatus healthStatus;
     private boolean hasRedShirt;
-    private boolean hasPlotAmour;
-    private boolean onAwayMission; // when set to false, crew member is located on the starship
+    private boolean hasPlotArmour;
+    private boolean isOnStarship;
+    private Random random;
 
     // EFFECTS: Constructs a healthy crew member on the starship with a given name, rank, and division
     // plot amour and shirt colour are random
     public CrewMember(String firstName, String lastName, Rank rank, Division division) {
-        Random random = new Random();
+        this.random = new Random();
         this.firstName = firstName;
         this.lastName = lastName;
         this.rank = rank;
         this.division = division;
         this.healthStatus = HealthStatus.HEALTHY;
         this.hasRedShirt = random.nextBoolean();
-        this.hasPlotAmour = random.nextBoolean();
-        this.onAwayMission = false;
+        this.hasPlotArmour = random.nextBoolean();
+        this.isOnStarship = true;
     }
 
     // getters
@@ -51,12 +52,12 @@ public class CrewMember {
         return hasRedShirt;
     } //TODO better method names
 
-    public boolean hasPlotAmour() {
-        return hasPlotAmour;
+    public boolean hasPlotArmour() {
+        return hasPlotArmour;
     }
 
-    public boolean isOnAwayMission() {
-        return onAwayMission;
+    public boolean isOnStarship() {
+        return isOnStarship;
     }
 
 
@@ -85,11 +86,32 @@ public class CrewMember {
         this.hasRedShirt = hasRedShirt;
     }
 
-    public void setHasPlotAmour(boolean hasPlotAmour) {
-        this.hasPlotAmour = hasPlotAmour;
+    public void setHasPlotArmour(boolean hasPlotArmour) {
+        this.hasPlotArmour = hasPlotArmour;
+    } //TODO get rid of some of these?
+
+    public void setOnStarship(boolean onStarship) {
+        this.isOnStarship = onStarship;
     }
 
-    public void setOnAwayMission(boolean onAwayMission) {
-        this.onAwayMission = onAwayMission;
+    // MODIFIES: this
+    // EFFECTS: randomly updates health status of crew member, influenced by shirt colour and plot armour
+    public void updateHealthStatus(){
+        if(this.hasPlotArmour) {
+            if (random.nextBoolean()) {
+                this.healthStatus = HealthStatus.INJURED;
+            }
+        } else if(this.hasRedShirt) {
+            if (random.nextBoolean()) {
+                this.healthStatus = HealthStatus.DEAD;
+            }
+        } else {
+            int x = random.nextInt(3);
+            if(x == 0){
+                this.healthStatus = HealthStatus.INJURED;
+            } else if(x == 1) {
+                this.healthStatus = HealthStatus.DEAD;
+            }
+        }
     }
 }

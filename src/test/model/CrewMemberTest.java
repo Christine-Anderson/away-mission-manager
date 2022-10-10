@@ -22,7 +22,22 @@ public class CrewMemberTest {
         assertEquals(Division.SCIENCES, testCrewMember.getDivision());
         assertEquals(HealthStatus.HEALTHY, testCrewMember.getHealthStatus());
         assertNotNull(testCrewMember.hasRedShirt()); //TODO is there something better to test, it just needs to be set to something
-        assertNotNull(testCrewMember.hasPlotAmour());
-        assertFalse(testCrewMember.isOnAwayMission());
+        assertNotNull(testCrewMember.hasPlotArmour());
+        assertTrue(testCrewMember.isOnStarship());
+    }
+
+    @Test
+    void testUpdateHealthStatusHasPlotArmour() {
+// TODO all three
+    }
+
+    @Test
+    void testUpdateHealthStatusHasRedShirtNoPlotArmour() {
+
+    }
+
+    @Test
+    void testUpdateHealthStatusNoPlotArmour() {
+
     }
 }

@@ -6,17 +6,19 @@ import java.util.List;
 // Represents an away mission having an away mission ID, stardate, list of away team, active status,
 // and objective status
 public class AwayMission {
-    private int awayMissionID;
-    private int stardate;
+    private int awayMissionID; // 6 digit unique ID
+    private int stardate; // 5 digit date
     private boolean isActive;
     private boolean isObjectiveComplete;
     private List<CrewMember> awayTeam;
 
 
-    // EFFECTS: Constructs an away mission with a unique away mission ID,
-    public AwayMission() {
-        this.awayMissionID = 0; //TODO randomly construct 1st one them add 1 each new one?
-        this.stardate = 0; //TODO set sorta randlomly loojk up stardates
+    // TODO requires for the id and stardate??
+    // EFFECTS: Constructs an inactive, not complete away mission with a given away mission ID, given stardate, and
+    // empty away team
+    public AwayMission(int awayMissionID, int stardate) {
+        this.awayMissionID = awayMissionID;
+        this.stardate = stardate;
         this.isActive = false;
         this.isObjectiveComplete = false;
         this.awayTeam = new ArrayList<>();
@@ -44,7 +46,7 @@ public class AwayMission {
     }
 
     //setters
-    public void setAwayMissionID(int awayMissionID) {
+    public void setAwayMissionID(int awayMissionID) { //TODO get rid of extra setters?
         this.awayMissionID = awayMissionID;
     }
 
@@ -52,50 +54,74 @@ public class AwayMission {
         this.stardate = stardate;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
-    public void setObjectiveComplete(boolean objectiveComplete) {
-        isObjectiveComplete = objectiveComplete;
+    public void setObjectiveComplete(boolean isObjectiveComplete) {
+        this.isObjectiveComplete = isObjectiveComplete;
     }
 
     public void setAwayTeam(List<CrewMember> awayTeam) {
+        // TODO should this set to off starship if mission is active??? set away team shouldn't be used other than testing
         this.awayTeam = awayTeam;
     }
 
     // MODIFIES: this
-    // EFFECTS: if crew member is not already assigned to an away mission, adds them to the away team
+    // EFFECTS: if crew member is not already assigned to the current away team, adds them to the away team
+    //          if the current away mission is active, transports them off of the starship
     //          otherwise, does nothing
-    public void addCrewMemberToAwayTeam(CrewMember crewMember) { //TODO should these add and remove functions still work after the away mission has started?
-        //TODO
+    public void addCrewMemberToAwayTeam(CrewMember crewMember) {
+        if(!this.awayTeam.contains(crewMember)) {
+            this.awayTeam.add(crewMember);
+            if(this.isActive) {
+                crewMember.setOnStarship(false);
+            }
+        }
     }
 
     // MODIFIES: this
-    // EFFECTS: if a crew member is assigned to an away team, removes them from the away team
+    // EFFECTS: if crew member is assigned to the current away team, removes them from the away team
+    //          if current away mission is active, updates their health status, and transports them back to the starship
     //          otherwise, does nothing
-    public void removeCrewMemberToAwayTeam(CrewMember crewMember) {
-        //TODO
+    public void removeCrewMemberFromAwayTeam(CrewMember crewMember) {
+        if(this.awayTeam.contains(crewMember)) {
+            this.awayTeam.remove(crewMember);
+            if(this.isActive) {
+                crewMember.updateHealthStatus();
+                crewMember.setOnStarship(true);
+            }
+        }
     }
 
     // MODIFIES: this
-    // EFFECTS: if away mission is not active, starts away mission //TODO set location of awayteam to not on ship?
+    // EFFECTS: if current away mission is not active, starts away mission, and transports away team off of the starship
     //          otherwise, does nothing
     public void startAwayMission() {
         //TODO
     }
 
     // MODIFIES: this
-    // EFFECTS: if away mission is active, end away mission with complete objective //TODO set location of awayteam to on ship? set health status
+    // EFFECTS: if current away mission is active, end away mission, complete objective, add it to the mission log,
+    //          updates the health status of all members of the away team, and transports them back to the starship
     //          otherwise, does nothing
     public void endAwayMission() {
         //TODO
     }
 
     // MODIFIES: this
-    // EFFECTS: if away mission is active, end away mission
+    // EFFECTS: if current away mission is active, end away mission, add it to the mission log, updates the health
+    //          status of all members of the away team, and transports them back to the starship
     //          otherwise, does nothing
-    public void emergencyBeamOut() { //TODO set location of awayteam to on ship? set health status
+    public void emergencyBeamOut() {
+        //TODO
+    }
+
+    public void transportAwayTeamToStarship(){
+        //TODO
+    }
+
+    public void transportAwayTeamOffOfStarship(){
         //TODO
     }
 }
