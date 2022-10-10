@@ -47,11 +47,11 @@ public class CrewMember {
         return healthStatus;
     }
 
-    public boolean isHasRedShirt() {
+    public boolean hasRedShirt() {
         return hasRedShirt;
-    }
+    } //TODO better method names
 
-    public boolean isHasPlotAmour() {
+    public boolean hasPlotAmour() {
         return hasPlotAmour;
     }
 

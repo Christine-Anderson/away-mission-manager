@@ -53,19 +53,23 @@ public class Starship {
         this.crewMembers = newCrew;
     }
 
+    // EFFECTS: if given crew member is currently serving on the starship, returns true
+    //          otherwise, returns false
+    public boolean hasCrewMember(CrewMember crewMember){
+        return false;
+    }
+
     // MODIFIES: this
-    // EFFECTS: add new crewMember to list of crew members
-    public void addCrewMember(CrewMember newRecruit) {
+    // EFFECTS: if crew member is not already on the starship, add new crewMember to list of crew members
+    //          otherwise, does nothing
+    public void addCrewMember(CrewMember crewMember) {
         //TODO
     }
 
     // MODIFIES: this
-    // EFFECTS: remove crewMember from list of crew members
+    // EFFECTS: if crew member is already on the starship, remove crewMember from list of crew members
+    //          otherwise, does nothing
     public void removeCrewMember(CrewMember crewMember) {
         //TODO
     }
-
-    //TODO get list of current crew members
-
-    //TODO find crewmember
 }
