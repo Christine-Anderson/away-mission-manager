@@ -22,6 +22,9 @@ public class StarshipTest {
         cm2 = new CrewMember("Leonard", "McCoy", Rank.LIEUTENANT_COMMANDER, Division.MEDICAL);
         cm3 = new CrewMember("Montgomery", "Scott", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING);
         testCrewMemberList = new ArrayList<>();
+        testCrewMemberList.add(cm1);
+        testCrewMemberList.add(cm2);
+        testCrewMemberList.add(cm3);
     }
 
     @Test
@@ -46,12 +49,12 @@ public class StarshipTest {
     @Test
     void testAddCrewMemberAlreadyOnStarship() {
         testStarship.setCrewMembers(testCrewMemberList);
-        assertTrue(testStarship.hasCrewMember(cm1));
+        assertTrue(testStarship.getCrewMembers().contains(cm1));
         assertEquals(3, testStarship.getCrewMembers().size());
 
         testStarship.addCrewMember(cm1);
 
-        assertTrue(testStarship.hasCrewMember(cm1));
+        assertTrue(testStarship.getCrewMembers().contains(cm1));
         assertEquals(3, testStarship.getCrewMembers().size());
     }
 
@@ -76,12 +79,12 @@ public class StarshipTest {
     @Test
     void testRemoveCrewMember() {
         testStarship.setCrewMembers(testCrewMemberList);
-        assertTrue(testStarship.hasCrewMember(cm1));
+        assertTrue(testStarship.getCrewMembers().contains(cm1));
         assertEquals(3, testStarship.getCrewMembers().size());
 
         testStarship.removeCrewMember(cm1);
 
-        assertFalse(testStarship.hasCrewMember(cm1));
+        assertFalse(testStarship.getCrewMembers().contains(cm1));
         assertEquals(2, testStarship.getCrewMembers().size());
 
     }
@@ -90,36 +93,36 @@ public class StarshipTest {
     void testRemoveCrewMemberNotOnStarship() {
         testStarship.addCrewMember(cm1);
         testStarship.addCrewMember(cm2);
-        assertFalse(testStarship.hasCrewMember(cm3));
+        assertFalse(testStarship.getCrewMembers().contains(cm3));
         assertEquals(2, testStarship.getCrewMembers().size());
 
         testStarship.removeCrewMember(cm3);
 
-        assertFalse(testStarship.hasCrewMember(cm3));
+        assertFalse(testStarship.getCrewMembers().contains(cm3));
         assertEquals(2, testStarship.getCrewMembers().size());
     }
 
     @Test
     void testRemoveCrewMemberMultipleTimes() {
         testStarship.setCrewMembers(testCrewMemberList);
-        assertTrue(testStarship.hasCrewMember(cm1));
-        assertTrue(testStarship.hasCrewMember(cm2));
-        assertTrue(testStarship.hasCrewMember(cm3));
+        assertTrue(testStarship.getCrewMembers().contains(cm1));
+        assertTrue(testStarship.getCrewMembers().contains(cm2));
+        assertTrue(testStarship.getCrewMembers().contains(cm3));
         assertEquals(3, testStarship.getCrewMembers().size());
 
         testStarship.removeCrewMember(cm1);
 
-        assertFalse(testStarship.hasCrewMember(cm1));
+        assertFalse(testStarship.getCrewMembers().contains(cm1));
         assertEquals(2, testStarship.getCrewMembers().size());
 
         testStarship.removeCrewMember(cm2);
 
-        assertFalse(testStarship.hasCrewMember(cm2));
+        assertFalse(testStarship.getCrewMembers().contains(cm2));
         assertEquals(1, testStarship.getCrewMembers().size());
 
         testStarship.removeCrewMember(cm3);
 
-        assertFalse(testStarship.hasCrewMember(cm3));
+        assertFalse(testStarship.getCrewMembers().contains(cm3));
         assertEquals(0, testStarship.getCrewMembers().size());
     }
 }
