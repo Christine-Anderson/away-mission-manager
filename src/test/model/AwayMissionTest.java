@@ -39,7 +39,7 @@ public class AwayMissionTest {
         assertTrue(testAwayMission.getAwayTeam().isEmpty());
     }
 
-    @Test
+    @Test //TODO should these have descriptions?
     void testAddCrewMemberToAwayTeamInactiveMission() {
         testAwayMission.addCrewMemberToAwayTeam(cm1);
 

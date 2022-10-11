@@ -95,7 +95,9 @@ public class CrewMember {
     }
 
     // MODIFIES: this
-    // EFFECTS: randomly updates health status of crew member, influenced by shirt colour and plot armour
+    // EFFECTS: randomly updates health status of crew member
+    //          if they have plot armour, health status is either healthy or injured
+    //          if they have a red shirt and no plot armour, health status is either healthy or dead
     public void updateHealthStatus(){
         if(this.hasPlotArmour) {
             if (random.nextBoolean()) {
