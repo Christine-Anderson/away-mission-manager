@@ -33,7 +33,7 @@ public class CrewMemberTest {
         assertEquals(Rank.COMMANDER, testCrewMember.getRank());
         assertEquals(Division.SCIENCES, testCrewMember.getDivision());
         assertEquals(HealthStatus.HEALTHY, testCrewMember.getHealthStatus());
-        assertTrue(testCrewMember.isOnStarship());
+        assertTrue(testCrewMember.getIsOnStarship());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class CrewMemberTest {
         for(int i = 0; i <= 1000; i++) {
             testCrewMember = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER,
                     Division.SCIENCES);
-            seenBoolean.add(testCrewMember.hasRedShirt());
+            seenBoolean.add(testCrewMember.getHasRedShirt());
 
             if(seenBoolean.equals(allOptionsBoolean)) {
                 break;
@@ -55,7 +55,7 @@ public class CrewMemberTest {
         for(int i = 0; i <= 1000; i++) {
             testCrewMember = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER,
                     Division.SCIENCES);
-            seenBoolean.add(testCrewMember.hasPlotArmour());
+            seenBoolean.add(testCrewMember.getHasPlotArmour());
 
             if(seenBoolean.equals(allOptionsBoolean)) {
                 break;

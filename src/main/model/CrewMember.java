@@ -2,7 +2,7 @@ package model;
 
 import java.util.Random;
 
-// Represents a crew member having a name, rank, division, and health, shirt colour, plot armour, and location
+// Represents a crew member having a name, rank, division, health status, shirt colour, plot armour, and location
 public class CrewMember {
     private String firstName;
     private String lastName;
@@ -48,15 +48,15 @@ public class CrewMember {
         return healthStatus;
     }
 
-    public boolean hasRedShirt() {
+    public boolean getHasRedShirt() {
         return hasRedShirt;
-    } //TODO better method names
+    }
 
-    public boolean hasPlotArmour() {
+    public boolean getHasPlotArmour() {
         return hasPlotArmour;
     }
 
-    public boolean isOnStarship() {
+    public boolean getIsOnStarship() {
         return isOnStarship;
     }
 
@@ -98,6 +98,7 @@ public class CrewMember {
     // EFFECTS: randomly updates health status of crew member
     //          if they have plot armour, health status is either healthy or injured
     //          if they have a red shirt and no plot armour, health status is either healthy or dead
+    //          if they don't have a red shirt or plot armour, health status may be any of the possible states
     public void updateHealthStatus(){
         if(this.hasPlotArmour) {
             if (random.nextBoolean()) {

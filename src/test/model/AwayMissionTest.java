@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AwayMissionTest {
     private AwayMission testAwayMission;
-    private Starship testStarship;
     private CrewMember cm1;
     private CrewMember cm2;
     private CrewMember cm3;
@@ -19,8 +18,7 @@ public class AwayMissionTest {
 
     @BeforeEach
     void setUp() {
-        testAwayMission = new AwayMission(123456, 41025);
-        testStarship = new Starship("James T.", "Kirk");
+        testAwayMission = new AwayMission(12345678, 41025);
         cm1 = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES);
         cm2 = new CrewMember("Leonard", "McCoy", Rank.LIEUTENANT_COMMANDER, Division.MEDICAL);
         cm3 = new CrewMember("Montgomery", "Scott", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING);
@@ -32,14 +30,14 @@ public class AwayMissionTest {
 
     @Test
     void testAwayMissionConstructor() {
-        assertEquals(123456, testAwayMission.getAwayMissionID());
+        assertEquals(12345678, testAwayMission.getAwayMissionID());
         assertEquals(41025, testAwayMission.getStardate());
         assertFalse(testAwayMission.isActive());
         assertFalse(testAwayMission.isObjectiveComplete());
         assertTrue(testAwayMission.getAwayTeam().isEmpty());
     }
 
-    @Test //TODO should these have descriptions?
+    @Test
     void testAddCrewMemberToAwayTeamInactiveMission() {
         testAwayMission.addCrewMemberToAwayTeam(cm1);
 
@@ -49,14 +47,14 @@ public class AwayMissionTest {
 
     @Test
     void testAddCrewMemberToAwayTeamActiveMission() {
-        testAwayMission.setActive(true);
-        assertTrue(cm1.isOnStarship());
+        testAwayMission.setIsActive(true);
+        assertTrue(cm1.getIsOnStarship());
 
         testAwayMission.addCrewMemberToAwayTeam(cm1);
 
         assertEquals(cm1, testAwayMission.getAwayTeam().get(0));
         assertEquals(1, testAwayMission.getAwayTeam().size());
-        assertFalse(cm1.isOnStarship());
+        assertFalse(cm1.getIsOnStarship());
     }
 
     @Test
@@ -101,7 +99,7 @@ public class AwayMissionTest {
 
     @Test
     void testRemoveCrewMemberFromAwayTeamActiveMission() {
-        testAwayMission.setActive(true);
+        testAwayMission.setIsActive(true);
         testAwayMission.setAwayTeam(testAwayTeam);
         cm1.setOnStarship(false);
         assertTrue(testAwayMission.getAwayTeam().contains(cm1));
@@ -111,8 +109,8 @@ public class AwayMissionTest {
 
         assertFalse(testAwayMission.getAwayTeam().contains(cm1));
         assertEquals(2, testAwayMission.getAwayTeam().size());
-        assertTrue(cm1.isOnStarship());
-        // TODO test that health status updated...
+        assertTrue(cm1.getIsOnStarship());
+        // TODO test that health status updated? already thoroughly updated in crewmemeber test
     }
 
     @Test
@@ -150,5 +148,69 @@ public class AwayMissionTest {
 
         assertFalse(testAwayMission.getAwayTeam().contains(cm3));
         assertEquals(0, testAwayMission.getAwayTeam().size());
+    }
+
+    @Test
+    void testStartAwayMissionInactiveMission() {
+        testAwayMission.setAwayTeam(testAwayTeam);
+        assertFalse(testAwayMission.isActive());
+        for(CrewMember cm: testAwayTeam) {
+            assertTrue(cm.getIsOnStarship());
+        }
+
+        testAwayMission.startAwayMission();
+
+        assertTrue(testAwayMission.isActive());
+        for(CrewMember cm: testAwayTeam) {
+            assertFalse(cm.getIsOnStarship());
+        }
+    }
+
+    @Test
+    void testStartAwayMissionActiveMission() {
+        testAwayMission.setAwayTeam(testAwayTeam);
+        testAwayMission.setIsActive(true);
+        for(CrewMember cm: testAwayTeam) {
+            cm.setOnStarship(false);
+        }
+
+        testAwayMission.startAwayMission();
+
+        assertTrue(testAwayMission.isActive());
+        for(CrewMember cm: testAwayTeam) {
+            assertFalse(cm.getIsOnStarship());
+        }
+    }
+
+    @Test
+    void name() {
+    }
+
+    @Test //TODO is this needed if its tested in other tests?
+    void testTransportAwayTeamToStarship() {
+        testAwayMission.setAwayTeam(testAwayTeam);
+        for(CrewMember cm: testAwayTeam) {
+            cm.setOnStarship(false);
+        }
+
+        testAwayMission.transportAwayTeamToStarship();
+
+        for(CrewMember cm: testAwayTeam) {
+            assertTrue(cm.getIsOnStarship());
+        }
+    }
+
+    @Test //TODO is this needed if its tested in other tests?
+    void testTransportAwayTeamOffOfStarship() {
+        testAwayMission.setAwayTeam(testAwayTeam);
+        for(CrewMember cm: testAwayTeam) {
+            assertTrue(cm.getIsOnStarship());
+        }
+
+        testAwayMission.transportAwayTeamOffOfStarship();
+
+        for(CrewMember cm: testAwayTeam) {
+            assertFalse(cm.getIsOnStarship());
+        }
     }
 }

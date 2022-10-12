@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Represents an away mission having an away mission ID, stardate, list of away team, active status,
-// and objective status
+// and objective status //TODO maek sure this is up to date
 public class AwayMission {
-    private int awayMissionID; // 6 digit unique ID
+    private int awayMissionID;
     private int stardate; // 5 digit date
     private boolean isActive;
     private boolean isObjectiveComplete;
     private List<CrewMember> awayTeam;
 
 
-    // TODO requires for the id and stardate??
     // EFFECTS: Constructs an inactive, not complete away mission with a given away mission ID, given stardate, and
     // empty away team
     public AwayMission(int awayMissionID, int stardate) {
@@ -54,7 +53,7 @@ public class AwayMission {
         this.stardate = stardate;
     }
 
-    public void setActive(boolean isActive) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 
@@ -63,11 +62,10 @@ public class AwayMission {
     }
 
     public void setAwayTeam(List<CrewMember> awayTeam) {
-        // TODO should this set to off starship if mission is active??? set away team shouldn't be used other than testing
         this.awayTeam = awayTeam;
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, CrewMember
     // EFFECTS: if crew member is not already assigned to the current away team, adds them to the away team
     //          if the current away mission is active, transports them off of the starship
     //          otherwise, does nothing
@@ -80,7 +78,7 @@ public class AwayMission {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, CrewMember
     // EFFECTS: if crew member is assigned to the current away team, removes them from the away team
     //          if current away mission is active, updates their health status, and transports them back to the starship
     //          otherwise, does nothing
@@ -94,14 +92,17 @@ public class AwayMission {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, CrewMember
     // EFFECTS: if current away mission is not active, starts away mission, and transports away team off of the starship
     //          otherwise, does nothing
     public void startAwayMission() {
-        //TODO
+        if(! this.isActive) {
+            this.setIsActive(true);
+            transportAwayTeamOffOfStarship();
+        }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, Starship, CrewMember
     // EFFECTS: if current away mission is active, end away mission, complete objective, add it to the mission log,
     //          updates the health status of all members of the away team, and transports them back to the starship
     //          otherwise, does nothing
@@ -109,7 +110,7 @@ public class AwayMission {
         //TODO
     }
 
-    // MODIFIES: this
+    // MODIFIES: this TODO
     // EFFECTS: if current away mission is active, end away mission, add it to the mission log, updates the health
     //          status of all members of the away team, and transports them back to the starship
     //          otherwise, does nothing
@@ -117,11 +118,19 @@ public class AwayMission {
         //TODO
     }
 
+    // MODIFIES: TODO this?, CrewMember
+    // EFFECTS: sets the location of all members of the away team to the starship
     public void transportAwayTeamToStarship(){
-        //TODO
+        for(CrewMember cm: awayTeam) {
+            cm.setOnStarship(true);
+        }
     }
 
+    // MODIFIES: TODO this?, CrewMember
+    // EFFECTS: sets the location of all members of the away team off of the starship
     public void transportAwayTeamOffOfStarship(){
-        //TODO
+        for(CrewMember cm: awayTeam) {
+            cm.setOnStarship(false);
+        }
     }
 }

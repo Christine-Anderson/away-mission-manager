@@ -4,25 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Represents a Starship with the name USS Intrepid, ship ID NCC-74600, and having a captain, a list of crew members,
-// a mission log, and a current away mission
+// a mission log, and a current away mission //TODO update
 public class Starship {
-    private static final String SHIP_NAME = "USS Intrepid";
-    private static final String SHIP_ID = "NCC-74600";
+    protected static final String SHIP_NAME = "USS Intrepid";
+    protected static final String SHIP_ID = "NCC-74600";
+    protected static final int INTIAL_STARDATE = 41025;
+    protected static final int FINAL_STARDATE = 54868;
+    protected static final int INITIAL_AWAY_MISSION_ID = 14268714;
+
 
     private String firstNameOfCaptain;
     private String lastNameOfCaptain;
+    private int currentStardate;
+    private int awayMissionID;
+    private AwayMission currentAwayMission;
     private List<CrewMember> crewMembers;
     private List<AwayMission> missionLog;
-    // TODO add an current mission here and test and implmement all the needed methods
-    // TODO add stardate (range 41025-54868) incrementer (1-9) that pull from previous away mission (if list mepty use this empty)
-    // TODO print stardate method
-    // TODO add away missionID incrementer +1 that pull from previous away mission
-    //TODO for testing check number is within bounds
 
-    // EFFECTS: Constructs a Starship with given captain name, an empty list of crew members, and an empty mission log
+    // EFFECTS: Constructs the Starship USS Intrepid (NCC-74600) on stardate 41025 with given captain name, an initial
+    // away mission ID of 142687, an empty list of crew members, and an empty mission log
     public Starship(String firstNameOfCaptain, String lastNameOfCaptain) {
         this.firstNameOfCaptain = firstNameOfCaptain;
         this.lastNameOfCaptain = lastNameOfCaptain;
+        this.currentStardate = INTIAL_STARDATE;
+        this.awayMissionID = INITIAL_AWAY_MISSION_ID;
+        this.currentAwayMission = null;
         crewMembers = new ArrayList<>();
         missionLog = new ArrayList<>();
     }
@@ -44,6 +50,18 @@ public class Starship {
         return lastNameOfCaptain;
     }
 
+    public int getCurrentStardate() {
+        return currentStardate;
+    }
+
+    public int getAwayMissionID() {
+        return awayMissionID;
+    }
+
+    public AwayMission getCurrentAwayMission() {
+        return currentAwayMission;
+    }
+
     public List<CrewMember> getCrewMembers() {
         return this.crewMembers;
     }
@@ -60,6 +78,18 @@ public class Starship {
     public void setLastNameOfCaptain(String lastNameOfCaptain) {
         this.lastNameOfCaptain = lastNameOfCaptain;
     } //TODO get rid of extra setters?
+
+    public void setCurrentStardate(int currentStardate) {
+        this.currentStardate = currentStardate;
+    }
+
+    public void setAwayMissionID(int awayMissionID) {
+        this.awayMissionID = awayMissionID;
+    }
+
+    public void setCurrentAwayMission(AwayMission currentAwayMission) {
+        this.currentAwayMission = currentAwayMission;
+    }
 
     public void setCrewMembers(List<CrewMember> newCrew) {
         this.crewMembers = newCrew;
@@ -87,9 +117,43 @@ public class Starship {
         }
     }
 
+    // MODIFIES: this, AwayMission
+    // EFFECTS: updates the current stardate and creates a current away mission with the current stardate and a unique
+    //          away mission ID
+    public void createAwayMission() {
+        updateCurrentStardate();
+        currentAwayMission = new AwayMission(this.awayMissionID, this.currentStardate);
+        updateAwayMissionID();
+    }
+
     // MODIFIES: this
+    // EFFECTS: adds current away mission to the mission log
+    public void addCurrentAwayMissionToMissionLog() {
+        this.missionLog.add(this.currentAwayMission);
+    }
+
     // EFFECTS: adds away mission to the mission log
-    public void addAwayMission(AwayMission awayMission) {
-        //this.missionLog.add(awayMission); TODO finsih
+    public void printAwayMissionLog() {
+        //TODO do i need this?
+    }
+
+    // MODIFIES: this
+    // EFFECTS: increments stardate
+    public void updateCurrentStardate() {
+       this.currentStardate = this.currentStardate + 1;
+    }
+    //TODO possibly add a random incrementer (range 41025-54868)?
+
+    // REQUIRES: a stardate with 5 digits
+    // EFFECTS: returns current stardate as String
+    public String printStardate() {
+        String s = Integer.toString(this.currentStardate);
+        return s.substring(0,4) + "." + s.charAt(4);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: increments away mission ID
+    public void updateAwayMissionID() {
+        this.awayMissionID = this.awayMissionID + 1;
     }
 }
