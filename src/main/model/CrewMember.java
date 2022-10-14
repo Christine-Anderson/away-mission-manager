@@ -90,7 +90,7 @@ public class CrewMember {
         this.hasPlotArmour = hasPlotArmour;
     } //TODO get rid of some of these?
 
-    public void setOnStarship(boolean onStarship) {
+    public void setIsOnStarship(boolean onStarship) {
         this.isOnStarship = onStarship;
     }
 

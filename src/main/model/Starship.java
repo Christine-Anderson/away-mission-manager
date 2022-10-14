@@ -103,7 +103,7 @@ public class Starship {
     // EFFECTS: if crew member is not already on the starship, add new crewMember to list of crew members
     //          otherwise, does nothing
     public void addCrewMember(CrewMember crewMember) {
-        if(!this.crewMembers.contains(crewMember)) {
+        if (!this.crewMembers.contains(crewMember)) {
             this.crewMembers.add(crewMember);
         }
     }
@@ -112,7 +112,7 @@ public class Starship {
     // EFFECTS: if crew member is already on the starship, remove crewMember from list of crew members
     //          otherwise, does nothing
     public void removeCrewMember(CrewMember crewMember) {
-        if(this.crewMembers.contains(crewMember)) {
+        if (this.crewMembers.contains(crewMember)) {
             this.crewMembers.remove(crewMember);
         }
     }
@@ -126,6 +126,45 @@ public class Starship {
         updateAwayMissionID();
     }
 
+    // MODIFIES: this, CrewMember
+    // EFFECTS: if current away mission is not active, starts away mission, and transports away team off of the starship
+    //          otherwise, does nothing
+    public void startAwayMission() {
+        if (! this.currentAwayMission.getIsActive()) {
+            this.currentAwayMission.setIsActive(true);
+            this.currentAwayMission.transportAwayTeamOffOfStarship();
+        }
+    }
+
+    // MODIFIES: this, Starship, CrewMember
+    // EFFECTS: if current away mission is active, ends away mission, adds it to the mission log, removes it as the
+    //          current mission, updates the health status of all members of the away team, and transports them back to
+    //          the starship
+    //          otherwise, does nothing
+    public void emergencyBeamOut() {
+        if (this.currentAwayMission.getIsActive()) {
+            this.currentAwayMission.setIsActive(false);
+            addCurrentAwayMissionToMissionLog();
+            for (CrewMember cm: this.currentAwayMission.getAwayTeam()) {
+                cm.updateHealthStatus();
+                cm.setIsOnStarship(true);
+            }
+            this.currentAwayMission = null;
+        }
+    }
+
+    // MODIFIES: this, Starship, CrewMember
+    // EFFECTS: if current away mission is active, end away mission, complete objective, adds it to the mission log,
+    //          removes it as the current mission, updates the health status of all members of the away team, and
+    //          transports them back to the starship
+    //          otherwise, does nothing
+    public void endAwayMission() {
+        if (this.currentAwayMission.getIsActive()) {
+            this.currentAwayMission.setIsObjectiveComplete(true);
+            emergencyBeamOut();
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: adds current away mission to the mission log
     public void addCurrentAwayMissionToMissionLog() {
@@ -134,13 +173,13 @@ public class Starship {
 
     // EFFECTS: adds away mission to the mission log
     public void printAwayMissionLog() {
-        //TODO do i need this?
+        //TODO do with ui to test properly
     }
 
     // MODIFIES: this
     // EFFECTS: increments stardate
     public void updateCurrentStardate() {
-       this.currentStardate = this.currentStardate + 1;
+        this.currentStardate = this.currentStardate + 1;
     }
     //TODO possibly add a random incrementer (range 41025-54868)?
 

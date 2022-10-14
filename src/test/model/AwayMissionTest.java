@@ -28,12 +28,13 @@ public class AwayMissionTest {
         testAwayTeam.add(cm3);
     }
 
+    //TODO cheeck all tests for good setup checks
     @Test
     void testAwayMissionConstructor() {
         assertEquals(12345678, testAwayMission.getAwayMissionID());
         assertEquals(41025, testAwayMission.getStardate());
-        assertFalse(testAwayMission.isActive());
-        assertFalse(testAwayMission.isObjectiveComplete());
+        assertFalse(testAwayMission.getIsActive());
+        assertFalse(testAwayMission.getIsObjectiveComplete());
         assertTrue(testAwayMission.getAwayTeam().isEmpty());
     }
 
@@ -101,7 +102,7 @@ public class AwayMissionTest {
     void testRemoveCrewMemberFromAwayTeamActiveMission() {
         testAwayMission.setIsActive(true);
         testAwayMission.setAwayTeam(testAwayTeam);
-        cm1.setOnStarship(false);
+        cm1.setIsOnStarship(false);
         assertTrue(testAwayMission.getAwayTeam().contains(cm1));
         assertEquals(3, testAwayMission.getAwayTeam().size());
 
@@ -151,46 +152,10 @@ public class AwayMissionTest {
     }
 
     @Test
-    void testStartAwayMissionInactiveMission() {
-        testAwayMission.setAwayTeam(testAwayTeam);
-        assertFalse(testAwayMission.isActive());
-        for(CrewMember cm: testAwayTeam) {
-            assertTrue(cm.getIsOnStarship());
-        }
-
-        testAwayMission.startAwayMission();
-
-        assertTrue(testAwayMission.isActive());
-        for(CrewMember cm: testAwayTeam) {
-            assertFalse(cm.getIsOnStarship());
-        }
-    }
-
-    @Test
-    void testStartAwayMissionActiveMission() {
-        testAwayMission.setAwayTeam(testAwayTeam);
-        testAwayMission.setIsActive(true);
-        for(CrewMember cm: testAwayTeam) {
-            cm.setOnStarship(false);
-        }
-
-        testAwayMission.startAwayMission();
-
-        assertTrue(testAwayMission.isActive());
-        for(CrewMember cm: testAwayTeam) {
-            assertFalse(cm.getIsOnStarship());
-        }
-    }
-
-    @Test
-    void name() {
-    }
-
-    @Test //TODO is this needed if its tested in other tests?
     void testTransportAwayTeamToStarship() {
         testAwayMission.setAwayTeam(testAwayTeam);
         for(CrewMember cm: testAwayTeam) {
-            cm.setOnStarship(false);
+            cm.setIsOnStarship(false);
         }
 
         testAwayMission.transportAwayTeamToStarship();
@@ -200,7 +165,7 @@ public class AwayMissionTest {
         }
     }
 
-    @Test //TODO is this needed if its tested in other tests?
+    @Test
     void testTransportAwayTeamOffOfStarship() {
         testAwayMission.setAwayTeam(testAwayTeam);
         for(CrewMember cm: testAwayTeam) {
