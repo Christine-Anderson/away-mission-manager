@@ -252,7 +252,7 @@ public class StarshipTest {
             assertTrue(cm.getIsOnStarship());
         }
 
-        testStarship.endAwayMission();
+        testStarship.emergencyBeamOut();
 
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
