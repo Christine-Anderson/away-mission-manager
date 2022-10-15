@@ -220,9 +220,8 @@ public class StarshipTest {
     @Test
     void testEmergencyBeamOutActiveMission() {
         am1.setAwayTeam(testAwayTeam);
-        am1.setIsActive(true);
         testStarship.setCurrentAwayMission(am1);
-        assertTrue(testStarship.getCurrentAwayMission().getIsActive());
+        testStarship.getCurrentAwayMission().setIsActive(true);
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
         for (CrewMember cm : testAwayTeam) {
