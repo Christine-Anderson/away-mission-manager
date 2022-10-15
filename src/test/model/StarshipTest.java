@@ -222,6 +222,7 @@ public class StarshipTest {
         am1.setAwayTeam(testAwayTeam);
         am1.setIsActive(true);
         testStarship.setCurrentAwayMission(am1);
+        assertTrue(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
         for (CrewMember cm : testAwayTeam) {
