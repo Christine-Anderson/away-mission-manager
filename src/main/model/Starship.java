@@ -105,6 +105,8 @@ public class Starship {
         if (!this.crewMembers.contains(crewMember)) {
             this.crewMembers.add(crewMember);
         }
+        //TODO implemenent this to instead not accept different crew member objects with the same name?
+        // users can't add these so does it matter?
     }
 
     // MODIFIES: this
