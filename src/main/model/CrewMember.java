@@ -32,6 +32,7 @@ public class CrewMember {
     public String getFirstName() {
         return firstName;
     }
+
     public String getLastName() {
         return lastName;
     }
@@ -99,22 +100,38 @@ public class CrewMember {
     //          if they have plot armour, health status is either healthy or injured
     //          if they have a red shirt and no plot armour, health status is either healthy or dead
     //          if they don't have a red shirt or plot armour, health status may be any of the possible states
-    public void updateHealthStatus(){
-        if(this.hasPlotArmour) {
+    public void updateHealthStatus() {
+        if (this.hasPlotArmour) {
             if (random.nextBoolean()) {
                 this.healthStatus = HealthStatus.INJURED;
             }
-        } else if(this.hasRedShirt) {
+        } else if (this.hasRedShirt) {
             if (random.nextBoolean()) {
                 this.healthStatus = HealthStatus.DEAD;
             }
         } else {
             int x = random.nextInt(3);
-            if(x == 0){
+            if (x == 0) {
                 this.healthStatus = HealthStatus.INJURED;
-            } else if(x == 1) {
+            } else if (x == 1) {
                 this.healthStatus = HealthStatus.DEAD;
             }
         }
+    }
+
+    // EFFECTS: if isFirstNameFirst is true, returns crew member name in the format: firstName lastName
+    //          otherwise, returns crew member name in the format: lastName, firstName
+    public String nameToString(boolean isFirstNameFirst) {
+        String name;
+
+        if (this.getLastName().equals("")) {
+            name = this.getFirstName();
+        } else if (isFirstNameFirst) {
+            name = this.getFirstName() + " " + this.getLastName();
+        } else {
+            name = this.getLastName() + ", " + this.getFirstName();
+        }
+
+        return name;
     }
 }

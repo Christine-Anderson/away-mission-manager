@@ -177,13 +177,13 @@ public class AwayMissionTest {
     @Test
     void testTransportAwayTeamToStarship() {
         testAwayMission.setAwayTeam(testAwayTeam);
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             cm.setIsOnStarship(false);
         }
 
         testAwayMission.transportAwayTeamToStarship();
 
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
     }
@@ -191,13 +191,13 @@ public class AwayMissionTest {
     @Test
     void testTransportAwayTeamOffOfStarship() {
         testAwayMission.setAwayTeam(testAwayTeam);
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
 
         testAwayMission.transportAwayTeamOffOfStarship();
 
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertFalse(cm.getIsOnStarship());
         }
     }

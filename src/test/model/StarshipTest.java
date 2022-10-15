@@ -166,7 +166,7 @@ public class StarshipTest {
     @Test
     void testCreateAwayMission() {
         testStarship.createAwayMission();
-        
+
         assertNotNull(testStarship.getCurrentAwayMission());
         assertEquals(INTIAL_STARDATE + 1, testStarship.getCurrentAwayMission().getStardate());
         assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getCurrentAwayMission().getAwayMissionID());
@@ -188,14 +188,14 @@ public class StarshipTest {
         am1.setAwayTeam(testAwayTeam);
         testStarship.setCurrentAwayMission(am1);
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
 
         testStarship.startAwayMission();
 
         assertTrue(testStarship.getCurrentAwayMission().getIsActive());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertFalse(cm.getIsOnStarship());
         }
     }
@@ -205,14 +205,14 @@ public class StarshipTest {
         am1.setAwayTeam(testAwayTeam);
         am1.setIsActive(true);
         testStarship.setCurrentAwayMission(am1);
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             cm.setIsOnStarship(false);
         }
 
         testStarship.startAwayMission();
 
         assertTrue(testStarship.getCurrentAwayMission().getIsActive());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertFalse(cm.getIsOnStarship());
         }
     }
@@ -224,7 +224,7 @@ public class StarshipTest {
         testStarship.setCurrentAwayMission(am1);
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             cm.setIsOnStarship(false);
         }
 
@@ -233,10 +233,12 @@ public class StarshipTest {
         assertFalse(am1.getIsActive());
         assertFalse(am1.getIsObjectiveComplete());
         assertEquals(am1, testStarship.getMissionLog().get(0));
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
         assertNull(testStarship.getCurrentAwayMission());
+
+        //TODO remove some of the repetitive/double testing? eg. transporting and emergency beam out
     }
 
     @Test
@@ -246,7 +248,7 @@ public class StarshipTest {
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
 
@@ -255,7 +257,7 @@ public class StarshipTest {
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
     }
@@ -267,7 +269,7 @@ public class StarshipTest {
         testStarship.setCurrentAwayMission(am1);
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             cm.setIsOnStarship(false);
         }
 
@@ -276,7 +278,7 @@ public class StarshipTest {
         assertFalse(am1.getIsActive());
         assertTrue(am1.getIsObjectiveComplete());
         assertEquals(am1, testStarship.getMissionLog().get(0));
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
         assertNull(testStarship.getCurrentAwayMission());
@@ -289,7 +291,7 @@ public class StarshipTest {
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
 
@@ -298,7 +300,7 @@ public class StarshipTest {
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        for(CrewMember cm: testAwayTeam) {
+        for (CrewMember cm : testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
     }

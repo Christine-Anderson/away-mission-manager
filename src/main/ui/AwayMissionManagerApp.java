@@ -139,12 +139,8 @@ public class AwayMissionManagerApp {
         if (command.equals("stats")) {
             printCrewMemberStats(input.nextInt());
         } else if (command.equals("add")) { // this menu option only available after an away mission has been created
-            if (starship.getCurrentAwayMission() != null) {
-                int i = input.nextInt();
-                printAddCrewMember(i);
-            } else {
-                System.out.println("\nPlease select a valid number.");
-            }
+            int i = input.nextInt();
+            printAddCrewMember(i);
         } else {
             System.out.println("\nHighly illogical.");
         }
@@ -309,28 +305,7 @@ public class AwayMissionManagerApp {
     private void processCommandCurrentAwayTeam(String command) {
         if (command.equals("remove")) {
             int i = input.nextInt();
-            if (!starship.getCurrentAwayMission().getAwayTeam().isEmpty() && i >= 1
-                    && i <= starship.getCurrentAwayMission().getAwayTeam().size()) {
-                CrewMember cm = starship.getCurrentAwayMission().getAwayTeam().get(i - 1);
-                starship.getCurrentAwayMission().removeCrewMemberFromAwayTeam(cm);
-                if (starship.getCurrentAwayMission().getIsActive()) {
-                    if (cm.getLastName() == "") {
-                        System.out.println("\n" + cm.getFirstName() + " has been transported back to the starship.");
-                    } else {
-                        System.out.println("\n" + cm.getFirstName() + " " + cm.getLastName()
-                                + " has been transported back to the starship.");
-                    }
-                } else {
-                    if (cm.getLastName() == "") {
-                        System.out.println("\n" + cm.getFirstName() + " has been removed from the away team.");
-                    } else {
-                        System.out.println("\n" + cm.getFirstName() + " " + cm.getLastName()
-                                + " has been removed from the away team.");
-                    }
-                }
-            } else {
-                System.out.println("\nPlease select a valid number.");
-            }
+            printRemoveCrewMember(i);
         } else {
             System.out.println("\nHighly illogical.");
         }
@@ -363,13 +338,8 @@ public class AwayMissionManagerApp {
 
         int i = 1;
         for (CrewMember cm : starship.getCrewMembers()) {
-            if (cm.getLastName() == "") {
-                System.out.println("\t" + i + ". " + cm.getFirstName());
-                i++;
-            } else {
-                System.out.println("\t" + i + ". " + cm.getLastName() + ", " + cm.getFirstName());
-                i++;
-            }
+            System.out.println("\t" + i + ". " + cm.nameToString(false));
+            i++;
         }
     }
 
@@ -378,11 +348,7 @@ public class AwayMissionManagerApp {
         if (i >= 1 && i <= starship.getCrewMembers().size()) {
             CrewMember cm = starship.getCrewMembers().get(i - 1);
 
-            if (cm.getLastName() == "") {
-                System.out.println("\n" + cm.getFirstName());
-            } else {
-                System.out.println("\n" + cm.getLastName() + ", " + cm.getFirstName());
-            }
+            System.out.println("\n" + cm.nameToString(false));
             System.out.println("Rank: " + cm.getRank().name());
             System.out.println("Division: " + cm.getDivision().name());
             System.out.println("Health Status: " + cm.getHealthStatus().name());
@@ -400,13 +366,8 @@ public class AwayMissionManagerApp {
 
             int i = 1;
             for (CrewMember cm : starship.getCurrentAwayMission().getAwayTeam()) {
-                if (cm.getLastName() == "") {
-                    System.out.println("\t" + i + ". " + cm.getFirstName());
-                    i++;
-                } else {
-                    System.out.println("\t" + i + ". " + cm.getLastName() + ", " + cm.getFirstName());
-                    i++;
-                }
+                System.out.println("\t" + i + ". " + cm.nameToString(false));
+                i++;
             }
         }
     }
@@ -450,21 +411,29 @@ public class AwayMissionManagerApp {
             } else {
                 starship.getCurrentAwayMission().addCrewMemberToAwayTeam(cm);
                 if (starship.getCurrentAwayMission().getIsActive()) {
-                    if (cm.getLastName() == "") {
-                        System.out.println("\n" + cm.getFirstName() + " has been transported off of the starship.");
-                    } else {
-                        System.out.println("\n" + cm.getFirstName() + " " + cm.getLastName()
-                                + " has been transported off of the starship.");
-                    }
+                    System.out.println("\n" + cm.nameToString(true) + " has been transported off of the starship.");
                 } else {
-                    if (cm.getLastName() == "") {
-                        System.out.println("\n" + cm.getFirstName() + " has been added to the away team.");
-                    } else {
-                        System.out.println("\n" + cm.getFirstName() + " " + cm.getLastName()
-                                + " has been added to the away team.");
-                    }
+                    System.out.println("\n" + cm.nameToString(true) + " has been added to the away team.");
                 }
             }
+        } else {
+            System.out.println("\nPlease select a valid number.");
+        }
+    }
+
+    // EFFECTS: removes a crew member and prints the results
+    public void printRemoveCrewMember(int i) {
+        if (!starship.getCurrentAwayMission().getAwayTeam().isEmpty() && i >= 1
+                && i <= starship.getCurrentAwayMission().getAwayTeam().size()) {
+            CrewMember cm = starship.getCurrentAwayMission().getAwayTeam().get(i - 1);
+            starship.getCurrentAwayMission().removeCrewMemberFromAwayTeam(cm);
+            if (starship.getCurrentAwayMission().getIsActive()) {
+                System.out.println("\n" + cm.nameToString(true) + " has been transported back to the starship.");
+            } else {
+                System.out.println("\n" + cm.nameToString(true) + " has been removed from the away team.");
+            }
+        } else {
+            System.out.println("\nPlease select a valid number.");
         }
     }
 }

@@ -105,34 +105,32 @@ public class Starship {
         if (!this.crewMembers.contains(crewMember)) {
             this.crewMembers.add(crewMember);
         }
-        //TODO implemenent this to instead not accept different crew member objects with the same name?
+        //TODO implement this to instead not accept different crew member objects with the same name?
         // users can't add these so does it matter?
     }
 
     // MODIFIES: this
-    // EFFECTS: if crew member is already on the starship, remove crewMember from list of crew members
-    //          otherwise, does nothing
+    // EFFECTS: removes crewMember from list of crew members
     public void removeCrewMember(CrewMember crewMember) {
-        if (this.crewMembers.contains(crewMember)) {
-            this.crewMembers.remove(crewMember);
-        }
+        this.crewMembers.remove(crewMember);
     }
 
     // MODIFIES: this, AwayMission
-    // EFFECTS: updates the current stardate and creates a current away mission with the current stardate and a unique
-    //          away mission ID
+    // EFFECTS: updates the current stardate and creates a current away mission with the initial stardate and away
+    //          mission ID
     public void createAwayMission() {
         updateCurrentStardate();
         currentAwayMission = new AwayMission(this.awayMissionID, this.currentStardate);
         updateAwayMissionID();
     }
+    //TODO make it so that it updates the current stardate and creates a unique away mission ID
 
     // MODIFIES: this, CrewMember
     // EFFECTS: if current away mission is not active and the away is not empty, starts away mission, and transports
     //          away team off of the starship
     //          otherwise, does nothing
     public void startAwayMission() {
-        if (! this.currentAwayMission.getIsActive() && ! this.currentAwayMission.getAwayTeam().isEmpty()) {
+        if (!this.currentAwayMission.getIsActive() && !this.currentAwayMission.getAwayTeam().isEmpty()) {
             this.currentAwayMission.setIsActive(true);
             this.currentAwayMission.transportAwayTeamOffOfStarship();
         }
@@ -147,7 +145,7 @@ public class Starship {
         if (this.currentAwayMission.getIsActive()) {
             this.currentAwayMission.setIsActive(false);
             this.currentAwayMission.transportAwayTeamToStarship();
-            for (CrewMember cm: this.currentAwayMission.getAwayTeam()) {
+            for (CrewMember cm : this.currentAwayMission.getAwayTeam()) {
                 cm.updateHealthStatus();
             }
             addCurrentAwayMissionToMissionLog();
@@ -174,11 +172,11 @@ public class Starship {
     }
 
 
-
     // MODIFIES: this
     // EFFECTS: increments stardate
     public void updateCurrentStardate() {
         this.currentStardate = this.currentStardate + 1;
+        //TODO increment stardate
         //TODO possibly add a random incrementer (range 41025-54868)?
     }
 
@@ -186,12 +184,13 @@ public class Starship {
     // EFFECTS: returns current stardate as String
     public String stardateToString(int stardate) {
         String s = Integer.toString(stardate);
-        return s.substring(0,4) + "." + s.charAt(4);
+        return s.substring(0, 4) + "." + s.charAt(4);
     }
 
     // MODIFIES: this
     // EFFECTS: increments away mission ID
     public void updateAwayMissionID() {
         this.awayMissionID = this.awayMissionID + 1;
+        //TODO increment ID
     }
 }

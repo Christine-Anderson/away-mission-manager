@@ -69,7 +69,7 @@ public class AwayMission {
     //          if the current away mission is active, transports them off of the starship
     //          otherwise, does nothing
     public void addCrewMemberToAwayTeam(CrewMember crewMember) {
-        if (! this.awayTeam.contains(crewMember) && crewMember.getHealthStatus() != HealthStatus.DEAD) {
+        if (!this.awayTeam.contains(crewMember) && crewMember.getHealthStatus() != HealthStatus.DEAD) {
             this.awayTeam.add(crewMember);
             if (this.isActive) {
                 crewMember.setIsOnStarship(false);
@@ -94,7 +94,7 @@ public class AwayMission {
     // MODIFIES: this, CrewMember
     // EFFECTS: sets the location of all members of the away team to the starship
     public void transportAwayTeamToStarship() {
-        for (CrewMember cm: awayTeam) {
+        for (CrewMember cm : awayTeam) {
             cm.setIsOnStarship(true);
         }
     }
@@ -102,7 +102,7 @@ public class AwayMission {
     // MODIFIES: this, CrewMember
     // EFFECTS: sets the location of all members of the away team off of the starship
     public void transportAwayTeamOffOfStarship() {
-        for (CrewMember cm: awayTeam) {
+        for (CrewMember cm : awayTeam) {
             cm.setIsOnStarship(false);
         }
     }
