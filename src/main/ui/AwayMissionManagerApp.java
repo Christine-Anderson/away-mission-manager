@@ -214,15 +214,27 @@ public class AwayMissionManagerApp {
         System.out.println("To emergency beam out the away team, enter \"out\".");
     }
 
-    // MODIFIES:
-    // EFFECTS: processes user command for main menu
-    private void processCommandCurrentAwayMissionMenu(String command) {
-        if (command.equals("log")) {
-            printAwayMissionLog();
-        } else if (command.equals("new")) {
-            AwayMission am = new AwayMission(starship.getAwayMissionID(), starship.getCurrentStardate());
-            starship.setCurrentAwayMission(am);
-            currentAwayMission();
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user command for current away mission menu
+    private boolean processCommandCurrentAwayMission(String command) {
+        boolean keepGoing = true;
+        if (command.equals("manage")) {
+            awayTeam();
+        } else if (command.equals("start")) {
+            printStartAwayMission();
+            starship.startAwayMission();
+        } else if (command.equals("end")) {
+            printEndAwayMission();
+            if (starship.getCurrentAwayMission().getIsActive()) {
+                keepGoing = false;
+            }
+            starship.endAwayMission();
+        } else if (command.equals("out")) {
+            printEmergencyBeamOut();
+            if (starship.getCurrentAwayMission().getIsActive()) {
+                keepGoing = false;
+            }
+            starship.emergencyBeamOut();
         } else {
             System.out.println("\nHighly illogical.");
         }
@@ -297,7 +309,6 @@ public class AwayMissionManagerApp {
     private void processCommandCurrentAwayTeam(String command) {
         if (command.equals("remove")) {
             int i = input.nextInt();
-            //printRemoveCrewMember(i);
             if (!starship.getCurrentAwayMission().getAwayTeam().isEmpty() && i >= 1
                     && i <= starship.getCurrentAwayMission().getAwayTeam().size()) {
                 CrewMember cm = starship.getCurrentAwayMission().getAwayTeam().get(i - 1);
