@@ -28,7 +28,6 @@ public class AwayMissionTest {
         testAwayTeam.add(cm3);
     }
 
-    //TODO cheeck all tests for good setup checks
     @Test
     void testAwayMissionConstructor() {
         assertEquals(12345678, testAwayMission.getAwayMissionID());
@@ -111,7 +110,6 @@ public class AwayMissionTest {
         assertFalse(testAwayMission.getAwayTeam().contains(cm1));
         assertEquals(2, testAwayMission.getAwayTeam().size());
         assertTrue(cm1.getIsOnStarship());
-        // TODO test that health status updated? already thoroughly updated in crewmemeber test
     }
 
     @Test

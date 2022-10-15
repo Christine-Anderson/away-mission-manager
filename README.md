@@ -10,8 +10,6 @@ away teams for missions and manage the away team from the safety of the ship.
 This application will fill the current need of the starship captain to feel involved in the away mission while still
 following Starfleet Regulation Section 12, Paragraph 4.
 
-//TODO ask if if need more here
-
 ### User Stories
 
 As a user, I want to be able to:
@@ -20,4 +18,4 @@ As a user, I want to be able to:
 - view previous missions in the mission log
 - assign crew members (X) to away mission (Y)
 - select a crew member and get stats on the crew member, for example, rank and division
-- emergency beam out the away team
+- emergency beam out the away team0

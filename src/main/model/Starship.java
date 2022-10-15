@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Represents a Starship with the name USS Intrepid, ship ID NCC-74600, and having a captain, a list of crew members,
-// a mission log, and a current away mission //TODO update
+// a mission log, and a current away mission
 public class Starship {
     protected static final String SHIP_NAME = "USS Intrepid";
     protected static final String SHIP_ID = "NCC-74600";
     protected static final int INTIAL_STARDATE = 41025;
-    protected static final int FINAL_STARDATE = 54868;
     protected static final int INITIAL_AWAY_MISSION_ID = 14268714;
 
 
@@ -17,9 +16,9 @@ public class Starship {
     private String lastNameOfCaptain;
     private int currentStardate;
     private int awayMissionID;
-    private AwayMission currentAwayMission;
     private List<CrewMember> crewMembers;
     private List<AwayMission> missionLog;
+    private AwayMission currentAwayMission;
 
     // EFFECTS: Constructs the Starship USS Intrepid (NCC-74600) on stardate 41025 with given captain name, an initial
     // away mission ID of 142687, an empty list of crew members, and an empty mission log
@@ -71,13 +70,13 @@ public class Starship {
     }
 
     //setters
-    public void setFirstNameOfCaptain(String firstNameOfCaptain) { //TODO do these need tests, i don't even need them...
+    public void setFirstNameOfCaptain(String firstNameOfCaptain) {
         this.firstNameOfCaptain = firstNameOfCaptain;
     }
 
     public void setLastNameOfCaptain(String lastNameOfCaptain) {
         this.lastNameOfCaptain = lastNameOfCaptain;
-    } //TODO get rid of extra setters?
+    }
 
     public void setCurrentStardate(int currentStardate) {
         this.currentStardate = currentStardate;
@@ -95,7 +94,7 @@ public class Starship {
         this.crewMembers = newCrew;
     }
 
-    public void setMissionLog(List<AwayMission> missionLog) { //TODO shouldn't need this one either...
+    public void setMissionLog(List<AwayMission> missionLog) {
         this.missionLog = missionLog;
     }
 
@@ -144,11 +143,11 @@ public class Starship {
     public void emergencyBeamOut() {
         if (this.currentAwayMission.getIsActive()) {
             this.currentAwayMission.setIsActive(false);
-            addCurrentAwayMissionToMissionLog();
+            this.currentAwayMission.transportAwayTeamToStarship();
             for (CrewMember cm: this.currentAwayMission.getAwayTeam()) {
                 cm.updateHealthStatus();
-                cm.setIsOnStarship(true);
             }
+            addCurrentAwayMissionToMissionLog();
             this.currentAwayMission = null;
         }
     }
@@ -171,22 +170,19 @@ public class Starship {
         this.missionLog.add(this.currentAwayMission);
     }
 
-    // EFFECTS: adds away mission to the mission log
-    public void printAwayMissionLog() {
-        //TODO do with ui to test properly
-    }
+
 
     // MODIFIES: this
     // EFFECTS: increments stardate
     public void updateCurrentStardate() {
         this.currentStardate = this.currentStardate + 1;
+        //TODO possibly add a random incrementer (range 41025-54868)?
     }
-    //TODO possibly add a random incrementer (range 41025-54868)?
 
     // REQUIRES: a stardate with 5 digits
     // EFFECTS: returns current stardate as String
-    public String printStardate() {
-        String s = Integer.toString(this.currentStardate);
+    public String stardateToString(int stardate) {
+        String s = Integer.toString(stardate);
         return s.substring(0,4) + "." + s.charAt(4);
     }
 

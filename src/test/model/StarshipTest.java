@@ -52,7 +52,6 @@ public class StarshipTest {
         assertTrue(testStarship.getMissionLog().isEmpty());
     }
 
-    //TODO cheeck all tests for good setup checks
     @Test
     void testAddCrewMember() {
         testStarship.addCrewMember(cm1);
@@ -190,7 +189,6 @@ public class StarshipTest {
         testStarship.setCurrentAwayMission(am1);
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        //TODO test health status??
         for(CrewMember cm: testAwayTeam) {
             cm.setIsOnStarship(false);
         }
@@ -200,7 +198,6 @@ public class StarshipTest {
         assertFalse(am1.getIsActive());
         assertFalse(am1.getIsObjectiveComplete());
         assertEquals(am1, testStarship.getMissionLog().get(0));
-        //TODO test health status??
         for(CrewMember cm: testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
@@ -214,7 +211,6 @@ public class StarshipTest {
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        //TODO test health status??
         for(CrewMember cm: testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
@@ -224,20 +220,21 @@ public class StarshipTest {
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        //TODO test health status??
         for(CrewMember cm: testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
+
+        //TODO get rid of testing transport method
+        //TODO get rid of testing beam out method
     }
 
     @Test
-    void testEndAwayMissionActiveMission() { //TODO should i do something about test code duplication? for example if things are tested elsewhere
+    void testEndAwayMissionActiveMission() {
         am1.setAwayTeam(testAwayTeam);
         am1.setIsActive(true);
         testStarship.setCurrentAwayMission(am1);
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        //TODO test health status??
         for(CrewMember cm: testAwayTeam) {
             cm.setIsOnStarship(false);
         }
@@ -247,7 +244,6 @@ public class StarshipTest {
         assertFalse(am1.getIsActive());
         assertTrue(am1.getIsObjectiveComplete());
         assertEquals(am1, testStarship.getMissionLog().get(0));
-        //TODO test health status??
         for(CrewMember cm: testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
@@ -261,7 +257,6 @@ public class StarshipTest {
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        //TODO test health status??
         for(CrewMember cm: testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
@@ -271,7 +266,6 @@ public class StarshipTest {
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
         assertFalse(testStarship.getCurrentAwayMission().getIsObjectiveComplete());
         assertTrue(testStarship.getMissionLog().isEmpty());
-        //TODO test health status??
         for(CrewMember cm: testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
@@ -326,8 +320,7 @@ public class StarshipTest {
 
     @Test
     void testPrintStardate() {
-        testStarship.setCurrentStardate(12345);
-        assertEquals("1234.5", testStarship.printStardate());
+        assertEquals("1234.5", testStarship.stardateToString(12345));
     }
 
     @Test

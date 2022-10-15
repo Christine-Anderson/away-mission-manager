@@ -3,8 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents an away mission having an away mission ID, stardate, list of away team, active status,
-// and objective status //TODO maek sure this is up to date
+// Represents an away mission having an away mission ID, stardate, active status, objective status, and away team
 public class AwayMission {
     private int awayMissionID;
     private int stardate; // 5 digit date
@@ -13,8 +12,8 @@ public class AwayMission {
     private List<CrewMember> awayTeam;
 
 
-    // EFFECTS: Constructs an inactive, not complete away mission with a given away mission ID, given stardate, and
-    // an empty away team
+    // EFFECTS: Constructs an inactive, incomplete away mission with a given away mission ID, given stardate, and an
+    //          empty away team
     public AwayMission(int awayMissionID, int stardate) {
         this.awayMissionID = awayMissionID;
         this.stardate = stardate;
@@ -45,7 +44,7 @@ public class AwayMission {
     }
 
     //setters
-    public void setAwayMissionID(int awayMissionID) { //TODO get rid of extra setters?
+    public void setAwayMissionID(int awayMissionID) {
         this.awayMissionID = awayMissionID;
     }
 
@@ -92,7 +91,7 @@ public class AwayMission {
         }
     }
 
-    // MODIFIES: TODO this?, CrewMember ask about this one
+    // MODIFIES: this, CrewMember
     // EFFECTS: sets the location of all members of the away team to the starship
     public void transportAwayTeamToStarship(){
         for(CrewMember cm: awayTeam) {
@@ -100,7 +99,7 @@ public class AwayMission {
         }
     }
 
-    // MODIFIES: TODO this?, CrewMember
+    // MODIFIES: this, CrewMember
     // EFFECTS: sets the location of all members of the away team off of the starship
     public void transportAwayTeamOffOfStarship(){
         for(CrewMember cm: awayTeam) {
