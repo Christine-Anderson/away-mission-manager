@@ -65,13 +65,13 @@ public class AwayMission {
     }
 
     // MODIFIES: this, CrewMember
-    // EFFECTS: if crew member is not already assigned to the current away team, adds them to the away team
+    // EFFECTS: if crew member is not already assigned to the current away or not dead, adds them to the away team
     //          if the current away mission is active, transports them off of the starship
     //          otherwise, does nothing
     public void addCrewMemberToAwayTeam(CrewMember crewMember) {
-        if(!this.awayTeam.contains(crewMember)) {
+        if (! this.awayTeam.contains(crewMember) && crewMember.getHealthStatus() != HealthStatus.DEAD) {
             this.awayTeam.add(crewMember);
-            if(this.isActive) {
+            if (this.isActive) {
                 crewMember.setIsOnStarship(false);
             }
         }
@@ -82,9 +82,9 @@ public class AwayMission {
     //          if current away mission is active, updates their health status, and transports them back to the starship
     //          otherwise, does nothing
     public void removeCrewMemberFromAwayTeam(CrewMember crewMember) {
-        if(this.awayTeam.contains(crewMember)) {
+        if (this.awayTeam.contains(crewMember)) {
             this.awayTeam.remove(crewMember);
-            if(this.isActive) {
+            if (this.isActive) {
                 crewMember.updateHealthStatus();
                 crewMember.setIsOnStarship(true);
             }
@@ -93,16 +93,16 @@ public class AwayMission {
 
     // MODIFIES: this, CrewMember
     // EFFECTS: sets the location of all members of the away team to the starship
-    public void transportAwayTeamToStarship(){
-        for(CrewMember cm: awayTeam) {
+    public void transportAwayTeamToStarship() {
+        for (CrewMember cm: awayTeam) {
             cm.setIsOnStarship(true);
         }
     }
 
     // MODIFIES: this, CrewMember
     // EFFECTS: sets the location of all members of the away team off of the starship
-    public void transportAwayTeamOffOfStarship(){
-        for(CrewMember cm: awayTeam) {
+    public void transportAwayTeamOffOfStarship() {
+        for (CrewMember cm: awayTeam) {
             cm.setIsOnStarship(false);
         }
     }

@@ -18,4 +18,5 @@ As a user, I want to be able to:
 - view previous missions in the mission log
 - assign crew members (X) to away mission (Y)
 - select a crew member and get stats on the crew member, for example, rank and division
-- emergency beam out the away team0
+- emergency beam out the away team 
+

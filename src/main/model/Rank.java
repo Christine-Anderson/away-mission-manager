@@ -6,5 +6,6 @@ public enum Rank {
     ENSIGN,
     LIEUTENANT,
     LIEUTENANT_COMMANDER,
-    COMMANDER
+    COMMANDER,
+    OTHER
 }

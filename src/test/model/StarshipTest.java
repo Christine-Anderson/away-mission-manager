@@ -53,6 +53,30 @@ public class StarshipTest {
     }
 
     @Test
+    void testSettersAndGetters() {
+        testStarship.setFirstNameOfCaptain("fn");
+        testStarship.setLastNameOfCaptain("ln");
+        testStarship.setCurrentStardate(12345);
+        testStarship.setAwayMissionID(12345678);
+        testStarship.setCrewMembers(testCrewMembers);
+        List<AwayMission> testMissionLog = new ArrayList<>();
+        testMissionLog.add(am1);
+        testMissionLog.add(am2);
+        testMissionLog.add(am3);
+        testStarship.setMissionLog(testMissionLog);
+        testStarship.setCurrentAwayMission(am1);
+
+        assertEquals("fn", testStarship.getFirstNameOfCaptain());
+        assertEquals("ln", testStarship.getLastNameOfCaptain());
+        assertEquals(12345, testStarship.getCurrentStardate());
+        assertEquals(12345678, testStarship.getAwayMissionID());
+        assertEquals(testCrewMembers, testStarship.getCrewMembers());
+        assertEquals(testMissionLog, testStarship.getMissionLog());
+        assertEquals(am1, testStarship.getCurrentAwayMission());
+
+    }
+
+    @Test
     void testAddCrewMember() {
         testStarship.addCrewMember(cm1);
 
@@ -149,7 +173,18 @@ public class StarshipTest {
     }
 
     @Test
-    void testStartAwayMissionInactiveMission() {
+    void testStartAwayMissionInactiveMissionEmptyAwayTeam() {
+        testStarship.setCurrentAwayMission(am1);
+        assertTrue(testStarship.getCurrentAwayMission().getAwayTeam().isEmpty());
+        assertFalse(testStarship.getCurrentAwayMission().getIsActive());
+
+        testStarship.startAwayMission();
+
+        assertFalse(testStarship.getCurrentAwayMission().getIsActive());
+    }
+
+    @Test
+    void testStartAwayMissionInactiveMissionWithAwayTeam() {
         am1.setAwayTeam(testAwayTeam);
         testStarship.setCurrentAwayMission(am1);
         assertFalse(testStarship.getCurrentAwayMission().getIsActive());
@@ -223,9 +258,6 @@ public class StarshipTest {
         for(CrewMember cm: testAwayTeam) {
             assertTrue(cm.getIsOnStarship());
         }
-
-        //TODO get rid of testing transport method
-        //TODO get rid of testing beam out method
     }
 
     @Test

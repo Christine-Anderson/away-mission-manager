@@ -38,6 +38,21 @@ public class AwayMissionTest {
     }
 
     @Test
+    void testGettersAndSetters() {
+        testAwayMission.setAwayMissionID(12345678);
+        testAwayMission.setStardate(12345);
+        testAwayMission.setIsActive(true);
+        testAwayMission.setIsObjectiveComplete(true);
+        testAwayMission.setAwayTeam(testAwayTeam);
+
+        assertEquals(12345678, testAwayMission.getAwayMissionID());
+        assertEquals(12345, testAwayMission.getStardate());
+        assertTrue(testAwayMission.getIsActive());
+        assertTrue(testAwayMission.getIsObjectiveComplete());
+        assertEquals(testAwayTeam, testAwayMission.getAwayTeam());
+    }
+
+    @Test
     void testAddCrewMemberToAwayTeamInactiveMission() {
         testAwayMission.addCrewMemberToAwayTeam(cm1);
 
@@ -65,6 +80,16 @@ public class AwayMissionTest {
         testAwayMission.addCrewMemberToAwayTeam(cm1);
 
         assertEquals(testAwayTeam, testAwayMission.getAwayTeam());
+    }
+
+    @Test
+    void testAddCrewMemberToAwayTeamDead() {
+        cm1.setHealthStatus(HealthStatus.DEAD);
+        assertTrue(testAwayMission.getAwayTeam().isEmpty());
+
+        testAwayMission.addCrewMemberToAwayTeam(cm1);
+
+        assertFalse(testAwayMission.getAwayTeam().contains(cm1));
     }
 
     @Test

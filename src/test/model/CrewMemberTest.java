@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,6 +35,27 @@ public class CrewMemberTest {
         assertEquals(Division.SCIENCES, testCrewMember.getDivision());
         assertEquals(HealthStatus.HEALTHY, testCrewMember.getHealthStatus());
         assertTrue(testCrewMember.getIsOnStarship());
+    }
+
+    @Test
+    void testSettersAndGetters() {
+        testCrewMember.setFirstName("fn");
+        testCrewMember.setLastName("ln");
+        testCrewMember.setRank(Rank.OTHER);
+        testCrewMember.setDivision(Division.OTHER);
+        testCrewMember.setHealthStatus(HealthStatus.DEAD);
+        testCrewMember.setHasRedShirt(true);
+        testCrewMember.setHasPlotArmour(true);
+        testCrewMember.setIsOnStarship(false);
+
+        assertEquals("fn", testCrewMember.getFirstName());
+        assertEquals("ln", testCrewMember.getLastName());
+        assertEquals(Rank.OTHER, testCrewMember.getRank());
+        assertEquals(Division.OTHER, testCrewMember.getDivision());
+        assertEquals(HealthStatus.DEAD, testCrewMember.getHealthStatus());
+        assertTrue(testCrewMember.getHasRedShirt());
+        assertTrue(testCrewMember.getHasPlotArmour());
+        assertFalse(testCrewMember.getIsOnStarship());
     }
 
     @Test

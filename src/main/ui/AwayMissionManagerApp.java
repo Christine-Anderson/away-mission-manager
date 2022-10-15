@@ -2,6 +2,8 @@ package ui;
 
 import model.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 // Away mission manager application
@@ -10,19 +12,20 @@ public class AwayMissionManagerApp {
     private Starship starship;
     private Scanner input;
 
-    // EFFECTS: runs the teller application
-    public AwayMissionManagerApp(){
+    // EFFECTS: runs the away mission manager application
+    public AwayMissionManagerApp() {
         runAwayMissionManager();
     }
 
-    //TODO update all specifications
-    // MODIFIES: this, Starship, AwayMission, CrewMember //TODO figure out modfies for this
-    // EFFECTS: processes user input
-    private void runAwayMissionManager(){
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user input for main menu
+    private void runAwayMissionManager() {
         boolean keepGoing = true;
         String command;
+        input = new Scanner(System.in);
 
-        initializeStarship();
+        starship = new Starship("Captain", "Name");
+        initializeCrew();
         inputCaptainName();
 
         while (keepGoing) {
@@ -39,40 +42,43 @@ public class AwayMissionManagerApp {
         System.out.println("\nLive long and prosper.");
     }
 
-    // MODIFIES: this, Starship
-    // EFFECTS: initializes starship and crew
-    private void initializeStarship() {
-        starship = new Starship("Captain", "Name");
-        CrewMember cm1 = new CrewMember("William", "Riker", Rank.COMMANDER, Division.COMMAND);
-        CrewMember cm2 = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES);
-        CrewMember cm3 = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES);
-        CrewMember cm4 = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES);
-        CrewMember cm5 = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES);
-        CrewMember cm6 = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES);
-        CrewMember cm7 = new CrewMember("Giant", "Spock", Rank.COMMANDER, Division.SCIENCES);
-        starship.addCrewMember(cm1);
-        starship.addCrewMember(cm2);
-        starship.addCrewMember(cm3);
-        starship.addCrewMember(cm4);
-        starship.addCrewMember(cm5);
-        starship.addCrewMember(cm6);
-        starship.addCrewMember(cm7);
-
-        input = new Scanner(System.in);
+    // MODIFIES: this, Starship, CrewMember
+    // EFFECTS: initializes crew
+    private void initializeCrew() {
+        List<CrewMember> crewMembers = new ArrayList<>();
+        crewMembers.add(new CrewMember("William", "Riker", Rank.COMMANDER, Division.COMMAND));
+        crewMembers.add(new CrewMember("Geordi", "La Forge", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING));
+        crewMembers.add(new CrewMember("Data", "", Rank.COMMANDER, Division.COMMAND));
+        crewMembers.add(new CrewMember("Reginald", "Baclay", Rank.LIEUTENANT, Division.ENGINEERING));
+        crewMembers.add(new CrewMember("Keiko", "O'Brien", Rank.CIVILIAN, Division.COMMAND));
+        crewMembers.add(new CrewMember("Jadzia", "Dax", Rank.LIEUTENANT, Division.MEDICAL));
+        crewMembers.add(new CrewMember("Julian", "Bashir", Rank.LIEUTENANT, Division.MEDICAL));
+        crewMembers.add(new CrewMember("Lwaxana", "Troi", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("Tribble", "", Rank.OTHER, Division.OTHER));
+        crewMembers.add(new CrewMember("Morn", "", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("Elim", "Garak", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("Worf", "Rozhenko", Rank.LIEUTENANT_COMMANDER, Division.COMMAND));
+        crewMembers.add(new CrewMember("Quark", "", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("Odo", "", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("B'Elanna", "Torres", Rank.LIEUTENANT, Division.ENGINEERING));
+        crewMembers.add(new CrewMember("Tom", "Paris", Rank.ENSIGN, Division.COMMAND));
+        crewMembers.add(new CrewMember("Harry", "Kim", Rank.ENSIGN, Division.COMMAND));
+        crewMembers.add(new CrewMember("The", "Doctor", Rank.OTHER, Division.MEDICAL));
+        crewMembers.add(new CrewMember("Seven of Nine", "", Rank.CIVILIAN, Division.SCIENCES));
+        crewMembers.add(new CrewMember("Iceb", "", Rank.CADET, Division.SCIENCES));
+        crewMembers.add(new CrewMember("Giant", "Spock", Rank.OTHER, Division.OTHER));
+        starship.setCrewMembers(crewMembers);
     }
 
     // MODIFIES: this, Starship
     // EFFECTS: gets Captain's name from user
     private void inputCaptainName() {
-        String fn = null;
-        String ln = null;
-
         System.out.println(starship.getShipName() + " (" + starship.getShipID() + ")");
         System.out.println("--------------------------------");
         System.out.println("Enter your first and last name:");
 
-        fn = input.next();
-        ln = input.next();
+        String fn = input.next();
+        String ln = input.next();
 
         starship.setFirstNameOfCaptain(fn);
         starship.setLastNameOfCaptain(ln);
@@ -88,6 +94,7 @@ public class AwayMissionManagerApp {
     }
 
 
+    // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: processes user command for main menu
     private void processCommandMainMenu(String command) {
         if (command.equals("crew")) {
@@ -95,34 +102,56 @@ public class AwayMissionManagerApp {
         } else if (command.equals("mission")) {
             awayMissions();
         } else {
-            System.out.println("Selection not valid...");
+            System.out.println("\nHighly illogical.");
         }
     }
 
-    // EFFECTS: prints current crew and allows user to get crew stats
+    // EFFECTS: processes user input for current crew menu
     private void currentCrew() {
         boolean keepGoing = true;
         String command;
-        int num;
 
         while (keepGoing) {
             printCurrentCrew();
+            currentCrewMenu();
             command = input.next();
 
             if (command.equals("back")) {
                 keepGoing = false;
-            } else if (command.equals("stats")) {
-                System.out.println("\nEnter the number of crew member you would like stats on:");
-                num = input.nextInt();
-                printCrewMemberStats(num);
             } else {
-                System.out.println("Selection not valid...");
+                processCommandCurrentCrew(command);
             }
         }
     }
 
-    // MODIFIES: this, AwayMission
-    // EFFECTS: displays away mission menu to user
+    // EFFECTS: displays current crew menu to user
+    private void currentCrewMenu() {
+        System.out.println("\nTo print the stats of a crew member, enter \"stats\" and number of crew member.");
+        if (starship.getCurrentAwayMission() != null) {
+            System.out.println("To add a crew member to the away team, enter \"add\" and number of crew member.");
+        }
+        System.out.println("To return to the previous menu enter \"back\"");
+    }
+
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user command for current crew menu
+    private void processCommandCurrentCrew(String command) {
+        if (command.equals("stats")) {
+            printCrewMemberStats(input.nextInt());
+        } else if (command.equals("add")) { // this menu option only available after an away mission has been created
+            if (starship.getCurrentAwayMission() != null) {
+                int i = input.nextInt();
+                printAddCrewMember(i);
+            } else {
+                System.out.println("\nPlease select a valid number.");
+            }
+        } else {
+            System.out.println("\nHighly illogical.");
+        }
+    }
+
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user input for away missions menu
     private void awayMissions() {
         boolean keepGoing = true;
         String command;
@@ -134,34 +163,37 @@ public class AwayMissionManagerApp {
             if (command.equals("back")) {
                 keepGoing = false;
             } else {
-                processCommandAwayMissionsMenu(command);
+                processCommandAwayMissions(command);
             }
         }
     }
 
-    // EFFECTS: displays away mission menu to user
+    // EFFECTS: displays away missions menu to user
     private void awayMissionsMenu() {
         System.out.println("\nTo view the mission log, enter \"log\".");
         System.out.println("To create an away mission, enter \"new\".");
         System.out.println("To return to the previous menu enter \"back\"");
     }
 
-    // MODIFIES:
-    // EFFECTS: processes user command for main menu
-    private void processCommandAwayMissionsMenu(String command) {
+    // MODIFIES: this, Starship, AwayMission
+    // EFFECTS: processes user command for away missions menu
+    private void processCommandAwayMissions(String command) {
         if (command.equals("log")) {
             printAwayMissionLog();
         } else if (command.equals("new")) {
             AwayMission am = new AwayMission(starship.getAwayMissionID(), starship.getCurrentStardate());
             starship.setCurrentAwayMission(am);
+            System.out.println("\nCreated new away mission " + starship.getCurrentAwayMission().getAwayMissionID()
+                    + " on stardate " + starship.stardateToString(starship.getCurrentAwayMission().getStardate())
+                    + ".");
             currentAwayMission();
         } else {
-            System.out.println("Selection not valid...");
+            System.out.println("\nHighly illogical.");
         }
     }
 
-    // MODIFIES: this, AwayMission
-    // EFFECTS: displays away mission menu to user
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user input for current away mission menu
     private void currentAwayMission() {
         boolean keepGoing = true;
         String command;
@@ -170,21 +202,16 @@ public class AwayMissionManagerApp {
             currentAwayMissionMenu();
             command = input.next();
 
-            if (command.equals("back")) {
-                keepGoing = false;
-            } else {
-                processCommandCurrentAwayMissionMenu(command);
-            }
+            keepGoing = processCommandCurrentAwayMission(command);
         }
     }
 
-    // EFFECTS: displays away mission menu to user
+    // EFFECTS: displays current away mission menu to user
     private void currentAwayMissionMenu() {
-        System.out.println("\nTo manage the away team, enter \"team\".");
+        System.out.println("\nTo manage the away team, enter \"manage\".");
         System.out.println("To start the away mission, enter \"start\".");
         System.out.println("To end the away mission, enter \"end\".");
-        System.out.println("To emergency beam out the away team, enter \"Beam me up Scottie!\".");
-        System.out.println("To return to the previous menu enter \"back\"");
+        System.out.println("To emergency beam out the away team, enter \"out\".");
     }
 
     // MODIFIES:
@@ -197,7 +224,104 @@ public class AwayMissionManagerApp {
             starship.setCurrentAwayMission(am);
             currentAwayMission();
         } else {
-            System.out.println("Selection not valid...");
+            System.out.println("\nHighly illogical.");
+        }
+        return keepGoing;
+    }
+
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user input for away team menu
+    private void awayTeam() {
+        boolean keepGoing = true;
+        String command;
+
+        while (keepGoing) {
+            awayTeamMenu();
+            command = input.next();
+
+            if (command.equals("back")) {
+                keepGoing = false;
+            } else {
+                processCommandAwayTeam(command);
+            }
+        }
+    }
+
+    // EFFECTS: displays away team menu to user
+    private void awayTeamMenu() {
+        System.out.println("\nTo view the current crew and add crew members to the away team, enter \"crew\".");
+        System.out.println("To view the away team and remove crew members from the away team, enter \"team\".");
+        System.out.println("To return to the previous menu enter \"back\"");
+    }
+
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user command for away team menu
+    private void processCommandAwayTeam(String command) {
+        if (command.equals("crew")) {
+            currentCrew();
+        } else if (command.equals("team")) {
+            currentAwayTeam();
+        } else {
+            System.out.println("\nHighly illogical.");
+        }
+    }
+
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user input for current away team menu
+    private void currentAwayTeam() {
+        boolean keepGoing = true;
+        String command;
+
+        while (keepGoing) {
+            printAwayTeam();
+            currentAwayTeamMenu();
+            command = input.next();
+
+            if (command.equals("back")) {
+                keepGoing = false;
+            } else {
+                processCommandCurrentAwayTeam(command);
+            }
+        }
+    }
+
+    // EFFECTS: displays away team menu to user
+    private void currentAwayTeamMenu() {
+        System.out.println("\nTo remove a crew member from the away team, enter \"remove\" and the number of the crew "
+                + "member.");
+        System.out.println("To return to the previous menu enter \"back\"");
+    }
+
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user command for away team menu
+    private void processCommandCurrentAwayTeam(String command) {
+        if (command.equals("remove")) {
+            int i = input.nextInt();
+            //printRemoveCrewMember(i);
+            if (!starship.getCurrentAwayMission().getAwayTeam().isEmpty() && i >= 1
+                    && i <= starship.getCurrentAwayMission().getAwayTeam().size()) {
+                CrewMember cm = starship.getCurrentAwayMission().getAwayTeam().get(i - 1);
+                starship.getCurrentAwayMission().removeCrewMemberFromAwayTeam(cm);
+                if (starship.getCurrentAwayMission().getIsActive()) {
+                    if (cm.getLastName() == "") {
+                        System.out.println("\n" + cm.getFirstName() + " has been transported back to the starship.");
+                    } else {
+                        System.out.println("\n" + cm.getFirstName() + " " + cm.getLastName()
+                                + " has been transported back to the starship.");
+                    }
+                } else {
+                    if (cm.getLastName() == "") {
+                        System.out.println("\n" + cm.getFirstName() + " has been removed from the away team.");
+                    } else {
+                        System.out.println("\n" + cm.getFirstName() + " " + cm.getLastName()
+                                + " has been removed from the away team.");
+                    }
+                }
+            } else {
+                System.out.println("\nPlease select a valid number.");
+            }
+        } else {
+            System.out.println("\nHighly illogical.");
         }
     }
 
@@ -207,7 +331,7 @@ public class AwayMissionManagerApp {
             System.out.println("\nNo previous missions.");
         } else {
             System.out.println("\nMission log:");
-            for (AwayMission am: starship.getMissionLog()) {
+            for (AwayMission am : starship.getMissionLog()) {
                 String s;
                 if (am.getIsObjectiveComplete()) {
                     s = "complete";
@@ -215,7 +339,7 @@ public class AwayMissionManagerApp {
                     s = "incomplete";
                 }
 
-                System.out.println("Mission ID: " + am.getAwayMissionID());
+                System.out.println("\nMission ID: " + am.getAwayMissionID());
                 System.out.println("Stardate: " + starship.stardateToString(am.getStardate()));
                 System.out.println("Objective " + s);
             }
@@ -227,22 +351,109 @@ public class AwayMissionManagerApp {
         System.out.println("\nCrew:");
 
         int i = 1;
-        for (CrewMember cm: starship.getCrewMembers()) {
-            System.out.println("\t" + i + ". " + cm.getLastName() + ". " + cm.getFirstName());
-            i++;
+        for (CrewMember cm : starship.getCrewMembers()) {
+            if (cm.getLastName() == "") {
+                System.out.println("\t" + i + ". " + cm.getFirstName());
+                i++;
+            } else {
+                System.out.println("\t" + i + ". " + cm.getLastName() + ", " + cm.getFirstName());
+                i++;
+            }
         }
-
-        System.out.println("\nTo print the stats of a crew member, enter \"stats\".");
-        System.out.println("To return to the previous menu enter \"back\"");
     }
 
-    // EFFECTS: prints stats on selected crew member
-    public void printCrewMemberStats(int num) {
-        CrewMember cm = starship.getCrewMembers().get(num);
+    // EFFECTS: prints stats on given crew member
+    public void printCrewMemberStats(int i) {
+        if (i >= 1 && i <= starship.getCrewMembers().size()) {
+            CrewMember cm = starship.getCrewMembers().get(i - 1);
 
-        System.out.println("\n" + cm.getLastName() + ", " + cm.getFirstName());
-        System.out.println("Rank: " + cm.getRank().name());
-        System.out.println("Division: " + cm.getDivision().name());
-        System.out.println("Health Status: " + cm.getHealthStatus().name());
+            if (cm.getLastName() == "") {
+                System.out.println("\n" + cm.getFirstName());
+            } else {
+                System.out.println("\n" + cm.getLastName() + ", " + cm.getFirstName());
+            }
+            System.out.println("Rank: " + cm.getRank().name());
+            System.out.println("Division: " + cm.getDivision().name());
+            System.out.println("Health Status: " + cm.getHealthStatus().name());
+        } else {
+            System.out.println("\nPlease select a valid number.");
+        }
+    }
+
+    // EFFECTS: prints away team
+    public void printAwayTeam() {
+        if (starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
+            System.out.println("\nNo one assigned to the away team.");
+        } else {
+            System.out.println("\nAway Team:");
+
+            int i = 1;
+            for (CrewMember cm : starship.getCurrentAwayMission().getAwayTeam()) {
+                if (cm.getLastName() == "") {
+                    System.out.println("\t" + i + ". " + cm.getFirstName());
+                    i++;
+                } else {
+                    System.out.println("\t" + i + ". " + cm.getLastName() + ", " + cm.getFirstName());
+                    i++;
+                }
+            }
+        }
+    }
+
+    // EFFECTS: prints for start of mission
+    public void printStartAwayMission() {
+        if (!starship.getCurrentAwayMission().getIsActive()
+                && !starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
+            System.out.println("\nMake it so.");
+        } else if (starship.getCurrentAwayMission().getIsActive()) {
+            System.out.println("\nAway Mission has already started.");
+        } else {
+            System.out.println("\nPlease select an away team.");
+        }
+    }
+
+    // EFFECTS: prints for end of mission
+    public void printEndAwayMission() {
+        if (starship.getCurrentAwayMission().getIsActive()) {
+            System.out.println("\nGood job number one.");
+        } else {
+            System.out.println("\nAway Mission has not started.");
+        }
+    }
+
+    // EFFECTS: prints for emergency beam out
+    public void printEmergencyBeamOut() {
+        if (starship.getCurrentAwayMission().getIsActive()) {
+            System.out.println("\nBeam me up Scottie!");
+        } else {
+            System.out.println("\nAway Mission has not started.");
+        }
+    }
+
+    // EFFECTS: adds a crew member and prints the results
+    public void printAddCrewMember(int i) {
+        if (i >= 1 && i <= starship.getCrewMembers().size()) {
+            CrewMember cm = starship.getCrewMembers().get(i - 1);
+            if (cm.getHealthStatus() == HealthStatus.DEAD) {
+                System.out.println("\nHe's dead Jim.");
+            } else {
+                starship.getCurrentAwayMission().addCrewMemberToAwayTeam(cm);
+                if (starship.getCurrentAwayMission().getIsActive()) {
+                    if (cm.getLastName() == "") {
+                        System.out.println("\n" + cm.getFirstName() + " has been transported off of the starship.");
+                    } else {
+                        System.out.println("\n" + cm.getFirstName() + " " + cm.getLastName()
+                                + " has been transported off of the starship.");
+                    }
+                } else {
+                    if (cm.getLastName() == "") {
+                        System.out.println("\n" + cm.getFirstName() + " has been added to the away team.");
+                    } else {
+                        System.out.println("\n" + cm.getFirstName() + " " + cm.getLastName()
+                                + " has been added to the away team.");
+                    }
+                }
+            }
+        }
     }
 }

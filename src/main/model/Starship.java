@@ -128,10 +128,11 @@ public class Starship {
     }
 
     // MODIFIES: this, CrewMember
-    // EFFECTS: if current away mission is not active, starts away mission, and transports away team off of the starship
+    // EFFECTS: if current away mission is not active and the away is not empty, starts away mission, and transports
+    //          away team off of the starship
     //          otherwise, does nothing
     public void startAwayMission() {
-        if (! this.currentAwayMission.getIsActive()) {
+        if (! this.currentAwayMission.getIsActive() && ! this.currentAwayMission.getAwayTeam().isEmpty()) {
             this.currentAwayMission.setIsActive(true);
             this.currentAwayMission.transportAwayTeamOffOfStarship();
         }
