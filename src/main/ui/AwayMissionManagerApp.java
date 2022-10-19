@@ -11,6 +11,7 @@ import java.util.Scanner;
 public class AwayMissionManagerApp {
     private Starship starship;
     private Scanner input;
+    boolean runProgram;
 
     // EFFECTS: runs the away mission manager application
     public AwayMissionManagerApp() {
@@ -20,7 +21,7 @@ public class AwayMissionManagerApp {
     // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: processes user input for main menu
     private void runAwayMissionManager() {
-        boolean keepGoing = true;
+        runProgram = true;
         String command;
         input = new Scanner(System.in);
 
@@ -28,18 +29,17 @@ public class AwayMissionManagerApp {
         initializeCrew();
         inputCaptainName();
 
-        while (keepGoing) {
+        while (runProgram) {
             mainDisplayMenu();
             command = input.next();
-            command = command.toLowerCase();
 
             if (command.equals("quit")) {
-                keepGoing = false;
+                endProgram();
+                runProgram = false;
             } else {
                 processCommandMainMenu(command);
             }
         }
-        System.out.println("\nLive long and prosper.");
     }
 
     // MODIFIES: this, Starship, CrewMember
@@ -111,12 +111,15 @@ public class AwayMissionManagerApp {
         boolean keepGoing = true;
         String command;
 
-        while (keepGoing) {
+        while (keepGoing && runProgram) {
             printCurrentCrew();
             currentCrewMenu();
             command = input.next();
 
-            if (command.equals("back")) {
+            if (command.equals("quit")) {
+                endProgram();
+                runProgram = false;
+            } else if (command.equals("back")) {
                 keepGoing = false;
             } else {
                 processCommandCurrentCrew(command);
@@ -131,6 +134,7 @@ public class AwayMissionManagerApp {
             System.out.println("To add a crew member to the away team, enter \"add\" and number of crew member.");
         }
         System.out.println("To return to the previous menu enter \"back\"");
+        System.out.println("To quit at any time enter \"quit\"");
     }
 
     // MODIFIES: this, Starship, AwayMission, CrewMember
@@ -152,11 +156,14 @@ public class AwayMissionManagerApp {
         boolean keepGoing = true;
         String command;
 
-        while (keepGoing) {
+        while (keepGoing && runProgram) {
             awayMissionsMenu();
             command = input.next();
 
-            if (command.equals("back")) {
+            if (command.equals("quit")) {
+                endProgram();
+                runProgram = false;
+            } else if (command.equals("back")) {
                 keepGoing = false;
             } else {
                 processCommandAwayMissions(command);
@@ -169,6 +176,7 @@ public class AwayMissionManagerApp {
         System.out.println("\nTo view the mission log, enter \"log\".");
         System.out.println("To create an away mission, enter \"new\".");
         System.out.println("To return to the previous menu enter \"back\"");
+        System.out.println("To quit at any time enter \"quit\"");
     }
 
     // MODIFIES: this, Starship, AwayMission
@@ -193,11 +201,17 @@ public class AwayMissionManagerApp {
         boolean keepGoing = true;
         String command;
 
-        while (keepGoing) {
+        while (keepGoing && runProgram) {
             currentAwayMissionMenu();
             command = input.next();
 
-            keepGoing = processCommandCurrentAwayMission(command);
+            if (command.equals("quit")) {
+                endProgram();
+                runProgram = false;
+            } else {
+                keepGoing = processCommandCurrentAwayMission(command);
+            }
+
         }
     }
 
@@ -207,12 +221,14 @@ public class AwayMissionManagerApp {
         System.out.println("To start the away mission, enter \"start\".");
         System.out.println("To end the away mission, enter \"end\".");
         System.out.println("To emergency beam out the away team, enter \"out\".");
+        System.out.println("To quit at any time enter \"quit\"");
     }
 
     // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: processes user command for current away mission menu
     private boolean processCommandCurrentAwayMission(String command) {
         boolean keepGoing = true;
+
         if (command.equals("manage")) {
             awayTeam();
         } else if (command.equals("start")) {
@@ -242,11 +258,14 @@ public class AwayMissionManagerApp {
         boolean keepGoing = true;
         String command;
 
-        while (keepGoing) {
+        while (keepGoing && runProgram) {
             awayTeamMenu();
             command = input.next();
 
-            if (command.equals("back")) {
+            if (command.equals("quit")) {
+                endProgram();
+                runProgram = false;
+            } else if (command.equals("back")) {
                 keepGoing = false;
             } else {
                 processCommandAwayTeam(command);
@@ -259,6 +278,7 @@ public class AwayMissionManagerApp {
         System.out.println("\nTo view the current crew and add crew members to the away team, enter \"crew\".");
         System.out.println("To view the away team and remove crew members from the away team, enter \"team\".");
         System.out.println("To return to the previous menu enter \"back\"");
+        System.out.println("To quit at any time enter \"quit\"");
     }
 
     // MODIFIES: this, Starship, AwayMission, CrewMember
@@ -279,12 +299,15 @@ public class AwayMissionManagerApp {
         boolean keepGoing = true;
         String command;
 
-        while (keepGoing) {
+        while (keepGoing && runProgram) {
             printAwayTeam();
             currentAwayTeamMenu();
             command = input.next();
 
-            if (command.equals("back")) {
+            if (command.equals("quit")) {
+                endProgram();
+                runProgram = false;
+            } else if (command.equals("back")) {
                 keepGoing = false;
             } else {
                 processCommandCurrentAwayTeam(command);
@@ -297,6 +320,7 @@ public class AwayMissionManagerApp {
         System.out.println("\nTo remove a crew member from the away team, enter \"remove\" and the number of the crew "
                 + "member.");
         System.out.println("To return to the previous menu enter \"back\"");
+        System.out.println("To quit at any time enter \"quit\"");
     }
 
     // MODIFIES: this, Starship, AwayMission, CrewMember
@@ -434,5 +458,10 @@ public class AwayMissionManagerApp {
         } else {
             System.out.println("\nPlease select a valid number.");
         }
+    }
+
+    // EFFECTS: prints end of program message
+    public void endProgram() {
+        System.out.println("\nLive long and prosper.");
     }
 }

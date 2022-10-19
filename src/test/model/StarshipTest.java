@@ -336,6 +336,21 @@ public class StarshipTest {
     }
 
     @Test
+    void isAlreadyOnBoardTrue() {
+        testStarship.addCrewMember(cm1);
+        assertTrue(testStarship.getCrewMembers().contains(cm1));
+
+        assertTrue(testStarship.isAlreadyOnBoard(cm1));
+    }
+
+    @Test
+    void isAlreadyOnBoardFalse() {
+        assertFalse(testStarship.getCrewMembers().contains(cm1));
+
+        assertFalse(testStarship.isAlreadyOnBoard(cm1));
+    }
+
+    @Test
     void testUpdateCurrentStardate() {
         assertEquals(INTIAL_STARDATE, testStarship.getCurrentStardate());
         testStarship.updateCurrentStardate();

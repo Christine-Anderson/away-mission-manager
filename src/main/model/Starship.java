@@ -99,14 +99,12 @@ public class Starship {
     }
 
     // MODIFIES: this
-    // EFFECTS: if crew member is not already on the starship, add new crewMember to list of crew members
+    // EFFECTS: if the crew member is not already on the starship, add new crew member to list of crew members
     //          otherwise, does nothing
     public void addCrewMember(CrewMember crewMember) {
-        if (!this.crewMembers.contains(crewMember)) {
+        if (!isAlreadyOnBoard(crewMember)) {
             this.crewMembers.add(crewMember);
         }
-        //TODO implement this to instead not accept different crew member objects with the same name?
-        // users can't add these so does it matter?
     }
 
     // MODIFIES: this
@@ -169,6 +167,23 @@ public class Starship {
     public void addCurrentAwayMissionToMissionLog() {
         this.missionLog.add(this.currentAwayMission);
     }
+
+    // EFFECTS: returns true if a crew member of the same name is already on board
+    //          otherwise, returns false
+    public boolean isAlreadyOnBoard(CrewMember crewMember) {
+        boolean isOnBoard = false;
+
+        for (CrewMember cm: crewMembers) {
+            if (cm.getFirstName().equals(crewMember.getFirstName())
+                    && cm.getLastName().equals(crewMember.getLastName())) {
+                isOnBoard = true;
+                break;
+            }
+        }
+
+        return isOnBoard;
+    }
+
 
     // MODIFIES: this
     // EFFECTS: increments stardate
