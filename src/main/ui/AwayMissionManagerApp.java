@@ -177,8 +177,7 @@ public class AwayMissionManagerApp {
         if (command.equals("log")) {
             printAwayMissionLog();
         } else if (command.equals("new")) {
-            AwayMission am = new AwayMission(starship.getAwayMissionID(), starship.getCurrentStardate());
-            starship.setCurrentAwayMission(am);
+            starship.createAwayMission();
             System.out.println("\nCreated new away mission " + starship.getCurrentAwayMission().getAwayMissionID()
                     + " on stardate " + starship.stardateToString(starship.getCurrentAwayMission().getStardate())
                     + ".");

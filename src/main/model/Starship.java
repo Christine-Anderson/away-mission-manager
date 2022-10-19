@@ -123,7 +123,6 @@ public class Starship {
         currentAwayMission = new AwayMission(this.awayMissionID, this.currentStardate);
         updateAwayMissionID();
     }
-    //TODO make it so that it updates the current stardate and creates a unique away mission ID
 
     // MODIFIES: this, CrewMember
     // EFFECTS: if current away mission is not active and the away is not empty, starts away mission, and transports
@@ -171,13 +170,17 @@ public class Starship {
         this.missionLog.add(this.currentAwayMission);
     }
 
-
     // MODIFIES: this
     // EFFECTS: increments stardate
     public void updateCurrentStardate() {
         this.currentStardate = this.currentStardate + 1;
-        //TODO increment stardate
         //TODO possibly add a random incrementer (range 41025-54868)?
+    }
+
+    // MODIFIES: this
+    // EFFECTS: increments away mission ID
+    public void updateAwayMissionID() {
+        this.awayMissionID = this.awayMissionID + 1;
     }
 
     // REQUIRES: a stardate with 5 digits
@@ -185,12 +188,5 @@ public class Starship {
     public String stardateToString(int stardate) {
         String s = Integer.toString(stardate);
         return s.substring(0, 4) + "." + s.charAt(4);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: increments away mission ID
-    public void updateAwayMissionID() {
-        this.awayMissionID = this.awayMissionID + 1;
-        //TODO increment ID
     }
 }
