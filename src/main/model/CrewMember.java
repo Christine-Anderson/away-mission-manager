@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 import java.util.Random;
 
 // Represents a crew member having a name, rank, division, health status, shirt colour, plot armour, and location
@@ -134,4 +136,19 @@ public class CrewMember {
 
         return name;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("firstName", this.firstName);
+        json.put("lastName", this.lastName);
+        json.put("rank", this.rank);
+        json.put("division", this.division);
+        json.put("healthStatus", this.healthStatus);
+        json.put("hasRedShirt", this.hasRedShirt);
+        json.put("hasPlotArmour", this.hasPlotArmour);
+        json.put("isOnStarship", this.isOnStarship);
+        return json;
+    }
+
 }

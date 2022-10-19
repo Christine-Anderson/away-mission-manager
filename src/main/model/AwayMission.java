@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,5 +108,26 @@ public class AwayMission {
         for (CrewMember cm : awayTeam) {
             cm.setIsOnStarship(false);
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("awayMissionID", this.awayMissionID);
+        json.put("isActive", this.isActive);
+        json.put("isObjectiveComplete", this.isObjectiveComplete);
+        json.put("awayTeam", awayTeamToJson());
+        return json;
+    }
+
+    // EFFECTS: returns crew members on the away team as a JSON array
+    private JSONArray awayTeamToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (CrewMember cm: awayTeam) {
+            jsonArray.put(cm.toJson());
+        }
+
+        return jsonArray;
     }
 }

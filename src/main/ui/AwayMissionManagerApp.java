@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 // Away mission manager application
-// This class is based on code from TellerApp ui example provided in class
 public class AwayMissionManagerApp {
     private Starship starship;
     private Scanner input;

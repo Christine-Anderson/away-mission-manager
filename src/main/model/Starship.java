@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,7 @@ public class Starship {
     private AwayMission currentAwayMission;
 
     // EFFECTS: Constructs the Starship USS Intrepid (NCC-74600) on stardate 41025 with given captain name, an initial
-    // away mission ID of 142687, an empty list of crew members, and an empty mission log
+    //          away mission ID of 142687, an empty list of crew members, and an empty mission log
     public Starship(String firstNameOfCaptain, String lastNameOfCaptain) {
         this.firstNameOfCaptain = firstNameOfCaptain;
         this.lastNameOfCaptain = lastNameOfCaptain;
@@ -203,5 +206,40 @@ public class Starship {
     public String stardateToString(int stardate) {
         String s = Integer.toString(stardate);
         return s.substring(0, 4) + "." + s.charAt(4);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("firstNameOfCaptain", this.firstNameOfCaptain);
+        json.put("lastNameOfCaptain", this.lastNameOfCaptain);
+        json.put("awayMissionID", this.awayMissionID);
+        json.put("lastNameOfCaptain", this.lastNameOfCaptain);
+        json.put("crewMembers", crewMembersToJson());
+        json.put("missionLog", missionLogToJson());
+        json.put("currentAwayMission", this.currentAwayMission.toJson());
+        return json;
+    }
+
+    // EFFECTS: returns crew members on the starship as a JSON array
+    private JSONArray crewMembersToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (CrewMember cm: crewMembers) {
+            jsonArray.put(cm.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns mission log as a JSON array
+    private JSONArray missionLogToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (AwayMission awayMission: missionLog) {
+            jsonArray.put(awayMission.toJson());
+        }
+
+        return jsonArray;
     }
 }

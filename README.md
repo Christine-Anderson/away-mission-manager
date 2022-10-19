@@ -24,3 +24,5 @@ As the Captain, I want to be able to:
 when I select the quit option from the application menu 
 - have the option to load my name, the current crew, the mission log, and the current away mission and away team,
 when I start the application
+
+Based on code from TellerApp and JsonSerializationDemo provided in class
