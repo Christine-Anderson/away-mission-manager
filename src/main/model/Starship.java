@@ -2,17 +2,18 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistance.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a Starship with the name USS Intrepid, ship ID NCC-74600, and having a captain, a list of crew members,
 // a mission log, and a current away mission
-public class Starship {
+public class Starship implements Writable {
     protected static final String SHIP_NAME = "USS Intrepid";
     protected static final String SHIP_ID = "NCC-74600";
-    protected static final int INTIAL_STARDATE = 41025;
-    protected static final int INITIAL_AWAY_MISSION_ID = 14268714;
+    public static final int INITIAL_STARDATE = 41025;
+    public static final int INITIAL_AWAY_MISSION_ID = 14268714;
 
 
     private String firstNameOfCaptain;
@@ -28,11 +29,19 @@ public class Starship {
     public Starship(String firstNameOfCaptain, String lastNameOfCaptain) {
         this.firstNameOfCaptain = firstNameOfCaptain;
         this.lastNameOfCaptain = lastNameOfCaptain;
-        this.currentStardate = INTIAL_STARDATE;
+        this.currentStardate = INITIAL_STARDATE;
         this.awayMissionID = INITIAL_AWAY_MISSION_ID;
         this.currentAwayMission = null;
         crewMembers = new ArrayList<>();
         missionLog = new ArrayList<>();
+    }
+
+    // EFFECTS: Constructs the Starship USS Intrepid (NCC-74600) with given captain name, stardate, and away mission ID,
+    //          an empty list of crew members, and an empty mission log
+    public Starship(String firstNameOfCaptain, String lastNameOfCaptain, int currentStardate, int awayMissionID) {
+        this(firstNameOfCaptain, lastNameOfCaptain);
+        this.currentStardate = currentStardate;
+        this.awayMissionID = awayMissionID;
     }
 
     //getters
@@ -213,8 +222,8 @@ public class Starship {
         JSONObject json = new JSONObject();
         json.put("firstNameOfCaptain", this.firstNameOfCaptain);
         json.put("lastNameOfCaptain", this.lastNameOfCaptain);
+        json.put("currentStardate", this.currentStardate);
         json.put("awayMissionID", this.awayMissionID);
-        json.put("lastNameOfCaptain", this.lastNameOfCaptain);
         json.put("crewMembers", crewMembersToJson());
         json.put("missionLog", missionLogToJson());
         json.put("currentAwayMission", this.currentAwayMission.toJson());

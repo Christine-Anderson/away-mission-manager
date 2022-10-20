@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static model.Starship.INITIAL_AWAY_MISSION_ID;
+import static model.Starship.INITIAL_STARDATE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonWriterTest extends JsonTest {
@@ -41,12 +42,12 @@ public class JsonWriterTest extends JsonTest {
             testStarship = reader.read();
             assertEquals("James T.", testStarship.getFirstNameOfCaptain());
             assertEquals("Kirk", testStarship.getLastNameOfCaptain());
-            assertEquals(INTIAL_STARDATE, testStarship.getCurrentStardate());
+            assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
             assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
-            assertNull(testStarship.getCurrentAwayMission());
             assertTrue(testStarship.getCrewMembers().isEmpty());
             assertTrue(testStarship.getMissionLog().isEmpty());
-            //checkStarship();
+            assertNull(testStarship.getCurrentAwayMission());
+
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
@@ -64,12 +65,24 @@ public class JsonWriterTest extends JsonTest {
 
             JsonReader reader = new JsonReader("./data/testWriterStarshipWithCrewAndAwayMissions.json");
             testStarship = reader.read();
+
+            assertEquals("James T.", testStarship.getFirstNameOfCaptain());
+            assertEquals("Kirk", testStarship.getLastNameOfCaptain());
+            assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
+            assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
+
+
+            assertTrue(testStarship.getCrewMembers().isEmpty());
+            assertTrue(testStarship.getMissionLog().isEmpty());
+
+            assertEquals(testStarship.getCurrentAwayMission());
+
+
             assertEquals("My work room", wr.getName());
             List<Thingy> thingies = wr.getThingies();
             assertEquals(2, thingies.size());
-            //abstract away some checks?
-//            checkThingy("saw", Category.METALWORK, thingies.get(0));
-//            checkThingy("needle", Category.STITCHING, thingies.get(1));
+            checkThingy("saw", Category.METALWORK, thingies.get(0));
+            checkThingy("needle", Category.STITCHING, thingies.get(1));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

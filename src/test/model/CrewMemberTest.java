@@ -37,6 +37,21 @@ public class CrewMemberTest {
     }
 
     @Test
+    void testCrewMemberConstructor2() {
+        testCrewMember = new CrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES,
+                HealthStatus.DEAD, false, true, false);
+
+        assertEquals("S'chn T'gai", testCrewMember.getFirstName());
+        assertEquals("Spock", testCrewMember.getLastName());
+        assertEquals(Rank.COMMANDER, testCrewMember.getRank());
+        assertEquals(Division.SCIENCES, testCrewMember.getDivision());
+        assertEquals(HealthStatus.DEAD, testCrewMember.getHealthStatus());
+        assertFalse(testCrewMember.getHasRedShirt());
+        assertTrue(testCrewMember.getHasPlotArmour());
+        assertFalse(testCrewMember.getIsOnStarship());
+    }
+
+    @Test
     void testSettersAndGetters() {
         testCrewMember.setFirstName("fn");
         testCrewMember.setLastName("ln");

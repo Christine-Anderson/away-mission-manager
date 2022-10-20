@@ -1,11 +1,12 @@
 package model;
 
 import org.json.JSONObject;
+import persistance.Writable;
 
 import java.util.Random;
 
 // Represents a crew member having a name, rank, division, health status, shirt colour, plot armour, and location
-public class CrewMember {
+public class CrewMember implements Writable {
     private String firstName;
     private String lastName;
     private Rank rank;
@@ -17,7 +18,7 @@ public class CrewMember {
     private Random random;
 
     // EFFECTS: Constructs a healthy crew member on the starship with a given name, rank, and division
-    // plot amour and shirt colour are random
+    //  are random
     public CrewMember(String firstName, String lastName, Rank rank, Division division) {
         this.random = new Random();
         this.firstName = firstName;
@@ -28,6 +29,17 @@ public class CrewMember {
         this.hasRedShirt = random.nextBoolean();
         this.hasPlotArmour = random.nextBoolean();
         this.isOnStarship = true;
+    }
+
+    // EFFECTS: Constructs a crew member with a given name, rank, division, health status, shirt colour, plot amour,
+    //          and location
+    public CrewMember(String firstName, String lastName, Rank rank, Division division, HealthStatus healthStatus,
+                      boolean hasRedShirt, boolean hasPlotArmour, boolean isOnStarship) {
+        this(firstName, lastName, rank, division);
+        this.healthStatus = healthStatus;
+        this.hasRedShirt = hasRedShirt;
+        this.hasPlotArmour = hasPlotArmour;
+        this.isOnStarship = isOnStarship;
     }
 
     // getters

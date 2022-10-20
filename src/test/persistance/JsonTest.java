@@ -5,10 +5,6 @@ import model.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.Starship.INITIAL_AWAY_MISSION_ID;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public class JsonTest {
     public void setUpStarship(Starship testStarship) {
         // assign crew to Starship
@@ -50,6 +46,6 @@ public class JsonTest {
     }
 
     public void checkStarship() {
-
+        //TODO abstract awa y various ce
     }
 }

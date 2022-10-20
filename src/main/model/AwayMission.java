@@ -2,12 +2,13 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistance.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents an away mission having an away mission ID, stardate, active status, objective status, and away team
-public class AwayMission {
+public class AwayMission implements Writable {
     private int awayMissionID;
     private int stardate; // 5 digit date
     private boolean isActive;

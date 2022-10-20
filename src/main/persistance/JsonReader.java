@@ -1,6 +1,6 @@
 package persistance;
 
-import model.Starship;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 
 // Represents a reader that reads starship from JSON data stored in file
@@ -40,13 +41,21 @@ public class JsonReader {
 
     // EFFECTS: parses starship from JSON object and returns it
     private Starship parseStarship(JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        WorkRoom wr = new WorkRoom(name);
-        addThingies(wr, jsonObject);
-        return wr;
+        String firstNameOfCaptain = jsonObject.getString("firstNameOfCaptain");
+        String lastNameOfCaptain = jsonObject.getString("lastNameOfCaptain");
+        int currentStardate = Integer.parseInt(jsonObject.getString("currentStardate"));
+        int awayMissionID = Integer.parseInt(jsonObject.getString("awayMissionID"));
+
+        Starship starship = new Starship(firstNameOfCaptain, lastNameOfCaptain, currentStardate, awayMissionID);
+
+        addCrewMembers(starship, jsonObject);
+        addMissionLog(starship, jsonObject);
+        addAwayMission(starship, jsonObject);
+
+        return starship;
     }
 
-    // MODIFIES: wr
+    // MODIFIES: starship
     // EFFECTS: parses thingies from JSON object and adds them to workroom
     private void addThingies(WorkRoom wr, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("thingies");
@@ -56,12 +65,23 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
-    private void addThingy(WorkRoom wr, JSONObject jsonObject) {
-        String name = jsonObject.getString("name");
-        Category category = Category.valueOf(jsonObject.getString("category"));
-        Thingy thingy = new Thingy(name, category);
-        wr.addThingy(thingy);
+    // MODIFIES: starship
+    // EFFECTS: parses crew member from JSON object and adds it to starship //TODO
+    private void addCrewMember(Starship starship, JSONObject jsonObject) {
+        String firstName = jsonObject.getString("firstName");
+        String lastName = jsonObject.getString("lastName");
+        Rank rank = Rank.valueOf(jsonObject.getString("rank"));
+        Division division = Division.valueOf(jsonObject.getString("division"));
+        HealthStatus healthStatus = HealthStatus.valueOf(jsonObject.getString("division"));
+        boolean hasRedShirt = Boolean.parseBoolean(jsonObject.getString("hasRedShirt"));
+        boolean hasPlotArmour = Boolean.parseBoolean(jsonObject.getString("hasPlotArmour"));
+        boolean isOnStarship = Boolean.parseBoolean(jsonObject.getString("isOnStarship"));
+
+        CrewMember crewMember = new CrewMember(firstName, lastName, rank, division, healthStatus, hasRedShirt,
+                hasPlotArmour, isOnStarship);
+
+        // use these to add to crew and away team
+//        Thingy thingy = new Thingy(name, category);
+//        wr.addThingy(thingy);
     }
 }

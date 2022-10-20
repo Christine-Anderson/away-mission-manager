@@ -45,8 +45,23 @@ public class StarshipTest {
         assertEquals(SHIP_ID, testStarship.getShipID());
         assertEquals("James T.", testStarship.getFirstNameOfCaptain());
         assertEquals("Kirk", testStarship.getLastNameOfCaptain());
-        assertEquals(INTIAL_STARDATE, testStarship.getCurrentStardate());
+        assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
         assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
+        assertNull(testStarship.getCurrentAwayMission());
+        assertTrue(testStarship.getCrewMembers().isEmpty());
+        assertTrue(testStarship.getMissionLog().isEmpty());
+    }
+
+    @Test
+    void testStarshipConstructor2() {
+        testStarship = new Starship("James T.", "Kirk", 12345, 1234567);
+
+        assertEquals(SHIP_NAME, testStarship.getShipName());
+        assertEquals(SHIP_ID, testStarship.getShipID());
+        assertEquals("James T.", testStarship.getFirstNameOfCaptain());
+        assertEquals("Kirk", testStarship.getLastNameOfCaptain());
+        assertEquals(12345, testStarship.getCurrentStardate());
+        assertEquals(1234567, testStarship.getAwayMissionID());
         assertNull(testStarship.getCurrentAwayMission());
         assertTrue(testStarship.getCrewMembers().isEmpty());
         assertTrue(testStarship.getMissionLog().isEmpty());
@@ -168,7 +183,7 @@ public class StarshipTest {
         testStarship.createAwayMission();
 
         assertNotNull(testStarship.getCurrentAwayMission());
-        assertEquals(INTIAL_STARDATE + 1, testStarship.getCurrentAwayMission().getStardate());
+        assertEquals(INITIAL_STARDATE + 1, testStarship.getCurrentAwayMission().getStardate());
         assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getCurrentAwayMission().getAwayMissionID());
     }
 
@@ -352,19 +367,19 @@ public class StarshipTest {
 
     @Test
     void testUpdateCurrentStardate() {
-        assertEquals(INTIAL_STARDATE, testStarship.getCurrentStardate());
+        assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
         testStarship.updateCurrentStardate();
-        assertEquals(INTIAL_STARDATE + 1, testStarship.getCurrentStardate());
+        assertEquals(INITIAL_STARDATE + 1, testStarship.getCurrentStardate());
     }
 
     @Test
     void testUpdateCurrentStardateMultipleTimes() {
-        assertEquals(INTIAL_STARDATE, testStarship.getCurrentStardate());
+        assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
         testStarship.updateCurrentStardate();
-        assertEquals(INTIAL_STARDATE + 1, testStarship.getCurrentStardate());
+        assertEquals(INITIAL_STARDATE + 1, testStarship.getCurrentStardate());
 
         testStarship.updateCurrentStardate();
-        assertEquals(INTIAL_STARDATE + 2, testStarship.getCurrentStardate());
+        assertEquals(INITIAL_STARDATE + 2, testStarship.getCurrentStardate());
     }
 
     @Test
