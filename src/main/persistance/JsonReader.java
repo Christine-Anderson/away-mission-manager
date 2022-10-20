@@ -101,14 +101,13 @@ public class JsonReader {
     // EFFECTS: adds away mission from json object to mission log on starship
     private void addAwayMission(Starship starship, JSONObject jsonObject) {
         AwayMission awayMission = parseAwayMission(jsonObject);
-        addAwayTeam();
+        addAwayTeam(awayMission, jsonObject);
 
         starship.getMissionLog().add(awayMission);
     }
 
-    // MODIFIES: starship
     // EFFECTS: parses away mission from json object and returns it
-    private AwayMission parseAwayMission(Starship starship, JSONObject jsonObject) {
+    private AwayMission parseAwayMission(JSONObject jsonObject) {
         int awayMissionID = Integer.parseInt(jsonObject.getString("awayMissionID"));
         int stardate = Integer.parseInt(jsonObject.getString("stardate"));
         boolean isActive = Boolean.parseBoolean(jsonObject.getString("isActive"));
@@ -118,20 +117,20 @@ public class JsonReader {
     }
 
     // MODIFIES: starship
-    // EFFECTS: parses current crew members from JSON object and adds them to the starship
-    private void addX(Starship starship, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("crewMembers");
+    // EFFECTS: parses away team members from JSON object and adds them to the away mission
+    private void addAwayTeam(AwayMission awayMission, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("awayTeam");
         for (Object json : jsonArray) {
-            JSONObject nextCrewMember = (JSONObject) json;
-            addCrewMember(starship, nextCrewMember);
+            JSONObject nextAwayTeamMember = (JSONObject) json;
+            addAwayTeamMember(awayMission, nextAwayTeamMember);
         }
     }
 
     // MODIFIES: starship
-    // EFFECTS: adds crew member from json object to current crew on starship
-    private void addXs(Starship starship, JSONObject jsonObject) {
+    // EFFECTS: adds away team member from json object to away team on away mission
+    private void addAwayTeamMember(AwayMission awayMission, JSONObject jsonObject) {
         CrewMember crewMember = parseCrewMember(jsonObject);
-        starship.addCrewMember(crewMember);
+        awayMission.getAwayTeam().add(crewMember);
     }
 
 }
