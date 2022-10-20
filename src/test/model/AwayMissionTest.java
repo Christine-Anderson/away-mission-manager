@@ -38,6 +38,17 @@ public class AwayMissionTest {
     }
 
     @Test
+    void testAwayMissionConstructor2() {
+        testAwayMission = new AwayMission(12345678, 41025, true, true);
+
+        assertEquals(12345678, testAwayMission.getAwayMissionID());
+        assertEquals(41025, testAwayMission.getStardate());
+        assertTrue(testAwayMission.getIsActive());
+        assertTrue(testAwayMission.getIsObjectiveComplete());
+        assertTrue(testAwayMission.getAwayTeam().isEmpty());
+    }
+
+    @Test
     void testGettersAndSetters() {
         testAwayMission.setAwayMissionID(12345678);
         testAwayMission.setStardate(12345);

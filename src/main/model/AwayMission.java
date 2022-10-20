@@ -26,6 +26,14 @@ public class AwayMission implements Writable {
         this.awayTeam = new ArrayList<>();
     }
 
+    // EFFECTS: Constructs an away mission with a given away mission ID, stardate, active status, and objective status
+    //          and an empty away team
+    public AwayMission(int awayMissionID, int stardate, boolean isActive, boolean isObjectiveComplete) {
+        this(awayMissionID, stardate);
+        this.isActive = isActive;
+        this.isObjectiveComplete = isObjectiveComplete;
+    }
+
     //getters
     public int getAwayMissionID() {
         return awayMissionID;
@@ -115,6 +123,7 @@ public class AwayMission implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("awayMissionID", this.awayMissionID);
+        json.put("stardate", this.stardate);
         json.put("isActive", this.isActive);
         json.put("isObjectiveComplete", this.isObjectiveComplete);
         json.put("awayTeam", awayTeamToJson());

@@ -50,24 +50,30 @@ public class JsonReader {
 
         addCrewMembers(starship, jsonObject);
         addMissionLog(starship, jsonObject);
-        addAwayMission(starship, jsonObject);
+        //TODO addAwayMission(starship, jsonObject);
 
         return starship;
     }
 
     // MODIFIES: starship
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
-    private void addThingies(WorkRoom wr, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("thingies");
+    // EFFECTS: parses current crew members from JSON object and adds them to the starship
+    private void addCrewMembers(Starship starship, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("crewMembers");
         for (Object json : jsonArray) {
-            JSONObject nextThingy = (JSONObject) json;
-            addThingy(wr, nextThingy);
+            JSONObject nextCrewMember = (JSONObject) json;
+            addCrewMember(starship, nextCrewMember);
         }
     }
 
     // MODIFIES: starship
-    // EFFECTS: parses crew member from JSON object and adds it to starship //TODO
+    // EFFECTS: adds crew member from json object to current crew on starship
     private void addCrewMember(Starship starship, JSONObject jsonObject) {
+        CrewMember crewMember = parseCrewMember(jsonObject);
+        starship.addCrewMember(crewMember);
+    }
+
+    // EFFECTS: parses crew member from JSON object and returns it
+    private CrewMember parseCrewMember(JSONObject jsonObject) {
         String firstName = jsonObject.getString("firstName");
         String lastName = jsonObject.getString("lastName");
         Rank rank = Rank.valueOf(jsonObject.getString("rank"));
@@ -77,11 +83,55 @@ public class JsonReader {
         boolean hasPlotArmour = Boolean.parseBoolean(jsonObject.getString("hasPlotArmour"));
         boolean isOnStarship = Boolean.parseBoolean(jsonObject.getString("isOnStarship"));
 
-        CrewMember crewMember = new CrewMember(firstName, lastName, rank, division, healthStatus, hasRedShirt,
+        return new CrewMember(firstName, lastName, rank, division, healthStatus, hasRedShirt,
                 hasPlotArmour, isOnStarship);
-
-        // use these to add to crew and away team
-//        Thingy thingy = new Thingy(name, category);
-//        wr.addThingy(thingy);
     }
+
+    // MODIFIES: starship
+    // EFFECTS: parses mission log from JSON object and adds previous missions to the starship
+    private void addMissionLog(Starship starship, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("missionLog");
+        for (Object json : jsonArray) {
+            JSONObject nextAwayMission = (JSONObject) json;
+            addAwayMission(starship, nextAwayMission);
+        }
+    }
+
+    // MODIFIES: starship
+    // EFFECTS: adds away mission from json object to mission log on starship
+    private void addAwayMission(Starship starship, JSONObject jsonObject) {
+        AwayMission awayMission = parseAwayMission(jsonObject);
+        addAwayTeam();
+
+        starship.getMissionLog().add(awayMission);
+    }
+
+    // MODIFIES: starship
+    // EFFECTS: parses away mission from json object and returns it
+    private AwayMission parseAwayMission(Starship starship, JSONObject jsonObject) {
+        int awayMissionID = Integer.parseInt(jsonObject.getString("awayMissionID"));
+        int stardate = Integer.parseInt(jsonObject.getString("stardate"));
+        boolean isActive = Boolean.parseBoolean(jsonObject.getString("isActive"));
+        boolean isObjectiveComplete = Boolean.parseBoolean(jsonObject.getString("isObjectiveComplete"));
+
+        return new AwayMission(awayMissionID, stardate, isActive, isObjectiveComplete);
+    }
+
+    // MODIFIES: starship
+    // EFFECTS: parses current crew members from JSON object and adds them to the starship
+    private void addX(Starship starship, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("crewMembers");
+        for (Object json : jsonArray) {
+            JSONObject nextCrewMember = (JSONObject) json;
+            addCrewMember(starship, nextCrewMember);
+        }
+    }
+
+    // MODIFIES: starship
+    // EFFECTS: adds crew member from json object to current crew on starship
+    private void addXs(Starship starship, JSONObject jsonObject) {
+        CrewMember crewMember = parseCrewMember(jsonObject);
+        starship.addCrewMember(crewMember);
+    }
+
 }
