@@ -50,7 +50,7 @@ public class JsonReader {
 
         addCrewMembers(starship, jsonObject);
         addMissionLog(starship, jsonObject);
-        //TODO addAwayMission(starship, jsonObject);
+        addCurrentAwayMission(starship, jsonObject);
 
         return starship;
     }
@@ -98,8 +98,17 @@ public class JsonReader {
     }
 
     // MODIFIES: starship
-    // EFFECTS: adds away mission from json object to mission log on starship
+    // EFFECTS: adds away mission from json object as current away mission on starship
     private void addAwayMission(Starship starship, JSONObject jsonObject) {
+        AwayMission awayMission = parseAwayMission(jsonObject);
+        addAwayTeam(awayMission, jsonObject);
+
+        starship.setCurrentAwayMission(awayMission);
+    }
+
+    // MODIFIES: starship
+    // EFFECTS: adds away mission from json object to mission log on starship
+    private void addCurrentAwayMission(Starship starship, JSONObject jsonObject) {
         AwayMission awayMission = parseAwayMission(jsonObject);
         addAwayTeam(awayMission, jsonObject);
 

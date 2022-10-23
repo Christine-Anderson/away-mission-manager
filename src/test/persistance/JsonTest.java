@@ -5,6 +5,9 @@ import model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class JsonTest {
     public void setUpStarship(Starship testStarship) {
         // assign crew to Starship
@@ -45,7 +48,32 @@ public class JsonTest {
         testStarship.setCurrentAwayMission(am3);
     }
 
-    public void checkStarship() {
-        //TODO abstract awa y various ce
+    public void checkStarship(String fn, String ln, int stardate, int awayMissionID, Starship starship) {
+        assertEquals(fn, starship.getFirstNameOfCaptain());
+        assertEquals(ln, starship.getLastNameOfCaptain());
+        assertEquals(stardate, starship.getCurrentStardate());
+        assertEquals(awayMissionID, starship.getAwayMissionID());
+    }
+
+
+
+    public void checkCrewMember(String fn, String ln, Rank rank, Division division, HealthStatus healthStatus,
+                                boolean hasRedShirt, boolean hasPlotArmour, boolean isOnStarship, CrewMember cm) {
+        assertEquals(fn, cm.getFirstName());
+        assertEquals(ln, cm.getLastName());
+        assertEquals(rank, cm.getRank());
+        assertEquals(division, cm.getDivision());
+        assertEquals(healthStatus, cm.getHealthStatus());
+        assertEquals(hasRedShirt, cm.getHasRedShirt());
+        assertEquals(hasPlotArmour, cm.getHasPlotArmour());
+        assertEquals(isOnStarship, cm.getIsOnStarship());
+    }
+
+    public void checkAwayMission(int awayMissionID, int stardate, boolean isActive, boolean isComplete,
+                                 AwayMission am) {
+        assertEquals(awayMissionID, am.getAwayMissionID());
+        assertEquals(stardate, am.getStardate());
+        assertEquals(isActive, am.getIsActive());
+        assertEquals(isComplete, am.getIsObjectiveComplete());
     }
 }

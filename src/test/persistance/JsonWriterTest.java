@@ -5,18 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import static model.Starship.INITIAL_AWAY_MISSION_ID;
 import static model.Starship.INITIAL_STARDATE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonWriterTest extends JsonTest {
-    private Starship testStarship;
+    private Starship starship;
 
     @BeforeEach
     void setUp() {
-        testStarship = new Starship("James T.", "Kirk");
+        starship = new Starship("James T.", "Kirk");
     }
 
     @Test
@@ -31,22 +30,19 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterUnchangedStarship() {
+    void testWriterEmptyStarship() {
         try {
-            JsonWriter writer = new JsonWriter("./data/testWriterUnchangedStarship.json");
+            JsonWriter writer = new JsonWriter("./data/testWriterEmptyStarship.json");
             writer.open();
-            writer.write(testStarship);
+            writer.write(starship);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterUnchangedStarship.json");
-            testStarship = reader.read();
-            assertEquals("James T.", testStarship.getFirstNameOfCaptain());
-            assertEquals("Kirk", testStarship.getLastNameOfCaptain());
-            assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
-            assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
-            assertTrue(testStarship.getCrewMembers().isEmpty());
-            assertTrue(testStarship.getMissionLog().isEmpty());
-            assertNull(testStarship.getCurrentAwayMission());
+            JsonReader reader = new JsonReader("./data/testWriterEmptyStarship.json");
+            starship = reader.read();
+            checkStarship("James T.", "Kirk", INITIAL_STARDATE, INITIAL_AWAY_MISSION_ID, starship);
+            assertTrue(starship.getCrewMembers().isEmpty());
+            assertTrue(starship.getMissionLog().isEmpty());
+            assertNull(starship.getCurrentAwayMission());
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");
@@ -56,33 +52,48 @@ public class JsonWriterTest extends JsonTest {
     @Test
     void testWriterStarshipWithCrewAndAwayMissions() {
         try {
-            setUpStarship(testStarship);
+            setUpStarship(starship);
 
             JsonWriter writer = new JsonWriter("./data/testWriterStarshipWithCrewAndAwayMissions.json");
             writer.open();
-            writer.write(testStarship);
+            writer.write(starship);
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterStarshipWithCrewAndAwayMissions.json");
-            testStarship = reader.read();
+            starship = reader.read();
 
-            assertEquals("James T.", testStarship.getFirstNameOfCaptain());
-            assertEquals("Kirk", testStarship.getLastNameOfCaptain());
-            assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
-            assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
+            checkStarship("James T.", "Kirk", INITIAL_STARDATE, INITIAL_AWAY_MISSION_ID, starship);
 
+            assertEquals(3, starship.getCrewMembers().size());
+            checkCrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES, HealthStatus.HEALTHY,
+                    true, true, true, starship.getCrewMembers().get(0));
+            checkCrewMember("Leonard", "McCoy", Rank.LIEUTENANT_COMMANDER, Division.MEDICAL, HealthStatus.HEALTHY,
+                    false, false, true, starship.getCrewMembers().get(1));
+            checkCrewMember("Montgomery", "Scott", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING, HealthStatus.HEALTHY,
+                    true, false, true, starship.getCrewMembers().get(2));
 
-            assertTrue(testStarship.getCrewMembers().isEmpty());
-            assertTrue(testStarship.getMissionLog().isEmpty());
+            assertEquals(2, starship.getMissionLog().size());
+            checkAwayMission(12345678, 45232, false, true,
+                    starship.getMissionLog().get(0));
+            assertEquals(2, starship.getMissionLog().get(0).getAwayTeam().size());
+            checkCrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES, HealthStatus.HEALTHY,
+                    true, true, true, starship.getMissionLog().get(0).getAwayTeam().get(0));
+            checkCrewMember("Leonard", "McCoy", Rank.LIEUTENANT_COMMANDER, Division.MEDICAL, HealthStatus.HEALTHY,
+                    false, false, true, starship.getMissionLog().get(0).getAwayTeam().get(1));
 
-            assertEquals(testStarship.getCurrentAwayMission());
+            checkAwayMission(12345679, 45232, false, false,
+                    starship.getMissionLog().get(1));
+            assertEquals(2, starship.getMissionLog().get(0).getAwayTeam().size());
+            checkCrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES, HealthStatus.HEALTHY,
+                    true, true, true, starship.getMissionLog().get(1).getAwayTeam().get(0));
+            checkCrewMember("Leonard", "McCoy", Rank.LIEUTENANT_COMMANDER, Division.MEDICAL, HealthStatus.HEALTHY,
+                    false, false, true, starship.getMissionLog().get(1).getAwayTeam().get(1));
 
-
-            assertEquals("My work room", wr.getName());
-            List<Thingy> thingies = wr.getThingies();
-            assertEquals(2, thingies.size());
-            checkThingy("saw", Category.METALWORK, thingies.get(0));
-            checkThingy("needle", Category.STITCHING, thingies.get(1));
+            checkAwayMission(12345680, 45237, true, false,
+                    starship.getCurrentAwayMission());
+            assertEquals(1, starship.getCurrentAwayMission().getAwayTeam().size());
+            checkCrewMember("Montgomery", "Scott", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING, HealthStatus.HEALTHY,
+                    true, false, true, starship.getCurrentAwayMission().getAwayTeam().get(0));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");
