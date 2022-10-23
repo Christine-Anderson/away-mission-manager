@@ -1,19 +1,30 @@
 package ui;
 
 import model.*;
+import persistance.JsonReader;
+import persistance.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 // Away mission manager application
 public class AwayMissionManagerApp {
+    private static final String JSON_STARSHIP = "./data/starship.json";
     private Starship starship;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     boolean runProgram;
 
     // EFFECTS: runs the away mission manager application
-    public AwayMissionManagerApp() {
+    public AwayMissionManagerApp() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        starship = new Starship("Captain", "Name");
+        jsonWriter = new JsonWriter(JSON_STARSHIP);
+        jsonReader = new JsonReader(JSON_STARSHIP);
         runAwayMissionManager();
     }
 
@@ -22,11 +33,8 @@ public class AwayMissionManagerApp {
     private void runAwayMissionManager() {
         runProgram = true;
         String command;
-        input = new Scanner(System.in);
 
-        starship = new Starship("Captain", "Name");
-        initializeCrew();
-        inputCaptainName();
+        loadOption();
 
         while (runProgram) {
             mainDisplayMenu();
@@ -38,6 +46,44 @@ public class AwayMissionManagerApp {
             } else {
                 processCommandMainMenu(command);
             }
+        }
+    }
+
+    // EFFECTS: processes user input for load menu
+    private void loadOption() {
+        boolean keepGoing = true;
+        String command;
+
+        while (runProgram) {
+            loadMenu();
+            command = input.next();
+
+            if (command.equals("quit")) {
+                endProgram();
+                runProgram = false;
+            } else {
+                processCommandLoadMenu(command);
+            }
+        }
+    }
+
+    // EFFECTS: displays load menu to user
+    private void loadMenu() {
+        System.out.println("\nWould you like to load previous starship data?");
+        System.out.println("Enter \"y\" for yes and \"n\" for no:");
+        System.out.println("To quit enter \"quit\"");
+    }
+
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user command for load menu
+    private void processCommandLoadMenu(String command) {
+        if (command.equals("y")) {
+            loadStarship();
+        } else if (command.equals("n")) {
+            initializeCrew();
+            inputCaptainName();
+        } else {
+            System.out.println("\nHighly illogical.");
         }
     }
 
@@ -333,6 +379,42 @@ public class AwayMissionManagerApp {
         }
     }
 
+    // EFFECTS: processes user input for save menu
+    private void saveOption() {
+        boolean keepGoing = true;
+        String command;
+
+        while (keepGoing && runProgram) {
+            saveMenu();
+            command = input.next();
+
+            if (command.equals("cancel")) {
+                keepGoing = false;
+            } else {
+                processCommandSaveMenu(command);
+            }
+        }
+    }
+
+    // EFFECTS: displays save menu to user
+    private void saveMenu() {
+        System.out.println("\nWould you like to save the current starship data?");
+        System.out.println("Enter \"y\" for yes and \"n\" for no:");
+        System.out.println("To cancel enter \"cancel\"");
+    }
+
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: processes user command for save menu
+    private void processCommandSaveMenu(String command) {
+        if (command.equals("y")) {
+            saveStarship();
+        } else if (command.equals("n")) {
+            //does nothing
+        } else {
+            System.out.println("\nHighly illogical.");
+        }
+    }
+
     // EFFECTS: prints mission log
     public void printAwayMissionLog() {
         if (starship.getMissionLog().isEmpty()) {
@@ -459,8 +541,34 @@ public class AwayMissionManagerApp {
         }
     }
 
+    // EFFECTS: saves the starship data to file
+    private void saveStarship() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(starship);
+            jsonWriter.close();
+            System.out.println("Saved starship data for " + starship.getShipName() + " (" + starship.getShipID()
+                    + ") to " + JSON_STARSHIP);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STARSHIP);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads starship data from file
+    private void loadStarship() {
+        try {
+            starship = jsonReader.read();
+            System.out.println("Loaded starship data for " + starship.getShipName() + " (" + starship.getShipID()
+                    + ") from " + JSON_STARSHIP);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STARSHIP);
+        }
+    }
+
     // EFFECTS: prints end of program message
     public void endProgram() {
+        saveOption();
         System.out.println("\nLive long and prosper.");
     }
 }
