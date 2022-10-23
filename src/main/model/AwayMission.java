@@ -122,8 +122,8 @@ public class AwayMission implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("awayMissionID", this.awayMissionID);
-        json.put("stardate", this.stardate);
+        json.put("awayMissionID", Integer.toString(this.awayMissionID));
+        json.put("stardate", Integer.toString(this.stardate));
         json.put("isActive", this.isActive);
         json.put("isObjectiveComplete", this.isObjectiveComplete);
         json.put("awayTeam", awayTeamToJson());

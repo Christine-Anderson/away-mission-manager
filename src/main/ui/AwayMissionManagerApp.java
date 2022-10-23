@@ -41,8 +41,10 @@ public class AwayMissionManagerApp {
             command = input.next();
 
             if (command.equals("quit")) {
-                endProgram();
-                runProgram = false;
+                runProgram = saveOption();
+                if (!runProgram) {
+                    endProgram();
+                }
             } else {
                 processCommandMainMenu(command);
             }
@@ -54,22 +56,27 @@ public class AwayMissionManagerApp {
         boolean keepGoing = true;
         String command;
 
-        while (runProgram) {
+        while (keepGoing && runProgram) {
             loadMenu();
             command = input.next();
 
             if (command.equals("quit")) {
-                endProgram();
-                runProgram = false;
+                runProgram = saveOption();
+                if (!runProgram) {
+                    endProgram();
+                }
             } else {
                 processCommandLoadMenu(command);
+                keepGoing = false;
             }
         }
     }
 
     // EFFECTS: displays load menu to user
     private void loadMenu() {
-        System.out.println("\nWould you like to load previous starship data?");
+        System.out.println("\n" + starship.getShipName() + " (" + starship.getShipID() + ")");
+        System.out.println("--------------------------------");
+        System.out.println("Would you like to load previous starship data?");
         System.out.println("Enter \"y\" for yes and \"n\" for no:");
         System.out.println("To quit enter \"quit\"");
     }
@@ -118,9 +125,7 @@ public class AwayMissionManagerApp {
     // MODIFIES: this, Starship
     // EFFECTS: gets Captain's name from user
     private void inputCaptainName() {
-        System.out.println(starship.getShipName() + " (" + starship.getShipID() + ")");
-        System.out.println("--------------------------------");
-        System.out.println("Enter your first and last name:");
+        System.out.println("\nEnter your first and last name:");
 
         String fn = input.next();
         String ln = input.next();
@@ -162,8 +167,10 @@ public class AwayMissionManagerApp {
             command = input.next();
 
             if (command.equals("quit")) {
-                endProgram();
-                runProgram = false;
+                runProgram = saveOption();
+                if (!runProgram) {
+                    endProgram();
+                }
             } else if (command.equals("back")) {
                 keepGoing = false;
             } else {
@@ -206,8 +213,10 @@ public class AwayMissionManagerApp {
             command = input.next();
 
             if (command.equals("quit")) {
-                endProgram();
-                runProgram = false;
+                runProgram = saveOption();
+                if (!runProgram) {
+                    endProgram();
+                }
             } else if (command.equals("back")) {
                 keepGoing = false;
             } else {
@@ -251,8 +260,10 @@ public class AwayMissionManagerApp {
             command = input.next();
 
             if (command.equals("quit")) {
-                endProgram();
-                runProgram = false;
+                runProgram = saveOption();
+                if (!runProgram) {
+                    endProgram();
+                }
             } else {
                 keepGoing = processCommandCurrentAwayMission(command);
             }
@@ -308,8 +319,10 @@ public class AwayMissionManagerApp {
             command = input.next();
 
             if (command.equals("quit")) {
-                endProgram();
-                runProgram = false;
+                runProgram = saveOption();
+                if (!runProgram) {
+                    endProgram();
+                }
             } else if (command.equals("back")) {
                 keepGoing = false;
             } else {
@@ -350,8 +363,10 @@ public class AwayMissionManagerApp {
             command = input.next();
 
             if (command.equals("quit")) {
-                endProgram();
-                runProgram = false;
+                runProgram = saveOption();
+                if (!runProgram) {
+                    endProgram();
+                }
             } else if (command.equals("back")) {
                 keepGoing = false;
             } else {
@@ -380,8 +395,9 @@ public class AwayMissionManagerApp {
     }
 
     // EFFECTS: processes user input for save menu
-    private void saveOption() {
+    private boolean saveOption() {
         boolean keepGoing = true;
+        boolean setRunProgram = false;
         String command;
 
         while (keepGoing && runProgram) {
@@ -389,11 +405,14 @@ public class AwayMissionManagerApp {
             command = input.next();
 
             if (command.equals("cancel")) {
+                setRunProgram = true;
                 keepGoing = false;
             } else {
                 processCommandSaveMenu(command);
+                keepGoing = false;
             }
         }
+        return setRunProgram;
     }
 
     // EFFECTS: displays save menu to user
@@ -547,10 +566,10 @@ public class AwayMissionManagerApp {
             jsonWriter.open();
             jsonWriter.write(starship);
             jsonWriter.close();
-            System.out.println("Saved starship data for " + starship.getShipName() + " (" + starship.getShipID()
+            System.out.println("\nSaved starship data for " + starship.getShipName() + " (" + starship.getShipID()
                     + ") to " + JSON_STARSHIP);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STARSHIP);
+            System.out.println("\nUnable to write to file: " + JSON_STARSHIP);
         }
     }
 
@@ -559,16 +578,15 @@ public class AwayMissionManagerApp {
     private void loadStarship() {
         try {
             starship = jsonReader.read();
-            System.out.println("Loaded starship data for " + starship.getShipName() + " (" + starship.getShipID()
+            System.out.println("\nLoaded starship data for " + starship.getShipName() + " (" + starship.getShipID()
                     + ") from " + JSON_STARSHIP);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STARSHIP);
+            System.out.println("\nUnable to read from file: " + JSON_STARSHIP);
         }
     }
 
     // EFFECTS: prints end of program message
     public void endProgram() {
-        saveOption();
         System.out.println("\nLive long and prosper.");
     }
 }

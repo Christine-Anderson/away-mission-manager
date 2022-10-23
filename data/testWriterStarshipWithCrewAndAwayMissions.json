@@ -1,0 +1,91 @@
+{
+    "crewMembers": [
+        {
+            "division": "SCIENCES",
+            "firstName": "S'chn T'gai",
+            "lastName": "Spock",
+            "healthStatus": "HEALTHY",
+            "isOnStarship": true,
+            "hasRedShirt": true,
+            "rank": "COMMANDER",
+            "hasPlotArmour": false
+        },
+        {
+            "division": "MEDICAL",
+            "firstName": "Leonard",
+            "lastName": "McCoy",
+            "healthStatus": "HEALTHY",
+            "isOnStarship": true,
+            "hasRedShirt": true,
+            "rank": "LIEUTENANT_COMMANDER",
+            "hasPlotArmour": true
+        },
+        {
+            "division": "ENGINEERING",
+            "firstName": "Montgomery",
+            "lastName": "Scott",
+            "healthStatus": "HEALTHY",
+            "isOnStarship": true,
+            "hasRedShirt": false,
+            "rank": "LIEUTENANT_COMMANDER",
+            "hasPlotArmour": false
+        }
+    ],
+    "firstNameOfCaptain": "James T.",
+    "awayMissionID": "14268714",
+    "lastNameOfCaptain": "Kirk",
+    "currentStardate": "41025",
+    "missionLog": [
+        {
+            "isObjectiveComplete": true,
+            "stardate": "45232",
+            "awayTeam": [
+                {
+                    "division": "SCIENCES",
+                    "firstName": "S'chn T'gai",
+                    "lastName": "Spock",
+                    "healthStatus": "HEALTHY",
+                    "isOnStarship": true,
+                    "hasRedShirt": true,
+                    "rank": "COMMANDER",
+                    "hasPlotArmour": false
+                },
+                {
+                    "division": "MEDICAL",
+                    "firstName": "Leonard",
+                    "lastName": "McCoy",
+                    "healthStatus": "HEALTHY",
+                    "isOnStarship": true,
+                    "hasRedShirt": true,
+                    "rank": "LIEUTENANT_COMMANDER",
+                    "hasPlotArmour": true
+                }
+            ],
+            "awayMissionID": "12345678",
+            "isActive": false
+        },
+        {
+            "isObjectiveComplete": false,
+            "stardate": "53924",
+            "awayTeam": [],
+            "awayMissionID": "12345679",
+            "isActive": false
+        }
+    ],
+    "currentAwayMission": {
+        "isObjectiveComplete": false,
+        "stardate": "45237",
+        "awayTeam": [{
+            "division": "ENGINEERING",
+            "firstName": "Montgomery",
+            "lastName": "Scott",
+            "healthStatus": "HEALTHY",
+            "isOnStarship": true,
+            "hasRedShirt": false,
+            "rank": "LIEUTENANT_COMMANDER",
+            "hasPlotArmour": false
+        }],
+        "awayMissionID": "12345680",
+        "isActive": true
+    }
+}

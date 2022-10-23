@@ -78,10 +78,10 @@ public class JsonReader {
         String lastName = jsonObject.getString("lastName");
         Rank rank = Rank.valueOf(jsonObject.getString("rank"));
         Division division = Division.valueOf(jsonObject.getString("division"));
-        HealthStatus healthStatus = HealthStatus.valueOf(jsonObject.getString("division"));
-        boolean hasRedShirt = Boolean.parseBoolean(jsonObject.getString("hasRedShirt"));
-        boolean hasPlotArmour = Boolean.parseBoolean(jsonObject.getString("hasPlotArmour"));
-        boolean isOnStarship = Boolean.parseBoolean(jsonObject.getString("isOnStarship"));
+        HealthStatus healthStatus = HealthStatus.valueOf(jsonObject.getString("healthStatus"));
+        boolean hasRedShirt = jsonObject.getBoolean("hasRedShirt");
+        boolean hasPlotArmour = jsonObject.getBoolean("hasPlotArmour");
+        boolean isOnStarship = jsonObject.getBoolean("isOnStarship");
 
         return new CrewMember(firstName, lastName, rank, division, healthStatus, hasRedShirt,
                 hasPlotArmour, isOnStarship);
@@ -98,29 +98,35 @@ public class JsonReader {
     }
 
     // MODIFIES: starship
-    // EFFECTS: adds away mission from json object as current away mission on starship
-    private void addAwayMission(Starship starship, JSONObject jsonObject) {
-        AwayMission awayMission = parseAwayMission(jsonObject);
-        addAwayTeam(awayMission, jsonObject);
-
-        starship.setCurrentAwayMission(awayMission);
-    }
-
-    // MODIFIES: starship
     // EFFECTS: adds away mission from json object to mission log on starship
-    private void addCurrentAwayMission(Starship starship, JSONObject jsonObject) {
+    private void addAwayMission(Starship starship, JSONObject jsonObject) {
         AwayMission awayMission = parseAwayMission(jsonObject);
         addAwayTeam(awayMission, jsonObject);
 
         starship.getMissionLog().add(awayMission);
     }
 
+    // MODIFIES: starship
+    // EFFECTS: adds away mission from json object as current away mission on starship
+    private void addCurrentAwayMission(Starship starship, JSONObject jsonObject) {
+        if (jsonObject.isNull("currentAwayMission")) {
+            starship.setCurrentAwayMission(null);
+        } else {
+            AwayMission awayMission = parseAwayMission(jsonObject);
+            addAwayTeam(awayMission, jsonObject);
+
+            starship.setCurrentAwayMission(awayMission);
+        }
+    }
+
     // EFFECTS: parses away mission from json object and returns it
     private AwayMission parseAwayMission(JSONObject jsonObject) {
-        int awayMissionID = Integer.parseInt(jsonObject.getString("awayMissionID"));
-        int stardate = Integer.parseInt(jsonObject.getString("stardate"));
-        boolean isActive = Boolean.parseBoolean(jsonObject.getString("isActive"));
-        boolean isObjectiveComplete = Boolean.parseBoolean(jsonObject.getString("isObjectiveComplete"));
+        JSONObject jsonObjectSubset = new JSONObject(jsonObject, "currentAwayMission");
+
+        int awayMissionID = Integer.parseInt(jsonObjectSubset.getString("awayMissionID"));
+        int stardate = Integer.parseInt(jsonObjectSubset.getString("stardate"));
+        boolean isActive = jsonObjectSubset.getBoolean("isActive");
+        boolean isObjectiveComplete = jsonObjectSubset.getBoolean("isObjectiveComplete");
 
         return new AwayMission(awayMissionID, stardate, isActive, isObjectiveComplete);
     }

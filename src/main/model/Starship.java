@@ -222,11 +222,16 @@ public class Starship implements Writable {
         JSONObject json = new JSONObject();
         json.put("firstNameOfCaptain", this.firstNameOfCaptain);
         json.put("lastNameOfCaptain", this.lastNameOfCaptain);
-        json.put("currentStardate", this.currentStardate);
-        json.put("awayMissionID", this.awayMissionID);
+        json.put("currentStardate", Integer.toString(this.currentStardate));
+        json.put("awayMissionID", Integer.toString(this.awayMissionID));
         json.put("crewMembers", crewMembersToJson());
         json.put("missionLog", missionLogToJson());
-        json.put("currentAwayMission", this.currentAwayMission.toJson());
+        if (this.currentAwayMission == null) {
+            json.put("currentAwayMission", JSONObject.NULL);
+        } else {
+            json.put("currentAwayMission", this.currentAwayMission.toJson());
+        }
+
         return json;
     }
 
