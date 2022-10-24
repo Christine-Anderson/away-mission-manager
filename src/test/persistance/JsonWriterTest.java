@@ -81,7 +81,7 @@ public class JsonWriterTest extends JsonTest {
             checkCrewMember("Leonard", "McCoy", Rank.LIEUTENANT_COMMANDER, Division.MEDICAL, HealthStatus.HEALTHY,
                     false, false, true, starship.getMissionLog().get(0).getAwayTeam().get(1));
 
-            checkAwayMission(12345679, 45232, false, false,
+            checkAwayMission(12345679, 53924, false, false,
                     starship.getMissionLog().get(1));
             assertEquals(2, starship.getMissionLog().get(0).getAwayTeam().size());
             checkCrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES, HealthStatus.HEALTHY,

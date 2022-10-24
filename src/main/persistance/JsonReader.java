@@ -112,8 +112,9 @@ public class JsonReader {
         if (jsonObject.isNull("currentAwayMission")) {
             starship.setCurrentAwayMission(null);
         } else {
-            AwayMission awayMission = parseAwayMission(jsonObject);
-            addAwayTeam(awayMission, jsonObject);
+            JSONObject jsonObjectSubset = (JSONObject) jsonObject.get("currentAwayMission");
+            AwayMission awayMission = parseAwayMission(jsonObjectSubset);
+            addAwayTeam(awayMission, jsonObjectSubset);
 
             starship.setCurrentAwayMission(awayMission);
         }
@@ -121,12 +122,10 @@ public class JsonReader {
 
     // EFFECTS: parses away mission from json object and returns it
     private AwayMission parseAwayMission(JSONObject jsonObject) {
-        JSONObject jsonObjectSubset = new JSONObject(jsonObject, "currentAwayMission");
-
-        int awayMissionID = Integer.parseInt(jsonObjectSubset.getString("awayMissionID"));
-        int stardate = Integer.parseInt(jsonObjectSubset.getString("stardate"));
-        boolean isActive = jsonObjectSubset.getBoolean("isActive");
-        boolean isObjectiveComplete = jsonObjectSubset.getBoolean("isObjectiveComplete");
+        int awayMissionID = Integer.parseInt(jsonObject.getString("awayMissionID"));
+        int stardate = Integer.parseInt(jsonObject.getString("stardate"));
+        boolean isActive = jsonObject.getBoolean("isActive");
+        boolean isObjectiveComplete = jsonObject.getBoolean("isObjectiveComplete");
 
         return new AwayMission(awayMissionID, stardate, isActive, isObjectiveComplete);
     }

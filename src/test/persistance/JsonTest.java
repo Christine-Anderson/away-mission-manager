@@ -16,12 +16,12 @@ public class JsonTest {
         cm1.setHasPlotArmour(true);
 
         CrewMember cm2 = new CrewMember("Leonard", "McCoy", Rank.LIEUTENANT_COMMANDER, Division.MEDICAL);
-        cm1.setHasRedShirt(false);
-        cm1.setHasPlotArmour(false);
+        cm2.setHasRedShirt(false);
+        cm2.setHasPlotArmour(false);
 
         CrewMember cm3 = new CrewMember("Montgomery", "Scott", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING);
-        cm1.setHasRedShirt(true);
-        cm1.setHasPlotArmour(false);
+        cm3.setHasRedShirt(true);
+        cm3.setHasPlotArmour(false);
 
         testStarship.addCrewMember(cm1);
         testStarship.addCrewMember(cm2);
@@ -37,7 +37,7 @@ public class JsonTest {
         am1.setAwayTeam(testAwayTeam);
 
         AwayMission am2 = new AwayMission(12345679, 53924);
-        am1.setAwayTeam(testAwayTeam);
+        am2.setAwayTeam(testAwayTeam);
 
         AwayMission am3 = new AwayMission(12345680, 45237);
         am3.setIsActive(true);
