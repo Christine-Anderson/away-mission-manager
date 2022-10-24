@@ -35,6 +35,7 @@ public class AwayMissionManagerApp {
         String command;
 
         loadOption();
+        System.out.println("\nWelcome Captain " + starship.getLastNameOfCaptain());
 
         while (runProgram) {
             mainDisplayMenu();
@@ -132,8 +133,6 @@ public class AwayMissionManagerApp {
 
         starship.setFirstNameOfCaptain(fn);
         starship.setLastNameOfCaptain(ln);
-        System.out.println("\nWelcome Captain " + starship.getLastNameOfCaptain());
-
     }
 
     // EFFECTS: displays main menu of options to user
@@ -228,7 +227,11 @@ public class AwayMissionManagerApp {
     // EFFECTS: displays away missions menu to user
     private void awayMissionsMenu() {
         System.out.println("\nTo view the mission log, enter \"log\".");
-        System.out.println("To create an away mission, enter \"new\".");
+        if (starship.getCurrentAwayMission() == null) {
+            System.out.println("To create an away mission, enter \"new\".");
+        } else {
+            System.out.println("To view current away mission, enter \"current\".");
+        }
         System.out.println("To return to the previous menu enter \"back\"");
         System.out.println("To quit at any time enter \"quit\"");
     }
@@ -243,6 +246,8 @@ public class AwayMissionManagerApp {
             System.out.println("\nCreated new away mission " + starship.getCurrentAwayMission().getAwayMissionID()
                     + " on stardate " + starship.stardateToString(starship.getCurrentAwayMission().getStardate())
                     + ".");
+            currentAwayMission();
+        } else if (command.equals("current")) {
             currentAwayMission();
         } else {
             System.out.println("\nHighly illogical.");
@@ -577,7 +582,7 @@ public class AwayMissionManagerApp {
     // EFFECTS: loads starship data from file
     private void loadStarship() {
         try {
-            starship = jsonReader.read();
+            this.starship = jsonReader.read();
             System.out.println("\nLoaded starship data for " + starship.getShipName() + " (" + starship.getShipID()
                     + ") from " + JSON_STARSHIP);
         } catch (IOException e) {
