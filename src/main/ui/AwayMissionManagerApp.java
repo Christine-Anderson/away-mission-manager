@@ -67,8 +67,7 @@ public class AwayMissionManagerApp {
                     endProgram();
                 }
             } else {
-                processCommandLoadMenu(command);
-                keepGoing = false;
+                keepGoing = processCommandLoadMenu(command);
             }
         }
     }
@@ -84,7 +83,8 @@ public class AwayMissionManagerApp {
 
     // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: processes user command for load menu
-    private void processCommandLoadMenu(String command) {
+    private boolean processCommandLoadMenu(String command) {
+        boolean keepGoing = false;
         if (command.equals("y")) {
             loadStarship();
         } else if (command.equals("n")) {
@@ -92,7 +92,9 @@ public class AwayMissionManagerApp {
             inputCaptainName();
         } else {
             System.out.println("\nHighly illogical.");
+            keepGoing = true;
         }
+        return keepGoing;
     }
 
     // MODIFIES: this, Starship, CrewMember

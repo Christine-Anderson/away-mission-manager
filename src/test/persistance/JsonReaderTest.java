@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static model.Starship.INITIAL_AWAY_MISSION_ID;
-import static model.Starship.INITIAL_STARDATE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonReaderTest extends JsonTest{
@@ -30,7 +28,7 @@ public class JsonReaderTest extends JsonTest{
         JsonReader reader = new JsonReader("./data/testReaderEmptyStarship.json");
         try {
             Starship starship = reader.read();
-            checkStarship("James T.", "Kirk", INITIAL_STARDATE, INITIAL_AWAY_MISSION_ID, starship);
+            checkStarship("James T.", "Kirk", Starship.INITIAL_STARDATE, Starship.INITIAL_AWAY_MISSION_ID, starship);
             assertTrue(starship.getCrewMembers().isEmpty());
             assertTrue(starship.getMissionLog().isEmpty());
             assertNull(starship.getCurrentAwayMission());
@@ -45,7 +43,7 @@ public class JsonReaderTest extends JsonTest{
         try {
             Starship starship = reader.read();
 
-            checkStarship("James T.", "Kirk", INITIAL_STARDATE, INITIAL_AWAY_MISSION_ID, starship);
+            checkStarship("James T.", "Kirk", Starship.INITIAL_STARDATE, Starship.INITIAL_AWAY_MISSION_ID, starship);
 
             assertEquals(3, starship.getCrewMembers().size());
             checkCrewMember("S'chn T'gai", "Spock", Rank.COMMANDER, Division.SCIENCES, HealthStatus.HEALTHY,

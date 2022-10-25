@@ -20,9 +20,7 @@ As the Captain, I want to be able to:
 - remove crew members from the away mission team
 - select a crew member and get stats on the crew member, for example, rank and division
 - emergency beam out the away team 
-- have the option to save my name, the current crew, the mission log, and the current away mission and away team,
-when I select the quit option from the application menu 
-- have the option to load my name, the current crew, the mission log, and the current away mission and away team,
-when I start the application
+- have the option to the current starship data when I select the quit option from the application menu 
+- have the option to the previous starship data when I start the application
 
 Based on code from TellerApp and JsonSerializationDemo provided in class

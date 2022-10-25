@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.Starship.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StarshipTest {
@@ -41,12 +40,12 @@ public class StarshipTest {
 
     @Test
     void testStarshipConstructor() {
-        assertEquals(SHIP_NAME, testStarship.getShipName());
-        assertEquals(SHIP_ID, testStarship.getShipID());
+        assertEquals(Starship.SHIP_NAME, testStarship.getShipName());
+        assertEquals(Starship.SHIP_ID, testStarship.getShipID());
         assertEquals("James T.", testStarship.getFirstNameOfCaptain());
         assertEquals("Kirk", testStarship.getLastNameOfCaptain());
-        assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
-        assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
+        assertEquals(Starship.INITIAL_STARDATE, testStarship.getCurrentStardate());
+        assertEquals(Starship.INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
         assertNull(testStarship.getCurrentAwayMission());
         assertTrue(testStarship.getCrewMembers().isEmpty());
         assertTrue(testStarship.getMissionLog().isEmpty());
@@ -56,8 +55,8 @@ public class StarshipTest {
     void testStarshipConstructor2() {
         testStarship = new Starship("James T.", "Kirk", 12345, 1234567);
 
-        assertEquals(SHIP_NAME, testStarship.getShipName());
-        assertEquals(SHIP_ID, testStarship.getShipID());
+        assertEquals(Starship.SHIP_NAME, testStarship.getShipName());
+        assertEquals(Starship.SHIP_ID, testStarship.getShipID());
         assertEquals("James T.", testStarship.getFirstNameOfCaptain());
         assertEquals("Kirk", testStarship.getLastNameOfCaptain());
         assertEquals(12345, testStarship.getCurrentStardate());
@@ -183,8 +182,8 @@ public class StarshipTest {
         testStarship.createAwayMission();
 
         assertNotNull(testStarship.getCurrentAwayMission());
-        assertEquals(INITIAL_STARDATE + 1, testStarship.getCurrentAwayMission().getStardate());
-        assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getCurrentAwayMission().getAwayMissionID());
+        assertEquals(Starship.INITIAL_STARDATE + 1, testStarship.getCurrentAwayMission().getStardate());
+        assertEquals(Starship.INITIAL_AWAY_MISSION_ID, testStarship.getCurrentAwayMission().getAwayMissionID());
     }
 
     @Test
@@ -252,7 +251,6 @@ public class StarshipTest {
             assertTrue(cm.getIsOnStarship());
         }
         assertNull(testStarship.getCurrentAwayMission());
-
         //TODO remove some of the repetitive/double testing? eg. transporting and emergency beam out
     }
 
@@ -367,19 +365,19 @@ public class StarshipTest {
 
     @Test
     void testUpdateCurrentStardate() {
-        assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
+        assertEquals(Starship.INITIAL_STARDATE, testStarship.getCurrentStardate());
         testStarship.updateCurrentStardate();
-        assertEquals(INITIAL_STARDATE + 1, testStarship.getCurrentStardate());
+        assertEquals(Starship.INITIAL_STARDATE + 1, testStarship.getCurrentStardate());
     }
 
     @Test
     void testUpdateCurrentStardateMultipleTimes() {
-        assertEquals(INITIAL_STARDATE, testStarship.getCurrentStardate());
+        assertEquals(Starship.INITIAL_STARDATE, testStarship.getCurrentStardate());
         testStarship.updateCurrentStardate();
-        assertEquals(INITIAL_STARDATE + 1, testStarship.getCurrentStardate());
+        assertEquals(Starship.INITIAL_STARDATE + 1, testStarship.getCurrentStardate());
 
         testStarship.updateCurrentStardate();
-        assertEquals(INITIAL_STARDATE + 2, testStarship.getCurrentStardate());
+        assertEquals(Starship.INITIAL_STARDATE + 2, testStarship.getCurrentStardate());
     }
 
     @Test
@@ -389,18 +387,18 @@ public class StarshipTest {
 
     @Test
     void testUpdateAwayMissionID() {
-        assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
+        assertEquals(Starship.INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
         testStarship.updateAwayMissionID();
-        assertEquals(INITIAL_AWAY_MISSION_ID + 1, testStarship.getAwayMissionID());
+        assertEquals(Starship.INITIAL_AWAY_MISSION_ID + 1, testStarship.getAwayMissionID());
     }
 
     @Test
     void testUpdateAwayMissionIDMultipleTimes() {
-        assertEquals(INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
+        assertEquals(Starship.INITIAL_AWAY_MISSION_ID, testStarship.getAwayMissionID());
         testStarship.updateAwayMissionID();
-        assertEquals(INITIAL_AWAY_MISSION_ID + 1, testStarship.getAwayMissionID());
+        assertEquals(Starship.INITIAL_AWAY_MISSION_ID + 1, testStarship.getAwayMissionID());
 
         testStarship.updateAwayMissionID();
-        assertEquals(INITIAL_AWAY_MISSION_ID + 2, testStarship.getAwayMissionID());
+        assertEquals(Starship.INITIAL_AWAY_MISSION_ID + 2, testStarship.getAwayMissionID());
     }
 }
