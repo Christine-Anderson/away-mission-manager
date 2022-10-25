@@ -350,17 +350,25 @@ public class StarshipTest {
 
     @Test
     void isAlreadyOnBoardTrue() {
-        testStarship.addCrewMember(cm1);
-        assertTrue(testStarship.getCrewMembers().contains(cm1));
+        testStarship.getCrewMembers().add(cm1);
 
         assertTrue(testStarship.isAlreadyOnBoard(cm1));
     }
 
     @Test
-    void isAlreadyOnBoardFalse() {
+    void isAlreadyOnBoardFalseDifferentLastName() {
         assertFalse(testStarship.getCrewMembers().contains(cm1));
 
         assertFalse(testStarship.isAlreadyOnBoard(cm1));
+    }
+
+    @Test
+    void isAlreadyOnBoardFalseDifferentFirstName() {
+        testStarship.getCrewMembers().add(cm1);
+
+        CrewMember cm4 = new CrewMember("Giant", "Spock", Rank.OTHER, Division.OTHER);
+
+        assertFalse(testStarship.isAlreadyOnBoard(cm4));
     }
 
     @Test

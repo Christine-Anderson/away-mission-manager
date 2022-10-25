@@ -186,8 +186,8 @@ public class Starship implements Writable {
         boolean isOnBoard = false;
 
         for (CrewMember cm: crewMembers) {
-            if (cm.getFirstName().equals(crewMember.getFirstName())
-                    && cm.getLastName().equals(crewMember.getLastName())) {
+            if (cm.getLastName().equals(crewMember.getLastName())
+                    && cm.getFirstName().equals(crewMember.getFirstName())) {
                 isOnBoard = true;
                 break;
             }
