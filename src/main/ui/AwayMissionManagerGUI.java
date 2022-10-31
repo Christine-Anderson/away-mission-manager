@@ -8,62 +8,78 @@ import java.awt.*;
 public class AwayMissionManagerGUI extends JFrame /*implements ActionListener*/ {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
-    private static final int VGAP = 15;
+    private static final int VGAP = 15; //TODO use?
+    private ImageIcon test;
+    private JPanel jpanel;
+    private JButton button;
+    private JLabel label;
 
     public AwayMissionManagerGUI() {
         //Create and set up the window.
         super("Away Mission Manager Application");
-        setDefaultCloseOperation(EXIT_ON_CLOSE); //update to call the quit method
+        setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO update to call the quit method
 
         //Set up the content pane.
-        addComponentsToPane(this.getContentPane());
+        Container pane = this.getContentPane();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        addComponentsToPane(pane);
 
         //Display the window.
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.pack();
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.setVisible(true);
     }
 
-    public static void addComponentsToPane(Container pane) {
+    private void addComponentsToPane(Container pane) {
+        JPanel jpanel1 = addPanel(80, pane);
+        jpanel1.setBackground(Color.yellow);
+        jpanel1.setLayout(new BoxLayout(jpanel1, BoxLayout.Y_AXIS));
+
+        addLabel(Starship.SHIP_NAME + " (" + Starship.SHIP_ID + ")", jpanel1);
+        loadImages();
+        addLabel(test, jpanel1);
+        addLabel("Would you like to load previous starship data?", jpanel1);
 
 
-//        addLabel(Starship.SHIP_NAME + " (" + Starship.SHIP_ID + ")", pane);
-//
-//        //this.setIconImage();
-//
-//        //Would you like to load previous starship data?
-//
-//        pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
-//        addButton("yes", pane);
-//        addButton("no", pane);
+        JPanel jpanel2 = addPanel(20, pane);
+        jpanel2.setBackground(Color.green);
+        jpanel2.setLayout(new BoxLayout(jpanel2, BoxLayout.X_AXIS));
+        addButton("yes", jpanel2);
+        addButton("no", jpanel2);
+
+       //this.setIconImage();
     }
 
-    public static void addPanel(Container container) {
-        JPanel jpanel1 = new JPanel();
-        //jpanel1.setBounds(40,80,200,200);
-        this.add(jpanel1);
-        jpanel1.setSize(WIDTH * 80 / 100,HEIGHT * 80 / 100);
-        jpanel1.setLayout(null);
-        jpanel1.setVisible(true);
-
-        JPanel jpanel2 = new JPanel();
-        //jpanel2.setBounds(40,80,200,200);
-        jpanel2.add(jpanel2);
-        jpanel2.setSize(WIDTH * 20 / 100,HEIGHT * 20 / 100);
-        jpanel2.setLayout(null);
-        jpanel2.setVisible(true);
+    private JPanel addPanel(int percentHeight, Container pane) {
+        jpanel = new JPanel();
+        pane.add(jpanel);
+        jpanel.setPreferredSize(new Dimension(WIDTH,HEIGHT * percentHeight / 100));
+        jpanel.setVisible(true);
+        return jpanel;
     }
 
-    private static void addButton(String text, Container container) {
-        JButton button = new JButton(text);
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+    private void addButton(String text, Container container) {
+        button = new JButton(text);
         container.add(button);
     }
 
-    private static void addLabel(String text, Container container) {
-        JLabel label = new JLabel(text);
+    private void addLabel(String text, Container container) {
+        label = new JLabel(text);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(label);
+    }
+
+//    public void setDoh() {
+//        imageAsLabel = new JLabel(dohImage);
+//        lightPanel.add(imageAsLabel);
+//    }
+
+    private void loadImages() {
+        String sep = System.getProperty("file.separator");
+        test = new ImageIcon(System.getProperty("user.dir") + sep
+                + "images" + sep + "test.png");
     }
 
     //This is a common need in almost every non-trivial GUI program. Basically you group your componenets,
