@@ -10,8 +10,8 @@ import java.util.List;
 // Represents a Starship with the name USS Intrepid, ship ID NCC-74600, and having a captain, a list of crew members,
 // a mission log, and a current away mission
 public class Starship implements Writable {
-    protected static final String SHIP_NAME = "USS Intrepid";
-    protected static final String SHIP_ID = "NCC-74600";
+    public static final String SHIP_NAME = "USS Intrepid";
+    public static final String SHIP_ID = "NCC-74600";
     public static final int INITIAL_STARDATE = 41025;
     public static final int INITIAL_AWAY_MISSION_ID = 14268714;
 
