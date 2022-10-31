@@ -9,10 +9,10 @@ public class AwayMissionManagerGUI extends JFrame /*implements ActionListener*/ 
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
     private static final int VGAP = 15; //TODO use?
-    private ImageIcon test;
     private JPanel jpanel;
     private JButton button;
     private JLabel label;
+    private ImageIcon image;
 
     public AwayMissionManagerGUI() {
         //Create and set up the window.
@@ -36,10 +36,16 @@ public class AwayMissionManagerGUI extends JFrame /*implements ActionListener*/ 
         JPanel jpanel1 = addPanel(80, pane);
         jpanel1.setBackground(Color.yellow);
         jpanel1.setLayout(new BoxLayout(jpanel1, BoxLayout.Y_AXIS));
-
         addLabel(Starship.SHIP_NAME + " (" + Starship.SHIP_ID + ")", jpanel1);
-        loadImages();
-        addLabel(test, jpanel1);
+
+        //addImage();
+        image = new ImageIcon("Starship.jpg"); //TODO look at wexamples and fix
+        label.setIcon();
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Dimension size = label.getPreferredSize(); //Gets the size of the image
+        label.setBounds(300, 300, size.width, size.height);
+        jpanel1.add(label);
+
         addLabel("Would you like to load previous starship data?", jpanel1);
 
 
@@ -48,8 +54,6 @@ public class AwayMissionManagerGUI extends JFrame /*implements ActionListener*/ 
         jpanel2.setLayout(new BoxLayout(jpanel2, BoxLayout.X_AXIS));
         addButton("yes", jpanel2);
         addButton("no", jpanel2);
-
-       //this.setIconImage();
     }
 
     private JPanel addPanel(int percentHeight, Container pane) {
@@ -75,12 +79,12 @@ public class AwayMissionManagerGUI extends JFrame /*implements ActionListener*/ 
 //        imageAsLabel = new JLabel(dohImage);
 //        lightPanel.add(imageAsLabel);
 //    }
-
-    private void loadImages() {
-        String sep = System.getProperty("file.separator");
-        test = new ImageIcon(System.getProperty("user.dir") + sep
-                + "images" + sep + "test.png");
-    }
+//
+//    private void loadImages() {
+//        String sep = System.getProperty("file.separator");
+//        test = new ImageIcon(System.getProperty("user.dir") + sep
+//                + "images" + sep + "test.png");
+//    }
 
     //This is a common need in almost every non-trivial GUI program. Basically you group your componenets,
     // create a JPanel for each group and set each layout for each JPanel. Then add the components to each respective
