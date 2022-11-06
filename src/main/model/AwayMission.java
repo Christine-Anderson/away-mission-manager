@@ -7,7 +7,9 @@ import persistance.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents an away mission having an away mission ID, stardate, active status, objective status, and away team
+/**
+ * Represents an away mission having an away mission ID, stardate, active status, objective status, and away team
+ */
 public class AwayMission implements Writable {
     private int awayMissionID;
     private int stardate; // 5 digit date
@@ -119,6 +121,7 @@ public class AwayMission implements Writable {
         }
     }
 
+    // EFFECTS: writes away mission to a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

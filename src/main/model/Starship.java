@@ -7,8 +7,10 @@ import persistance.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents a Starship with the name USS Intrepid, ship ID NCC-74600, and having a captain, a list of crew members,
-// a mission log, and a current away mission
+/**
+ * Represents a Starship with the name USS Intrepid, ship ID NCC-74600, and having a captain, a list of crew members,
+ * a mission log, and a current away mission
+ */
 public class Starship implements Writable {
     public static final String SHIP_NAME = "USS Intrepid";
     public static final String SHIP_ID = "NCC-74600";
@@ -217,6 +219,7 @@ public class Starship implements Writable {
         return s.substring(0, 4) + "." + s.charAt(4);
     }
 
+    // EFFECTS: writes starship to a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -2,7 +2,9 @@ package persistance;
 
 import org.json.JSONObject;
 
-// Based on code from JsonSerializationDemo provided in class
+/**
+ * An interface for objects that are writable to JSON Object
+ */
 public interface Writable {
     // EFFECTS: returns this as JSON object
     JSONObject toJson();

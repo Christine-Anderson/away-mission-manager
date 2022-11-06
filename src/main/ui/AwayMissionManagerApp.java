@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// Away mission manager application
+/**
+ * Away mission manager application
+ */
 public class AwayMissionManagerApp {
     private static final String JSON_STARSHIP = "./data/starship.json";
     private Starship starship;

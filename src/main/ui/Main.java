@@ -1,5 +1,8 @@
 package ui;
 
+/**
+ * Runs the Away Mission Manager App
+ */
 public class Main {
     public static void main(String[] args) {
         new AwayMissionManagerGUI();

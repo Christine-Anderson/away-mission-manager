@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Represents a Starfleet rank
+ * civilians are crew members not in Starfleet
+ */
 public enum Rank {
     CIVILIAN,
     CADET,

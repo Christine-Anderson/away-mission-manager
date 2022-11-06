@@ -5,7 +5,9 @@ import persistance.Writable;
 
 import java.util.Random;
 
-// Represents a crew member having a name, rank, division, health status, shirt colour, plot armour, and location
+/**
+ * Represents a crew member having a name, rank, division, health status, shirt colour, plot armour, and location
+ */
 public class CrewMember implements Writable {
     private String firstName;
     private String lastName;
@@ -149,6 +151,7 @@ public class CrewMember implements Writable {
         return name;
     }
 
+    // EFFECTS: writes crew member to a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

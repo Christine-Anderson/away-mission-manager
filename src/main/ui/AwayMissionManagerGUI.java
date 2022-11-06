@@ -5,6 +5,9 @@ import model.Starship;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Away mission manager GUI
+ */
 public class AwayMissionManagerGUI extends JFrame /*implements ActionListener*/ {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 500;
@@ -14,6 +17,7 @@ public class AwayMissionManagerGUI extends JFrame /*implements ActionListener*/ 
     private JLabel label;
     private ImageIcon image;
 
+    //TODO dont forget method comments!
     public AwayMissionManagerGUI() {
         //Create and set up the window.
         super("Away Mission Manager Application");

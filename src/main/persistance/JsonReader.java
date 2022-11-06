@@ -11,7 +11,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
 
-// Represents a reader that reads starship from JSON data stored in file
+/**
+ * Represents a reader that reads starship from JSON data stored in file
+ */
 public class JsonReader {
     private String source;
 
