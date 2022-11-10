@@ -6,11 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 /**
  * Away mission manager GUI
  */
-public class LoadWindowGUI extends JFrame implements ActionListener {
+public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 300;
     private static final int VGAP = 15;
@@ -19,14 +20,12 @@ public class LoadWindowGUI extends JFrame implements ActionListener {
     private JButton button;
     private JLabel label;
     private ImageIcon image;
-    private AwayMissionManagerApp awayMissionManagerApp;
 
     //TODO dont forget method comments!
-    public LoadWindowGUI(AwayMissionManagerApp awayMissionManagerApp) {
+    public AwayMissionManagerGUI() {
         //Create and set up the window.
         super("Away Mission Manager Application");
-        this.awayMissionManagerApp = awayMissionManagerApp;
-        setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO update to call the quit method
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         //Set up the content pane.
         Container pane = this.getContentPane();
@@ -97,11 +96,12 @@ public class LoadWindowGUI extends JFrame implements ActionListener {
     //This is the method that is called when the JButton btn is clicked TODO all comments
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("loadFile")) {
-
+            app.loadStarship();
+            this.getContentPane().removeAll();
         }
 
         if (e.getActionCommand().equals("doNotLoadFile")) {
-
+            this.getContentPane().removeAll();
         }
     }
 }

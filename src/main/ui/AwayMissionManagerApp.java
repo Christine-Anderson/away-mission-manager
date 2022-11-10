@@ -36,8 +36,8 @@ public class AwayMissionManagerApp {
         runProgram = true;
         String command;
 
-        new LoadWindowGUI(this);
-        //loadOption();
+        loadOption();
+        inputCaptainName();
         System.out.println("\nWelcome Captain " + starship.getLastNameOfCaptain());
 
         while (runProgram) {
@@ -585,7 +585,7 @@ public class AwayMissionManagerApp {
 
     // MODIFIES: this
     // EFFECTS: loads starship data from file
-    private void loadStarship() {
+    public void loadStarship() {
         try {
             this.starship = jsonReader.read();
             System.out.println("\nLoaded starship data for " + starship.getShipName() + " (" + starship.getShipID()
