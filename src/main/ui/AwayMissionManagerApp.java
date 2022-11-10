@@ -36,7 +36,8 @@ public class AwayMissionManagerApp {
         runProgram = true;
         String command;
 
-        loadOption();
+        new LoadWindowGUI(this);
+        //loadOption();
         System.out.println("\nWelcome Captain " + starship.getLastNameOfCaptain());
 
         while (runProgram) {
