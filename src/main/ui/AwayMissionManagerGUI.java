@@ -1,6 +1,6 @@
 package ui;
 
-import model.Starship;
+import model.*;
 import persistance.JsonReader;
 import persistance.JsonWriter;
 
@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GUI for initial window asking the user if they would like to load their data
@@ -130,18 +133,133 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         container.add(label);
     }
 
-    public void addCentered(Component internalFrame) {
-        desktop.add(internalFrame);
-        internalFrame.setLocation((desktop.getWidth()-internalFrame.getWidth())/2, (desktop.getHeight()-internalFrame.getHeight())/2);
-        internalFrame.setVisible(true);
-    }
-
     //This is the method that is called when the JButton btn is clicked TODO all comments
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("loadFile")) {
+            loadStarship();
+            loadWindow.dispose();
+            //TODO open the main frames
         }
 
         if (e.getActionCommand().equals("doNotLoadFile")) {
+            initializeCrew();
+            loadWindow.dispose();
+            //TODO open captain name frame
+        }
+    }
+
+    // MODIFIES: this, Starship, CrewMember
+    // EFFECTS: initializes crew
+    private void initializeCrew() {
+        List<CrewMember> crewMembers = new ArrayList<>();
+        crewMembers.add(new CrewMember("William", "Riker", Rank.COMMANDER, Division.COMMAND));
+        crewMembers.add(new CrewMember("Geordi", "La Forge", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING));
+        crewMembers.add(new CrewMember("Data", "", Rank.COMMANDER, Division.COMMAND));
+        crewMembers.add(new CrewMember("Reginald", "Baclay", Rank.LIEUTENANT, Division.ENGINEERING));
+        crewMembers.add(new CrewMember("Keiko", "O'Brien", Rank.CIVILIAN, Division.COMMAND));
+        crewMembers.add(new CrewMember("Jadzia", "Dax", Rank.LIEUTENANT, Division.MEDICAL));
+        crewMembers.add(new CrewMember("Julian", "Bashir", Rank.LIEUTENANT, Division.MEDICAL));
+        crewMembers.add(new CrewMember("Lwaxana", "Troi", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("Tribble", "", Rank.OTHER, Division.OTHER));
+        crewMembers.add(new CrewMember("Morn", "", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("Elim", "Garak", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("Worf", "Rozhenko", Rank.LIEUTENANT_COMMANDER, Division.COMMAND));
+        crewMembers.add(new CrewMember("Quark", "", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("Odo", "", Rank.CIVILIAN, Division.OTHER));
+        crewMembers.add(new CrewMember("B'Elanna", "Torres", Rank.LIEUTENANT, Division.ENGINEERING));
+        crewMembers.add(new CrewMember("Tom", "Paris", Rank.ENSIGN, Division.COMMAND));
+        crewMembers.add(new CrewMember("Harry", "Kim", Rank.ENSIGN, Division.COMMAND));
+        crewMembers.add(new CrewMember("The", "Doctor", Rank.OTHER, Division.MEDICAL));
+        crewMembers.add(new CrewMember("Seven of Nine", "", Rank.CIVILIAN, Division.SCIENCES));
+        crewMembers.add(new CrewMember("Iceb", "", Rank.CADET, Division.SCIENCES));
+        crewMembers.add(new CrewMember("Giant", "Spock", Rank.OTHER, Division.OTHER));
+        starship.setCrewMembers(crewMembers);
+    }
+
+    // EFFECTS: prints mission log TODO delete unused print methods
+    public void printAwayMissionLog() {
+        if (starship.getMissionLog().isEmpty()) {
+            System.out.println("\nNo previous missions.");
+        } else {
+            System.out.println("\nMission log:");
+            for (AwayMission am : starship.getMissionLog()) {
+                String s;
+                if (am.getIsObjectiveComplete()) {
+                    s = "complete";
+                } else {
+                    s = "incomplete";
+                }
+
+                System.out.println("\nMission ID: " + am.getAwayMissionID());
+                System.out.println("Stardate: " + starship.stardateToString(am.getStardate()));
+                System.out.println("Objective " + s);
+            }
+        }
+    }
+
+    // EFFECTS: prints current crew
+    public void printCurrentCrew() {
+        System.out.println("\nCrew:");
+
+        int i = 1;
+        for (CrewMember cm : starship.getCrewMembers()) {
+            System.out.println("\t" + i + ". " + cm.nameToString(false));
+            i++;
+        }
+    }
+
+    // EFFECTS: prints stats on given crew member
+    public void printCrewMemberStats(int i) {
+        if (i >= 1 && i <= starship.getCrewMembers().size()) {
+            CrewMember cm = starship.getCrewMembers().get(i - 1);
+
+            System.out.println("\n" + cm.nameToString(false));
+            System.out.println("Rank: " + cm.getRank().name());
+            System.out.println("Division: " + cm.getDivision().name());
+            System.out.println("Health Status: " + cm.getHealthStatus().name());
+        } else {
+            System.out.println("\nPlease select a valid number.");
+        }
+    }
+
+    // EFFECTS: prints away team
+    public void printAwayTeam() {
+        if (starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
+            System.out.println("\nNo one assigned to the away team.");
+        } else {
+            System.out.println("\nAway Team:");
+
+            int i = 1;
+            for (CrewMember cm : starship.getCurrentAwayMission().getAwayTeam()) {
+                System.out.println("\t" + i + ". " + cm.nameToString(false));
+                i++;
+            }
+        }
+    }
+
+    // EFFECTS: saves the starship data to file
+    private void saveStarship() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(starship);
+            jsonWriter.close();
+            System.out.println("\nSaved starship data for " + starship.getShipName() + " (" + starship.getShipID()
+                    + ") to " + JSON_STARSHIP);
+        } catch (FileNotFoundException e) {
+            System.out.println("\nUnable to write to file: " + JSON_STARSHIP);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads starship data from file
+    public void loadStarship() {
+        try {
+            this.starship = jsonReader.read();
+            //TODO update accordingly
+            System.out.println("\nLoaded starship data for " + starship.getShipName() + " (" + starship.getShipID()
+                    + ") from " + JSON_STARSHIP);
+        } catch (IOException e) {
+            System.out.println("\nUnable to read from file: " + JSON_STARSHIP);
         }
     }
 }
