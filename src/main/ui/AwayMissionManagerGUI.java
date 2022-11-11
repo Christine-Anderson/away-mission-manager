@@ -20,9 +20,12 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private static final int DESKTOP_WINDOW_WIDTH = 800;
     private static final int DESKTOP_WINDOW_HEIGHT = 600;
     private static final int LOAD_WINDOW_WIDTH = 400;
-    private static final int LOAD_WINDOW_HEIGHT = 250;
+    private static final int LOAD_WINDOW_HEIGHT = 225;
     private static final int LOAD_WINDOW_VGAP = 10;
     private static final int LOAD_WINDOW_HGAP = 10;
+    private static final int INPUT_NAME_WIDTH = 200;
+    private static final int INPUT_NAME_HEIGHT = 100;
+    private static final int INPUT_NAME_VGAP = 10;
 
     private static final String JSON_STARSHIP = "./data/starship.json";
     private Starship starship;
@@ -31,10 +34,13 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
     private JDesktopPane desktop;
     private JInternalFrame loadWindow;
+    private JInternalFrame inputNameWindow;
     private JPanel jpanel;
     private JButton button;
     private JLabel label;
     private ImageIcon image;
+    private JTextField textField1;
+    private JTextField textField2;
 
     //TODO dont forget method comments!
     public AwayMissionManagerGUI() throws FileNotFoundException {
@@ -70,19 +76,15 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     public void createLoadWindow() {
         loadWindow = new JInternalFrame("Loading...", false, false, false, false);
 
-        //Set up the content pane.
         Container pane = loadWindow.getContentPane();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        pane.add(Box.createRigidArea(new Dimension(0, LOAD_WINDOW_VGAP)));
-        addComponentsToPane(pane);
-        pane.add(Box.createRigidArea(new Dimension(0, LOAD_WINDOW_VGAP)));
+        addComponentsToLoadWindow(pane);
 
         loadWindow.pack();
-        //loadWindow.setLocationRelativeTo(null);
         loadWindow.setVisible(true);
     }
 
-        private void addComponentsToPane(Container pane) {
+    private void addComponentsToLoadWindow(Container pane) {
         JPanel jpanel1 = addPanel(80, pane);
         //jpanel1.setBackground(Color.yellow);
         jpanel1.setLayout(new BoxLayout(jpanel1, BoxLayout.Y_AXIS));
@@ -95,9 +97,46 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         JPanel jpanel2 = addPanel(20, pane);
         //jpanel2.setBackground(Color.green);
         jpanel2.setLayout(new BoxLayout(jpanel2, BoxLayout.X_AXIS));
-        addButton("yes", "loadFile", jpanel2);
+        addButton("yes", "loadFile", false, jpanel2);
         jpanel2.add(Box.createRigidArea(new Dimension(LOAD_WINDOW_HGAP, 0)));
-        addButton("no", "doNotLoadFile", jpanel2);
+        addButton("no", "doNotLoadFile", false,  jpanel2);
+    }
+
+    public void createInputNameWindow() {
+        inputNameWindow = new JInternalFrame("Captain's Name", false, false, false, false);
+
+        Container pane = inputNameWindow.getContentPane();
+        JPanel jpanel = addPanel(pane);
+        jpanel.setLayout(new BoxLayout(jpanel, BoxLayout.Y_AXIS));
+        addLabel("Enter your first and last name:", jpanel);
+        jpanel.add(Box.createRigidArea(new Dimension(0, INPUT_NAME_VGAP)));
+
+        textField1 = new JTextField( "First Name", 10);
+        textField2 = new JTextField( "Last Name", 10);
+        jpanel.add(textField1);
+        jpanel.add(textField2);
+        jpanel.add(Box.createRigidArea(new Dimension(0, INPUT_NAME_VGAP)));
+
+        addButton("enter", "setCaptainName", true, jpanel);
+
+        inputNameWindow.pack();
+        inputNameWindow.setVisible(true);
+        desktop.add(inputNameWindow);
+    }
+
+    private JPanel addPanel(Container pane) {
+        jpanel = new JPanel();
+        pane.add(jpanel);
+        jpanel.setVisible(true);
+        return jpanel;
+    }
+
+    private JPanel addPanel(int width, int height, Container pane) {
+        jpanel = new JPanel();
+        pane.add(jpanel);
+        jpanel.setPreferredSize(new Dimension(width, height));
+        jpanel.setVisible(true);
+        return jpanel;
     }
 
     private JPanel addPanel(int percentHeight, Container pane) {
@@ -108,10 +147,13 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         return jpanel;
     }
 
-    private void addButton(String buttonLabel, String actionCommand, Container container) {
+    private void addButton(String buttonLabel, String actionCommand, boolean isCentred, Container container) {
         button = new JButton(buttonLabel);
         button.setActionCommand(actionCommand);
         button.addActionListener(this);
+        if (isCentred) {
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        }
         container.add(button);
     }
 
@@ -124,7 +166,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private void addImage(Container container) {
         image = new ImageIcon("images/Starship.png");
         Image scaleImage = image.getImage();
-        Image newImage = scaleImage.getScaledInstance(300, 150,  java.awt.Image.SCALE_SMOOTH);
+        Image newImage = scaleImage.getScaledInstance(300, 150, java.awt.Image.SCALE_SMOOTH);
         image = new ImageIcon(newImage);
 
         label = new JLabel();
@@ -144,7 +186,23 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("doNotLoadFile")) {
             initializeCrew();
             loadWindow.dispose();
-            //TODO open captain name frame
+            createInputNameWindow();
+        }
+
+        if (e.getActionCommand().equals("setCaptainName")) {
+            String fn = textField1.getText();
+            String ln = textField2.getText();
+
+
+            if(!fn.equals("") && !ln.equals("")) {
+                starship.setFirstNameOfCaptain(fn);
+                starship.setLastNameOfCaptain(ln);
+                welcomeCaptain();
+                inputNameWindow.dispose();
+                //TODO open main frames
+            } else {
+                JOptionPane.showMessageDialog(desktop,"Please enter a valid name.","Alert", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
 
@@ -252,14 +310,16 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this
     // EFFECTS: loads starship data from file
-    public void loadStarship() {
+    private void loadStarship() {
         try {
             this.starship = jsonReader.read();
-            //TODO update accordingly
-            System.out.println("\nLoaded starship data for " + starship.getShipName() + " (" + starship.getShipID()
-                    + ") from " + JSON_STARSHIP);
+            welcomeCaptain();
         } catch (IOException e) {
-            System.out.println("\nUnable to read from file: " + JSON_STARSHIP);
+            JOptionPane.showMessageDialog(desktop,"Unable to read from file: " + JSON_STARSHIP,"Alert", JOptionPane.WARNING_MESSAGE);
         }
+    }
+
+    private void welcomeCaptain() {
+        JOptionPane.showMessageDialog(desktop,"Welcome Captain " + starship.getLastNameOfCaptain());
     }
 }
