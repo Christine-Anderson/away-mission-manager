@@ -23,4 +23,8 @@ As the Captain, I want to be able to:
 - have the option to the current starship data when I select the quit option from the application menu 
 - have the option to the previous starship data when I start the application
 
+//TODO add instructions to grader
+
 Based on code from TellerApp and JsonSerializationDemo provided in class
+
+//TODO java tutorials and javapoint.com

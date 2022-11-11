@@ -17,7 +17,6 @@ public class Starship implements Writable {
     public static final int INITIAL_STARDATE = 41025;
     public static final int INITIAL_AWAY_MISSION_ID = 14268714;
 
-
     private String firstNameOfCaptain;
     private String lastNameOfCaptain;
     private int currentStardate;
