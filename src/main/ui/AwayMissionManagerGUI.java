@@ -257,6 +257,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             }
         }
 
+        //TODO check that mission is not null for start, end, and emergency beam out
         if (e.getActionCommand().equals("start mission")) {
             if (!starship.getCurrentAwayMission().getIsActive()
                     && !starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {

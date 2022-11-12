@@ -25,6 +25,9 @@ As the Captain, I want to be able to:
 
 //TODO add instructions to grader
 
+Citations //TODO write in more detail
 Based on code from TellerApp and JsonSerializationDemo provided in class
+
+Just do your best to make Chinese what your source is, where you used it, and at a very high level how you adapted it for your needs
 
 //TODO java tutorials and javapoint.com
