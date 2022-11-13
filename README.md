@@ -20,8 +20,8 @@ As the Captain, I want to be able to:
 - remove crew members from the away mission team
 - select a crew member and get stats on the crew member, for example, rank and division
 - emergency beam out the away team 
-- have the option to the current starship data when I select the quit option from the application menu 
-- have the option to the previous starship data when I start the application
+- have the option to save the current starship data when I select the quit option from the application menu 
+- have the option to load the previous starship data when I start the application
 
 //TODO add instructions to grader
 
