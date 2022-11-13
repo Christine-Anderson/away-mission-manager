@@ -162,6 +162,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private void addComponentsCrewManagerWindow(Container pane) {
         JPanel jpanel1 = addPanel(pane);
         jpanel1.setLayout(new BoxLayout(jpanel1, BoxLayout.Y_AXIS));
+        addLabel("Crew Members", jpanel1);
+        pane.add(Box.createRigidArea(new Dimension(0, VGAP)));
         createCrewMemberList(jpanel1);
         pane.add(Box.createRigidArea(new Dimension(0, VGAP)));
         addButton("add", "addAwayTeamMember", true, jpanel1);
@@ -170,6 +172,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
         JPanel jpanel2 = addPanel(pane);
         jpanel2.setLayout(new BoxLayout(jpanel2, BoxLayout.Y_AXIS));
+        addLabel("Away Team", jpanel2);
+        pane.add(Box.createRigidArea(new Dimension(0, VGAP)));
         createAwayTeamList(jpanel2);
         pane.add(Box.createRigidArea(new Dimension(0, VGAP)));
         addButton("remove", "removeAwayTeamMember", true, jpanel2);
@@ -354,12 +358,12 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
                 CrewMember cm = starship.getCrewMembers().get(i);
 
                 if (cm.getHealthStatus() == HealthStatus.DEAD) {
-                    popupMessage = popupMessage + "\nHe's dead Jim.";
-                } else if (starship.getCurrentAwayMission().getAwayTeam().contains(cm)) {
-                    popupMessage = popupMessage + "\n" + cm.nameToString(true) + " is already on the away team.";
+                    JOptionPane.showMessageDialog(desktop, "He's dead Jim.", "Alert", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    starship.getCurrentAwayMission().addCrewMemberToAwayTeam(cm);
-                    l2.addElement(cm.nameToString(true));
+                    if (!starship.getCurrentAwayMission().getAwayTeam().contains(cm)) {
+                        l2.addElement(cm.nameToString(true));
+                        starship.getCurrentAwayMission().addCrewMemberToAwayTeam(cm);
+                    }
 
                     if (starship.getCurrentAwayMission().getIsActive()) { //TODO potnetially make these messages shorter/combined
                         popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been transported off of the starship.";
@@ -376,14 +380,15 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             createCrewMemberStats();
         }
 
-        if (e.getActionCommand().equals("removeAwayTeamMember")) {
+        if (e.getActionCommand().equals("removeAwayTeamMember")) { //TODO fix multiremove and message as well?
             int[] awayTeamIndices = list2.getSelectedIndices();
             String popupMessage = "";
 
-            for (int i : awayTeamIndices) {
-                CrewMember cm = starship.getCurrentAwayMission().getAwayTeam().get(i);
+            for (int i = awayTeamIndices.length - 1; i >= 0; i--) {
+                int n = awayTeamIndices[i];
+                CrewMember cm = starship.getCurrentAwayMission().getAwayTeam().get(n);
                 starship.getCurrentAwayMission().removeCrewMemberFromAwayTeam(cm);
-                l2.removeElementAt(i);
+                l2.removeElementAt(n);
 
                 if (starship.getCurrentAwayMission().getIsActive()) {
                     popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been transported back to the starship.";
@@ -391,7 +396,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
                     popupMessage = popupMessage + "\n" + cm.nameToString(true) +  " has been removed from the away team.";
                 }
             }
-            JOptionPane.showMessageDialog(desktop, popupMessage);
+
+            if (awayTeamIndices.length > 0) {
+                JOptionPane.showMessageDialog(desktop, popupMessage);
+            }
         }
     }
 
@@ -468,6 +476,9 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private void loadStarship() {
         try {
             this.starship = jsonReader.read();
+            for (CrewMember cm : starship.getCurrentAwayMission().getAwayTeam()) {
+                l2.addElement(cm.nameToString(true));
+            }
             welcomeCaptain();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(desktop, "Unable to read from file: " + JSON_STARSHIP, "Alert", JOptionPane.WARNING_MESSAGE);
