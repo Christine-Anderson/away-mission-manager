@@ -6,8 +6,7 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private JInternalFrame missionCreationWindow;
     private JInternalFrame missionManagerWindow;
     private JInternalFrame crewManagerWindow;
+    private JInternalFrame saveWindow;
 
     private JPanel jpanel;
     private JButton button;
@@ -58,10 +58,15 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         createLoadWindow();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+//        addWindowListener (new WindowAdapter() {
+//            public void windowClosing (WindowEvent e) {
+//                dispose();
+//            }
+//        });
+
         setLocationRelativeTo(null);
         setVisible(true);
-
-
     }
 
     public void createLoadWindow() {
@@ -225,6 +230,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         pane.add(listScroller);
     }
 
+    public void createSaveWindow() {
+
+    }
+
     private JPanel addPanel(Container pane) {
         jpanel = new JPanel();
         pane.add(jpanel);
@@ -380,7 +389,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             createCrewMemberStats();
         }
 
-        if (e.getActionCommand().equals("removeAwayTeamMember")) { //TODO fix multiremove and message as well?
+        if (e.getActionCommand().equals("removeAwayTeamMember")) { //TODO fix message
             int[] awayTeamIndices = list2.getSelectedIndices();
             String popupMessage = "";
 
