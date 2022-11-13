@@ -1,8 +1,8 @@
 package ui;
 
 import model.*;
-import persistance.JsonReader;
-import persistance.JsonWriter;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,20 +34,18 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private JDesktopPane desktop;
     private JInternalFrame loadWindow;
     private JInternalFrame inputNameWindow;
+    private JInternalFrame missionCreationWindow;
     private JInternalFrame missionManagerWindow;
     private JInternalFrame crewManagerWindow;
-    private JInternalFrame awayMissionLog;
 
     private JPanel jpanel;
     private JButton button;
     private JLabel label;
-    private ImageIcon image;
     private JTextField textField1;
     private JTextField textField2;
     private  JList<String> list1;
 
 
-    //TODO dont forget method comments!
     public AwayMissionManagerGUI() throws FileNotFoundException {
         starship = new Starship("Captain", "Name");
         jsonWriter = new JsonWriter(JSON_STARSHIP);
@@ -114,6 +112,20 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         desktop.add(inputNameWindow);
     }
 
+    public void createMissionCreationWindow() {
+        missionCreationWindow = new JInternalFrame("Mission Creation", false, false, false, false);
+
+        Container pane = missionCreationWindow.getContentPane();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+
+        addButton("create mission", "create mission", true, pane);
+        addButton("print mission log", "print mission log", true, pane);
+
+        missionCreationWindow.pack();
+        missionCreationWindow.setVisible(true);
+        desktop.add(missionCreationWindow);
+    }
+
     public void createMissionManagerWindow() {
         missionManagerWindow = new JInternalFrame("Mission Manager", false, false, false, false);
 
@@ -159,15 +171,26 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     public void createAwayMissionLog() {
-        awayMissionLog = new JInternalFrame("Away Mission Log", false, true, false, false);
+        JInternalFrame awayMissionLog = new JInternalFrame("Away Mission Log", false, true, false, false);
         JTextArea missionLog = new JTextArea(awayMissionLogToString());
-        missionLog.setBounds(10,30, 200,200);
         awayMissionLog.add(missionLog);
-        awayMissionLog.setSize(300,300);
-        awayMissionLog.setLayout(null);
 
+        awayMissionLog.pack();
         awayMissionLog.setVisible(true);
         desktop.add(awayMissionLog);
+    }
+
+    public void createCrewMemberStats() {
+        JInternalFrame crewMemberStats = new JInternalFrame("Crew Member Stats", false, true, false, false);
+        JTextArea crewStats = new JTextArea(crewMemberStatsToString());
+        crewMemberStats.add(crewStats);
+        JScrollPane scroll = new JScrollPane(crewMemberStats);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+
+        crewMemberStats.pack();
+        crewMemberStats.setVisible(true);
+        desktop.add(crewMemberStats);
     }
 
     private void createCrewMemberList(Container pane) {
@@ -176,7 +199,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
 
         list1 = new JList<>(l1);
-        list1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         list1.setVisibleRowCount(5);
         JScrollPane listScroller = new JScrollPane(list1);
         listScroller.setPreferredSize(new Dimension(150, 200));
@@ -214,7 +237,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     private void addImage(Container container) {
-        image = new ImageIcon("images/Starship.png");
+        ImageIcon image = new ImageIcon("images/Starship.png");
         Image scaleImage = image.getImage();
         Image newImage = scaleImage.getScaledInstance(300, 150, java.awt.Image.SCALE_SMOOTH);
         image = new ImageIcon(newImage);
@@ -230,8 +253,13 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("loadFile")) {
             loadStarship();
             loadWindow.dispose();
-            createMissionManagerWindow();
-            createCrewManagerWindow();
+
+            if (starship.getCurrentAwayMission() == null) {
+                createMissionCreationWindow();
+            } else {
+                createMissionManagerWindow();
+                createCrewManagerWindow();
+            }
         }
 
         if (e.getActionCommand().equals("doNotLoadFile")) {
@@ -250,14 +278,22 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
                 starship.setLastNameOfCaptain(ln);
                 welcomeCaptain();
                 inputNameWindow.dispose();
-                createMissionManagerWindow();
-                createCrewManagerWindow();
+                createMissionCreationWindow();
             } else {
                 JOptionPane.showMessageDialog(desktop,"Please enter a valid name.","Alert", JOptionPane.WARNING_MESSAGE);
             }
         }
 
-        //TODO check that mission is not null for start, end, and emergency beam out
+        if (e.getActionCommand().equals("create mission")) {
+            starship.createAwayMission();
+            JOptionPane.showMessageDialog(desktop,"Created new away mission " + starship.getCurrentAwayMission().getAwayMissionID()
+                    + " on stardate " + starship.stardateToString(starship.getCurrentAwayMission().getStardate())
+                    + ".");
+            missionCreationWindow.dispose();
+            createMissionManagerWindow();
+            createCrewManagerWindow();
+        }
+
         if (e.getActionCommand().equals("start mission")) {
             if (!starship.getCurrentAwayMission().getIsActive()
                     && !starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
@@ -274,6 +310,9 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             if (starship.getCurrentAwayMission().getIsActive()) {
                 starship.endAwayMission();
                 JOptionPane.showMessageDialog(desktop,"Good job number one.");
+                missionManagerWindow.dispose();
+                crewManagerWindow.dispose();
+                createMissionCreationWindow();
             } else {
                 JOptionPane.showMessageDialog(desktop,"Away Mission has not started.","Alert", JOptionPane.WARNING_MESSAGE);
             }
@@ -283,6 +322,9 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             if (starship.getCurrentAwayMission().getIsActive()) {
                 starship.emergencyBeamOut();
                 JOptionPane.showMessageDialog(desktop,"Beam me up Scottie!");
+                missionManagerWindow.dispose();
+                crewManagerWindow.dispose();
+                createMissionCreationWindow();
             } else {
                 JOptionPane.showMessageDialog(desktop,"Away Mission has not started.","Alert", JOptionPane.WARNING_MESSAGE);
             }
@@ -301,7 +343,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
 
         if (e.getActionCommand().equals("statsCrewMember")) {
-
+            createCrewMemberStats();
+            //TODO
         }
 
         if (e.getActionCommand().equals("removeAwayTeamMember")) {
@@ -337,7 +380,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         starship.setCrewMembers(crewMembers);
     }
 
-    // EFFECTS: prints mission log TODO delete unused print methods
+    // EFFECTS: prints mission log
     public String awayMissionLogToString() {
         String awayMissionLog = "Mission log:";
             for (AwayMission am : starship.getMissionLog()) {
@@ -347,51 +390,21 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
                 } else {
                     s = "incomplete";
                 }
-
                awayMissionLog = awayMissionLog + "\nMission ID: " + am.getAwayMissionID() + "\nStardate: " + starship.stardateToString(am.getStardate()) + "\nObjective " + s + "\n";
             }
-
             return awayMissionLog;
     }
 
-    // EFFECTS: prints current crew
-    public void printCurrentCrew() {
-        System.out.println("\nCrew:");
-
-        int i = 1;
-        for (CrewMember cm : starship.getCrewMembers()) {
-            System.out.println("\t" + i + ". " + cm.nameToString(false));
-            i++;
-        }
-    }
-
     // EFFECTS: prints stats on given crew member
-    public void printCrewMemberStats(int i) {
-        if (i >= 1 && i <= starship.getCrewMembers().size()) {
-            CrewMember cm = starship.getCrewMembers().get(i - 1);
+    public String crewMemberStatsToString() {
+        String crewMemberStats = "";
+        int[] crewNumbers = list1.getSelectedIndices();
 
-            System.out.println("\n" + cm.nameToString(false));
-            System.out.println("Rank: " + cm.getRank().name());
-            System.out.println("Division: " + cm.getDivision().name());
-            System.out.println("Health Status: " + cm.getHealthStatus().name());
-        } else {
-            System.out.println("\nPlease select a valid number.");
+        for (int i: crewNumbers) {
+            CrewMember cm = starship.getCrewMembers().get(i);
+            crewMemberStats = crewMemberStats + cm.nameToString(false) + "\nRank: " + cm.getRank().name() + "\nDivision: " + cm.getDivision().name() + "\nHealth Status: "+ cm.getHealthStatus().name() + "\n\n";
         }
-    }
-
-    // EFFECTS: prints away team
-    public void printAwayTeam() {
-        if (starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
-            System.out.println("\nNo one assigned to the away team.");
-        } else {
-            System.out.println("\nAway Team:");
-
-            int i = 1;
-            for (CrewMember cm : starship.getCurrentAwayMission().getAwayTeam()) {
-                System.out.println("\t" + i + ". " + cm.nameToString(false));
-                i++;
-            }
-        }
+        return crewMemberStats;
     }
 
     // EFFECTS: saves the starship data to file

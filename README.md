@@ -25,8 +25,15 @@ As the Captain, I want to be able to:
 
 //TODO add instructions to grader
 
-Citations //TODO write in more detail
-Based on code from TellerApp and JsonSerializationDemo provided in class
+#### Citations
+1. The AwayMissionManagerApp Class console interface is based on code from the TellerApp project provided in class 
+   1. I based the structure of methods processing user input, processing user command, and printing menu options on this 
+       example
+2. The classes in the persistence package, tests in the persistence package, and JSon writing methods in the Starship, 
+   AwayMission, and CrewMember classes are based on code from the JsonSerializationDemo project provided in class 
+   1. I based the structure of the classes on the example and used it to learn how to read and write JSon files
+3. 
+4. 
 
 Just do your best to make Chinese what your source is, where you used it, and at a very high level how you adapted it for your needs
 

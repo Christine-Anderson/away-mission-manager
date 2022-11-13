@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 import model.Starship;
 import org.json.JSONObject;
