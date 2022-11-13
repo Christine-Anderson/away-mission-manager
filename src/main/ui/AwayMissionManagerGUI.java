@@ -54,16 +54,18 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         setContentPane(desktop);
         setTitle("Away Mission Manager Application");
         setSize(DESKTOP_WINDOW_WIDTH, DESKTOP_WINDOW_HEIGHT);
-
         createLoadWindow();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-//        addWindowListener (new WindowAdapter() {
-//            public void windowClosing (WindowEvent e) {
-//                dispose();
-//            }
-//        });
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener (new WindowAdapter() {
+            public void windowClosing (WindowEvent e) {
+                JInternalFrame[] frames = desktop.getAllFrames();
+                for (JInternalFrame j: frames) {
+                    j.dispose();
+                }
+                createSaveWindow();
+            }
+        });
 
         setLocationRelativeTo(null);
         setVisible(true);
@@ -231,7 +233,23 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     public void createSaveWindow() {
+        saveWindow = new JInternalFrame("Saving...", false, false, false, false);
 
+        Container pane = saveWindow.getContentPane();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        addLabel("Would you like to save?", pane);
+        pane.add(Box.createRigidArea(new Dimension(0, VGAP)));
+
+        JPanel jpanel = addPanel(pane);
+        jpanel.setLayout(new BoxLayout(jpanel, BoxLayout.X_AXIS));
+        addButton("yes", "saveFile", false, jpanel);
+        jpanel.add(Box.createRigidArea(new Dimension(HGAP, 0)));
+        addButton("no", "doNotSaveFile", false, jpanel);
+
+        saveWindow.setSize(200, 100);
+        centreWindow(saveWindow);
+        saveWindow.setVisible(true);
+        desktop.add(saveWindow);
     }
 
     private JPanel addPanel(Container pane) {
@@ -410,6 +428,15 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(desktop, popupMessage);
             }
         }
+
+        if (e.getActionCommand().equals("saveFile")) {
+            saveStarship();
+            System.exit(0);
+        }
+
+        if (e.getActionCommand().equals("doNotSaveFile")) {
+            System.exit(0);
+        }
     }
 
     // MODIFIES: this, Starship, CrewMember
@@ -473,10 +500,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             jsonWriter.open();
             jsonWriter.write(starship);
             jsonWriter.close();
-            System.out.println("\nSaved starship data for " + starship.getShipName() + " (" + starship.getShipID()
+            JOptionPane.showMessageDialog(desktop, "Saved starship data for " + starship.getShipName() + " (" + starship.getShipID()
                     + ") to " + JSON_STARSHIP);
         } catch (FileNotFoundException e) {
-            System.out.println("\nUnable to write to file: " + JSON_STARSHIP);
+            JOptionPane.showMessageDialog(desktop, "Unable to write to file " + JSON_STARSHIP, "Alert", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -485,9 +512,13 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private void loadStarship() {
         try {
             this.starship = jsonReader.read();
-            for (CrewMember cm : starship.getCurrentAwayMission().getAwayTeam()) {
-                l2.addElement(cm.nameToString(true));
+            if (starship.getCurrentAwayMission() != null) {
+                for (CrewMember cm : starship.getCurrentAwayMission().getAwayTeam()) {
+                    l2.addElement(cm.nameToString(true));
+                }
             }
+
+
             welcomeCaptain();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(desktop, "Unable to read from file: " + JSON_STARSHIP, "Alert", JOptionPane.WARNING_MESSAGE);
