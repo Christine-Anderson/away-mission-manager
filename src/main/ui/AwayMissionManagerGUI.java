@@ -46,8 +46,6 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private JList<String> list1;
     private JList<String> list2;
 
-    //TODO MODIFIES: this, Starship, AwayMission, CrewMember
-
     // MODIFIES: this, Starship
     // EFFECTS: Sets up desktop and load window
     public AwayMissionManagerGUI() throws FileNotFoundException {
@@ -97,7 +95,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         JPanel jpanel1 = addPanel(pane);
         jpanel1.setLayout(new BoxLayout(jpanel1, BoxLayout.Y_AXIS));
         addLabel(Starship.SHIP_NAME + " (" + Starship.SHIP_ID + ")", jpanel1);
-        addImage(jpanel1);
+        addImage("images/Starship.png", 300, 150, jpanel1);
         addLabel("Would you like to load previous starship data?", jpanel1);
 
         pane.add(Box.createRigidArea(new Dimension(0, VGAP)));
@@ -232,7 +230,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: Creates away mission log and adds components
+    // EFFECTS: Creates away mission log print out window and adds components
     public void createAwayMissionLog() {
         JInternalFrame awayMissionLog = new JInternalFrame("Away Mission Log", false, true, false, false);
         JTextArea missionLog = new JTextArea(awayMissionLogToString());
@@ -247,7 +245,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: Creates crew member stats and adds components
+    // EFFECTS: Creates crew member stats print out window and adds components
     public void createCrewMemberStats() {
         JInternalFrame crewMemberStats = new JInternalFrame("Crew Member Stats", false, true, false, false);
         JTextArea crewStats = new JTextArea(crewMemberStatsToString());
@@ -261,6 +259,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         desktop.add(crewMemberStats);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates save window and adds components
     public void createSaveWindow() {
         saveWindow = new JInternalFrame("Saving...", false, false, false, false);
 
@@ -281,6 +281,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         desktop.add(saveWindow);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates a JPanel and adds it to the given container
     private JPanel addPanel(Container pane) {
         JPanel jpanel = new JPanel();
         pane.add(jpanel);
@@ -288,6 +290,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         return jpanel;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates an optionally centred JButton with a given action command and adds it to the given container
     private void addButton(String buttonLabel, String actionCommand, boolean isCentred, Container container) {
         JButton button = new JButton(buttonLabel);
         button.setActionCommand(actionCommand);
@@ -298,16 +302,21 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         container.add(button);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates a JLabel and adds it to the given container
     private void addLabel(String text, Container container) {
         label = new JLabel(text);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(label);
     }
 
-    private void addImage(Container container) {
-        ImageIcon image = new ImageIcon("images/Starship.png");
+    // MODIFIES: this
+    // EFFECTS: Creates an ImageIcon for a given file scaled by given width and height and adds it to the given
+    // container
+    private void addImage(String fileName, int width, int height, Container container) {
+        ImageIcon image = new ImageIcon(fileName);
         Image scaleImage = image.getImage();
-        Image newImage = scaleImage.getScaledInstance(300, 150, java.awt.Image.SCALE_SMOOTH);
+        Image newImage = scaleImage.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
         image = new ImageIcon(newImage);
 
         label = new JLabel();
@@ -316,7 +325,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         container.add(label);
     }
 
-    //This is the method that is called when the JButton btn is clicked TODO all comments
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: Calls the appropriate action command method when a JButton is clicked
     @SuppressWarnings("methodlength")
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("loadFile")) {
@@ -373,6 +383,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: Loads Starship data from file
+    //          if the current away mission is null creates mission creation window
+    //          otherwise, creates mission manager and crew manager windows
     private void loadFileAction() {
         loadStarship();
         loadWindow.dispose();
@@ -385,16 +399,19 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Starship, CrewMember
+    // EFFECTS: Initializes Starship crew and creates input captain name window
     private void doNotLoadFileAction() {
         initializeCrew();
         loadWindow.dispose();
         createInputNameWindow();
     }
 
+    // MODIFIES: this, Starship
+    // EFFECTS: Updates Starship's Captain's name and creates mission creation window
     private void setCaptainNameAction() {
         String fn = textField1.getText();
         String ln = textField2.getText();
-
 
         if (!fn.equals("") && !ln.equals("")) {
             starship.setFirstNameOfCaptain(fn);
@@ -407,6 +424,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Starship, AwayMission
+    // EFFECTS: creates a new away mission and creates mission manager and crew manager windows
     private void createMissionAction() {
         starship.createAwayMission();
         JOptionPane.showMessageDialog(desktop, "Created new away mission "
@@ -418,6 +437,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         createCrewManagerWindow();
     }
 
+    // MODIFIES: this, AwayMission
+    // EFFECTS: if the current away mission is not active and the away team is not empty, starts away mission
+    //          if the current away mission is active creates a pop up warning
+    //          otherwise, creates creates a pop up warning
     private void startMissionAction() {
         if (!starship.getCurrentAwayMission().getIsActive()
                 && !starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
@@ -431,6 +454,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Starship, AwayMission
+    // EFFECTS: if the current away mission is active, ends away mission, updates the away team Jlist and creates the
+    //          mission creation window
+    //          otherwise, creates creates a pop up warning
     private void endMissionAction() {
         if (starship.getCurrentAwayMission().getIsActive()) {
             starship.endAwayMission();
@@ -445,6 +472,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Starship, AwayMission
+    // EFFECTS: if the current away mission is active, emergency beams out the away team of the current away mission,
+    //          updates the away team Jlist and creates the mission creation window
+    //          otherwise, creates creates a pop up warning
     private void emergencyBeamOutAction() {
         if (starship.getCurrentAwayMission().getIsActive()) {
             starship.emergencyBeamOut();
@@ -459,6 +490,9 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: if the mission log is empty, creates a pop up warning
+    //          otherwise, creates a mission log print out window
     private void printMissionLogAction() {
         if (starship.getMissionLog().isEmpty()) {
             JOptionPane.showMessageDialog(desktop, "No previous missions.", "Alert", JOptionPane.WARNING_MESSAGE);
@@ -548,7 +582,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         starship.setCrewMembers(crewMembers);
     }
 
-    // EFFECTS: prints mission log
+    // EFFECTS: returns mission log as a String
     public String awayMissionLogToString() {
         String awayMissionLog = "Mission log:";
         for (AwayMission am : starship.getMissionLog()) {
@@ -564,7 +598,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         return awayMissionLog;
     }
 
-    // EFFECTS: prints stats on given crew member
+    // EFFECTS: returns stats on given crew member(s) as a String
     public String crewMemberStatsToString() {
         String crewMemberStats = "";
         int[] crewIndices = list1.getSelectedIndices();
@@ -593,7 +627,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: loads starship data from file
     private void loadStarship() {
         try {
@@ -610,10 +644,12 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: Creates a welcome Caption pop up window
     private void welcomeCaptain() {
         JOptionPane.showMessageDialog(desktop, "Welcome Captain " + starship.getLastNameOfCaptain());
     }
 
+    // EFFECTS: Centres a given window in the desktop
     private void centreWindow(Container pane) {
         pane.setLocation((DESKTOP_WINDOW_WIDTH - pane.getWidth()) / 2, (DESKTOP_WINDOW_HEIGHT - pane.getHeight()) / 2);
     }
