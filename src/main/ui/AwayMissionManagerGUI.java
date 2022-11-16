@@ -437,7 +437,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         createCrewManagerWindow();
     }
 
-    // MODIFIES: this, AwayMission
+    // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: if the current away mission is not active and the away team is not empty, starts away mission
     //          if the current away mission is active creates a pop up warning
     //          otherwise, creates creates a pop up warning
@@ -454,7 +454,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
-    // MODIFIES: this, Starship, AwayMission
+    // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: if the current away mission is active, ends away mission, updates the away team Jlist and creates the
     //          mission creation window
     //          otherwise, creates creates a pop up warning
@@ -472,10 +472,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
-    // MODIFIES: this, Starship, AwayMission
-    // EFFECTS: if the current away mission is active, emergency beams out the away team of the current away mission,
-    //          updates the away team Jlist and creates the mission creation window
-    //          otherwise, creates creates a pop up warning
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: if the current away mission is active, emergency beams out the away team, updates the away team Jlist,
+    //          and creates the mission creation window
+    //          otherwise, creates a pop up warning
     private void emergencyBeamOutAction() {
         if (starship.getCurrentAwayMission().getIsActive()) {
             starship.emergencyBeamOut();
@@ -501,6 +501,12 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: if the crew member is dead, creates a pop up warning
+    //          if the away team does not contain the crew member(s) to add, add the crew member(s) to the away team and
+    //          the away team JList
+    //          if the away team is active, create a pop up that crew member(s) have been transported off the ship
+    //          otherwise, creates a pop up warning that crew member(s) have been added to the away team
     private void addAwayTeamMemberAction() {
         int[] crewIndices = list1.getSelectedIndices();
         String popupMessage = "";
@@ -530,6 +536,10 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Starship, AwayMission, CrewMember
+    // EFFECTS: removes the crew member(s) from the away team and the away team JList
+    //          if the away team is active, create a pop up that crew member(s) have been transported back to the ship
+    //          otherwise, creates a pop up warning that crew member(s) have been removed from the away team
     private void removeAwayTeamMemberAction() { //TODO shorter message?
         int[] awayTeamIndices = list2.getSelectedIndices();
         String popupMessage = "";
