@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+
 /**
  * Away Mission Manager GUI
  */
@@ -57,8 +60,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         createLoadWindow();
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        addWindowListener (new WindowAdapter() {
-            public void windowClosing (WindowEvent e) {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
                 JInternalFrame[] frames = desktop.getAllFrames();
                 for (JInternalFrame j: frames) {
                     j.dispose();
@@ -193,7 +196,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
         awayMissionLog.add(scroll);
         awayMissionLog.setSize(250, 200);
-        awayMissionLog.setLocation( (DESKTOP_WINDOW_WIDTH - awayMissionLog.getWidth()) / 2,0);
+        awayMissionLog.setLocation((DESKTOP_WINDOW_WIDTH - awayMissionLog.getWidth()) / 2,0);
         awayMissionLog.setVisible(true);
         desktop.add(awayMissionLog);
     }
@@ -218,7 +221,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
         list1 = new JList<>(l1);
         list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        JScrollPane listScroller = new JScrollPane(list1);
+        JScrollPane listScroller = new JScrollPane(list1, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_NEVER);
         listScroller.setPreferredSize(new Dimension(125, 200));
 
         pane.add(listScroller);
@@ -227,7 +230,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private void createAwayTeamList(Container pane) {
         list2 = new JList<>(l2);
         list2.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        JScrollPane listScroller = new JScrollPane(list2);
+        JScrollPane listScroller = new JScrollPane(list2, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_NEVER);
         listScroller.setPreferredSize(new Dimension(125, 200));
 
         pane.add(listScroller);
@@ -289,149 +292,50 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     //This is the method that is called when the JButton btn is clicked TODO all comments
+    @SuppressWarnings("methodlength")
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("loadFile")) {
-            loadStarship();
-            loadWindow.dispose();
-
-            if (starship.getCurrentAwayMission() == null) {
-                createMissionCreationWindow();
-            } else {
-                createMissionManagerWindow();
-                createCrewManagerWindow();
-            }
+            loadFileAction();
         }
 
         if (e.getActionCommand().equals("doNotLoadFile")) {
-            initializeCrew();
-            loadWindow.dispose();
-            createInputNameWindow();
+            doNotLoadFileAction();
         }
 
         if (e.getActionCommand().equals("setCaptainName")) {
-            String fn = textField1.getText();
-            String ln = textField2.getText();
-
-
-            if (!fn.equals("") && !ln.equals("")) {
-                starship.setFirstNameOfCaptain(fn);
-                starship.setLastNameOfCaptain(ln);
-                welcomeCaptain();
-                inputNameWindow.dispose();
-                createMissionCreationWindow();
-            } else {
-                JOptionPane.showMessageDialog(desktop, "Please enter a valid name.", "Alert", JOptionPane.WARNING_MESSAGE);
-            }
+            setCaptainNameAction();
         }
 
         if (e.getActionCommand().equals("create mission")) {
-            starship.createAwayMission();
-            JOptionPane.showMessageDialog(desktop, "Created new away mission " + starship.getCurrentAwayMission().getAwayMissionID()
-                    + " on stardate " + starship.stardateToString(starship.getCurrentAwayMission().getStardate())
-                    + ".");
-            missionCreationWindow.dispose();
-            createMissionManagerWindow();
-            createCrewManagerWindow();
+            createMissionAction();
         }
 
         if (e.getActionCommand().equals("start mission")) {
-            if (!starship.getCurrentAwayMission().getIsActive()
-                    && !starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
-                starship.startAwayMission();
-                JOptionPane.showMessageDialog(desktop, "Make it so.");
-            } else if (starship.getCurrentAwayMission().getIsActive()) {
-                JOptionPane.showMessageDialog(desktop, "Away Mission has already started.", "Alert", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(desktop, "Please select an away team.", "Alert", JOptionPane.WARNING_MESSAGE);
-            }
+            startMissionAction();
         }
 
         if (e.getActionCommand().equals("end mission")) {
-            if (starship.getCurrentAwayMission().getIsActive()) {
-                starship.endAwayMission();
-                l2.removeAllElements();
-                JOptionPane.showMessageDialog(desktop, "Good job number one.");
-                missionManagerWindow.dispose();
-                crewManagerWindow.dispose();
-                createMissionCreationWindow();
-            } else {
-                JOptionPane.showMessageDialog(desktop, "Away Mission has not started.", "Alert", JOptionPane.WARNING_MESSAGE);
-            }
+            endMissionAction();
         }
 
         if (e.getActionCommand().equals("emergency beam out")) {
-            if (starship.getCurrentAwayMission().getIsActive()) {
-                starship.emergencyBeamOut();
-                l2.removeAllElements();
-                JOptionPane.showMessageDialog(desktop, "Beam me up Scottie!");
-                missionManagerWindow.dispose();
-                crewManagerWindow.dispose();
-                createMissionCreationWindow();
-            } else {
-                JOptionPane.showMessageDialog(desktop, "Away Mission has not started.", "Alert", JOptionPane.WARNING_MESSAGE);
-            }
+            emergencyBeamOutAction();
         }
 
         if (e.getActionCommand().equals("print mission log")) {
-            if (starship.getMissionLog().isEmpty()) {
-                JOptionPane.showMessageDialog(desktop, "No previous missions.", "Alert", JOptionPane.WARNING_MESSAGE);
-            } else {
-                createAwayMissionLog();
-            }
+            printMissionLogAction();
         }
 
         if (e.getActionCommand().equals("addAwayTeamMember")) {
-            int[] crewIndices = list1.getSelectedIndices();
-            String popupMessage = "";
-
-            for (int i : crewIndices) {
-                CrewMember cm = starship.getCrewMembers().get(i);
-
-                if (cm.getHealthStatus() == HealthStatus.DEAD) {
-                    JOptionPane.showMessageDialog(desktop, "He's dead Jim.", "Alert", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    if (!starship.getCurrentAwayMission().getAwayTeam().contains(cm)) {
-                        l2.addElement(cm.nameToString(true));
-                        starship.getCurrentAwayMission().addCrewMemberToAwayTeam(cm);
-                    }
-
-                    if (starship.getCurrentAwayMission().getIsActive()) { //TODO potnetially make these messages shorter/combined
-                        popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been transported off of the starship.";
-                    } else {
-                        popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been added to the away team.";
-                    }
-                }
-            }
-
-            if (crewIndices.length > 0) {
-                JOptionPane.showMessageDialog(desktop, popupMessage);
-            }
+            addAwayTeamMemberAction();
         }
 
         if (e.getActionCommand().equals("statsCrewMember")) {
             createCrewMemberStats();
         }
 
-        if (e.getActionCommand().equals("removeAwayTeamMember")) { //TODO fix message
-            int[] awayTeamIndices = list2.getSelectedIndices();
-            String popupMessage = "";
-
-            for (int i = awayTeamIndices.length - 1; i >= 0; i--) {
-                int n = awayTeamIndices[i];
-                CrewMember cm = starship.getCurrentAwayMission().getAwayTeam().get(n);
-                starship.getCurrentAwayMission().removeCrewMemberFromAwayTeam(cm);
-                l2.removeElementAt(n);
-
-                if (starship.getCurrentAwayMission().getIsActive()) {
-                    popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been transported back to the starship.";
-                } else {
-                    popupMessage = popupMessage + "\n" + cm.nameToString(true) +  " has been removed from the away team.";
-                }
-            }
-
-            if (awayTeamIndices.length > 0) {
-                JOptionPane.showMessageDialog(desktop, popupMessage);
-            }
+        if (e.getActionCommand().equals("removeAwayTeamMember")) {
+            removeAwayTeamMemberAction();
         }
 
         if (e.getActionCommand().equals("saveFile")) {
@@ -441,6 +345,147 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
         if (e.getActionCommand().equals("doNotSaveFile")) {
             System.exit(0);
+        }
+    }
+
+    private void loadFileAction() {
+        loadStarship();
+        loadWindow.dispose();
+
+        if (starship.getCurrentAwayMission() == null) {
+            createMissionCreationWindow();
+        } else {
+            createMissionManagerWindow();
+            createCrewManagerWindow();
+        }
+    }
+
+    private void doNotLoadFileAction() {
+        initializeCrew();
+        loadWindow.dispose();
+        createInputNameWindow();
+    }
+
+    private void setCaptainNameAction() {
+        String fn = textField1.getText();
+        String ln = textField2.getText();
+
+
+        if (!fn.equals("") && !ln.equals("")) {
+            starship.setFirstNameOfCaptain(fn);
+            starship.setLastNameOfCaptain(ln);
+            welcomeCaptain();
+            inputNameWindow.dispose();
+            createMissionCreationWindow();
+        } else {
+            JOptionPane.showMessageDialog(desktop, "Please enter a valid name.", "Alert", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void createMissionAction() {
+        starship.createAwayMission();
+        JOptionPane.showMessageDialog(desktop, "Created new away mission " + starship.getCurrentAwayMission().getAwayMissionID()
+                + " on stardate " + starship.stardateToString(starship.getCurrentAwayMission().getStardate())
+                + ".");
+        missionCreationWindow.dispose();
+        createMissionManagerWindow();
+        createCrewManagerWindow();
+    }
+
+    private void startMissionAction() {
+        if (!starship.getCurrentAwayMission().getIsActive()
+                && !starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
+            starship.startAwayMission();
+            JOptionPane.showMessageDialog(desktop, "Make it so.");
+        } else if (starship.getCurrentAwayMission().getIsActive()) {
+            JOptionPane.showMessageDialog(desktop, "Away Mission has already started.", "Alert", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(desktop, "Please select an away team.", "Alert", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void endMissionAction() {
+        if (starship.getCurrentAwayMission().getIsActive()) {
+            starship.endAwayMission();
+            l2.removeAllElements();
+            JOptionPane.showMessageDialog(desktop, "Good job number one.");
+            missionManagerWindow.dispose();
+            crewManagerWindow.dispose();
+            createMissionCreationWindow();
+        } else {
+            JOptionPane.showMessageDialog(desktop, "Away Mission has not started.", "Alert", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void emergencyBeamOutAction() {
+        if (starship.getCurrentAwayMission().getIsActive()) {
+            starship.emergencyBeamOut();
+            l2.removeAllElements();
+            JOptionPane.showMessageDialog(desktop, "Beam me up Scottie!");
+            missionManagerWindow.dispose();
+            crewManagerWindow.dispose();
+            createMissionCreationWindow();
+        } else {
+            JOptionPane.showMessageDialog(desktop, "Away Mission has not started.", "Alert", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void printMissionLogAction() {
+        if (starship.getMissionLog().isEmpty()) {
+            JOptionPane.showMessageDialog(desktop, "No previous missions.", "Alert", JOptionPane.WARNING_MESSAGE);
+        } else {
+            createAwayMissionLog();
+        }
+    }
+
+    private void addAwayTeamMemberAction() {
+        addAwayTeamMemberAction();
+        int[] crewIndices = list1.getSelectedIndices();
+        String popupMessage = "";
+
+        for (int i : crewIndices) {
+            CrewMember cm = starship.getCrewMembers().get(i);
+
+            if (cm.getHealthStatus() == HealthStatus.DEAD) {
+                JOptionPane.showMessageDialog(desktop, "He's dead Jim.", "Alert", JOptionPane.WARNING_MESSAGE);
+            } else {
+                if (!starship.getCurrentAwayMission().getAwayTeam().contains(cm)) {
+                    l2.addElement(cm.nameToString(true));
+                    starship.getCurrentAwayMission().addCrewMemberToAwayTeam(cm);
+                }
+
+                if (starship.getCurrentAwayMission().getIsActive()) { //TODO potnetially make these messages shorter/combined
+                    popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been transported off of the starship.";
+                } else {
+                    popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been added to the away team.";
+                }
+            }
+        }
+
+        if (crewIndices.length > 0) {
+            JOptionPane.showMessageDialog(desktop, popupMessage);
+        }
+    }
+
+    private void removeAwayTeamMemberAction() { //TODO fix message
+        int[] awayTeamIndices = list2.getSelectedIndices();
+        String popupMessage = "";
+
+        for (int i = awayTeamIndices.length - 1; i >= 0; i--) {
+            int n = awayTeamIndices[i];
+            CrewMember cm = starship.getCurrentAwayMission().getAwayTeam().get(n);
+            starship.getCurrentAwayMission().removeCrewMemberFromAwayTeam(cm);
+            l2.removeElementAt(n);
+
+            if (starship.getCurrentAwayMission().getIsActive()) {
+                popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been transported back to the starship.";
+            } else {
+                popupMessage = popupMessage + "\n" + cm.nameToString(true) +  " has been removed from the away team.";
+            }
+        }
+
+        if (awayTeamIndices.length > 0) {
+            JOptionPane.showMessageDialog(desktop, popupMessage);
         }
     }
 

@@ -23,7 +23,13 @@ As the Captain, I want to be able to:
 - have the option to save the current starship data when I select the quit option from the application menu 
 - have the option to load the previous starship data when I start the application
 
-//TODO add instructions to grader
+# Instructions for Grader //TODO
+
+- You can generate the first required event related to adding Xs to a Y by...
+- You can generate the second required event related to adding Xs to a Y by...
+- You can locate my visual component by...
+- You can save the state of my application by...
+- You can reload the state of my application by...
 
 #### Citations
 1. The AwayMissionManagerApp Class console interface is based on code from the TellerApp project provided in class 
@@ -32,9 +38,11 @@ As the Captain, I want to be able to:
 2. The classes in the persistence package, tests in the persistence package, and JSon writing methods in the Starship, 
    AwayMission, and CrewMember classes are based on code from the JsonSerializationDemo project provided in class 
    1. I based the structure of the classes on the example and used it to learn how to read and write JSon files
-3. 
-4. 
-
-Just do your best to make Chinese what your source is, where you used it, and at a very high level how you adapted it for your needs
-
-//TODO java tutorials and javapoint.com
+3. The AwayMissionManagerGUI Class is based on example code from www.javatpoint.com tutorials on Java Swing and Layout 
+Managers
+   1. I used these examples to learn how to make each component and what different components were available
+4. The AwayMissionManagerGUI Class is based on example code from https://docs.oracle.com/javase/tutorial/uiswing/components/
+tutorials
+   1. I used these examples to learn how to make, adjust, and use lists and scroll panes
+5. The AwayMissionManagerGUI Class is based on example code from https://stackoverflow.com/questions/6578205/swing-jlabel-text-change-on-the-running-application
+    1. I used this example to learn how to use event handling
