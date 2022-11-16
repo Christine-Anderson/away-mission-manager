@@ -40,14 +40,16 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     private JInternalFrame crewManagerWindow;
     private JInternalFrame saveWindow;
 
-    private JPanel jpanel;
-    private JButton button;
     private JLabel label;
     private JTextField textField1;
     private JTextField textField2;
     private JList<String> list1;
     private JList<String> list2;
 
+    //TODO MODIFIES: this, Starship, AwayMission, CrewMember
+
+    // MODIFIES: this, Starship
+    // EFFECTS: Sets up desktop and load window
     public AwayMissionManagerGUI() throws FileNotFoundException {
         starship = new Starship("Captain", "Name");
         jsonWriter = new JsonWriter(JSON_STARSHIP);
@@ -74,6 +76,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates load window structure and layout
     public void createLoadWindow() {
         loadWindow = new JInternalFrame("Loading...", false, false, false, false);
 
@@ -87,6 +91,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         desktop.add(loadWindow);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates and adds containers and components to load window
     private void addComponentsLoadWindow(Container pane) {
         JPanel jpanel1 = addPanel(pane);
         jpanel1.setLayout(new BoxLayout(jpanel1, BoxLayout.Y_AXIS));
@@ -103,6 +109,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         addButton("no", "doNotLoadFile", false, jpanel2);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates input name window and adds components
     public void createInputNameWindow() {
         inputNameWindow = new JInternalFrame("Captain's Name", false, false, false, false);
 
@@ -125,6 +133,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         desktop.add(inputNameWindow);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates mission creation window and adds components
     public void createMissionCreationWindow() {
         missionCreationWindow = new JInternalFrame("Mission Creation", false, false, false, false);
 
@@ -140,6 +150,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         desktop.add(missionCreationWindow);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates mission manager window and adds components
     public void createMissionManagerWindow() {
         missionManagerWindow = new JInternalFrame("Mission Manager", false, false, false, false);
 
@@ -152,11 +164,14 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         addButton("print mission log", "print mission log", true, pane);
 
         missionManagerWindow.setSize(225, 165); //TODO
-        missionManagerWindow.setLocation((DESKTOP_WINDOW_WIDTH - missionManagerWindow.getWidth()) / 2, (desktop.getHeight() - missionManagerWindow.getHeight()) / 2);
+        missionManagerWindow.setLocation((DESKTOP_WINDOW_WIDTH - missionManagerWindow.getWidth()) / 2,
+                (desktop.getHeight() - missionManagerWindow.getHeight()) / 2);
         missionManagerWindow.setVisible(true);
         desktop.add(missionManagerWindow);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates crew manager window structure and layout
     public void createCrewManagerWindow() {
         crewManagerWindow = new JInternalFrame("Crew Manager", false, false, false, false);
 
@@ -169,6 +184,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         desktop.add(crewManagerWindow);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates and adds containers and components to crew manager window
     private void addComponentsCrewManagerWindow(Container pane) {
         JPanel jpanel1 = addPanel(pane);
         jpanel1.setLayout(new BoxLayout(jpanel1, BoxLayout.Y_AXIS));
@@ -188,32 +205,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         addButton("remove", "removeAwayTeamMember", true, jpanel2);
     }
 
-    public void createAwayMissionLog() {
-        JInternalFrame awayMissionLog = new JInternalFrame("Away Mission Log", false, true, false, false);
-        JTextArea missionLog = new JTextArea(awayMissionLogToString());
-        JScrollPane scroll = new JScrollPane(missionLog);
-        scroll.setPreferredSize(new Dimension(200, 150));
-
-        awayMissionLog.add(scroll);
-        awayMissionLog.setSize(250, 200);
-        awayMissionLog.setLocation((DESKTOP_WINDOW_WIDTH - awayMissionLog.getWidth()) / 2,0);
-        awayMissionLog.setVisible(true);
-        desktop.add(awayMissionLog);
-    }
-
-    public void createCrewMemberStats() {
-        JInternalFrame crewMemberStats = new JInternalFrame("Crew Member Stats", false, true, false, false);
-        JTextArea crewStats = new JTextArea(crewMemberStatsToString());
-        JScrollPane scroll = new JScrollPane(crewStats);
-        scroll.setPreferredSize(new Dimension(240, 300));
-
-        crewMemberStats.add(scroll);
-        crewMemberStats.setSize(250, 300);
-        crewMemberStats.setLocation(DESKTOP_WINDOW_WIDTH - crewMemberStats.getWidth(), 0);
-        crewMemberStats.setVisible(true);
-        desktop.add(crewMemberStats);
-    }
-
+    // MODIFIES: this
+    // EFFECTS: Creates crew member list with crew members and adds component to the crew manager window
     private void createCrewMemberList(Container pane) {
         for (CrewMember cm : starship.getCrewMembers()) {
             l1.addElement(cm.nameToString(true));
@@ -227,6 +220,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         pane.add(listScroller);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates away team list and adds component to the crew manager window
     private void createAwayTeamList(Container pane) {
         list2 = new JList<>(l2);
         list2.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -234,6 +229,36 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         listScroller.setPreferredSize(new Dimension(125, 200));
 
         pane.add(listScroller);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates away mission log and adds components
+    public void createAwayMissionLog() {
+        JInternalFrame awayMissionLog = new JInternalFrame("Away Mission Log", false, true, false, false);
+        JTextArea missionLog = new JTextArea(awayMissionLogToString());
+        JScrollPane scroll = new JScrollPane(missionLog);
+        scroll.setPreferredSize(new Dimension(200, 150));
+
+        awayMissionLog.add(scroll);
+        awayMissionLog.setSize(250, 200);
+        awayMissionLog.setLocation((DESKTOP_WINDOW_WIDTH - awayMissionLog.getWidth()) / 2,0);
+        awayMissionLog.setVisible(true);
+        desktop.add(awayMissionLog);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates crew member stats and adds components
+    public void createCrewMemberStats() {
+        JInternalFrame crewMemberStats = new JInternalFrame("Crew Member Stats", false, true, false, false);
+        JTextArea crewStats = new JTextArea(crewMemberStatsToString());
+        JScrollPane scroll = new JScrollPane(crewStats);
+        scroll.setPreferredSize(new Dimension(240, 300));
+
+        crewMemberStats.add(scroll);
+        crewMemberStats.setSize(250, 300);
+        crewMemberStats.setLocation(DESKTOP_WINDOW_WIDTH - crewMemberStats.getWidth(), 0);
+        crewMemberStats.setVisible(true);
+        desktop.add(crewMemberStats);
     }
 
     public void createSaveWindow() {
@@ -257,14 +282,14 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     private JPanel addPanel(Container pane) {
-        jpanel = new JPanel();
+        JPanel jpanel = new JPanel();
         pane.add(jpanel);
         jpanel.setVisible(true);
         return jpanel;
     }
 
     private void addButton(String buttonLabel, String actionCommand, boolean isCentred, Container container) {
-        button = new JButton(buttonLabel);
+        JButton button = new JButton(buttonLabel);
         button.setActionCommand(actionCommand);
         button.addActionListener(this);
         if (isCentred) {
@@ -384,7 +409,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
     private void createMissionAction() {
         starship.createAwayMission();
-        JOptionPane.showMessageDialog(desktop, "Created new away mission " + starship.getCurrentAwayMission().getAwayMissionID()
+        JOptionPane.showMessageDialog(desktop, "Created new away mission "
+                + starship.getCurrentAwayMission().getAwayMissionID()
                 + " on stardate " + starship.stardateToString(starship.getCurrentAwayMission().getStardate())
                 + ".");
         missionCreationWindow.dispose();
@@ -398,7 +424,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             starship.startAwayMission();
             JOptionPane.showMessageDialog(desktop, "Make it so.");
         } else if (starship.getCurrentAwayMission().getIsActive()) {
-            JOptionPane.showMessageDialog(desktop, "Away Mission has already started.", "Alert", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(desktop,
+                    "Away Mission has already started.", "Alert", JOptionPane.WARNING_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(desktop, "Please select an away team.", "Alert", JOptionPane.WARNING_MESSAGE);
         }
@@ -413,7 +440,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             crewManagerWindow.dispose();
             createMissionCreationWindow();
         } else {
-            JOptionPane.showMessageDialog(desktop, "Away Mission has not started.", "Alert", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(desktop, "Away Mission has not started.", "Alert",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -426,7 +454,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             crewManagerWindow.dispose();
             createMissionCreationWindow();
         } else {
-            JOptionPane.showMessageDialog(desktop, "Away Mission has not started.", "Alert", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(desktop, "Away Mission has not started.", "Alert",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -439,7 +468,6 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     private void addAwayTeamMemberAction() {
-        addAwayTeamMemberAction();
         int[] crewIndices = list1.getSelectedIndices();
         String popupMessage = "";
 
@@ -454,8 +482,9 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
                     starship.getCurrentAwayMission().addCrewMemberToAwayTeam(cm);
                 }
 
-                if (starship.getCurrentAwayMission().getIsActive()) { //TODO potnetially make these messages shorter/combined
-                    popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been transported off of the starship.";
+                if (starship.getCurrentAwayMission().getIsActive()) { //TODO make these messages shorter/combined?
+                    popupMessage = popupMessage + "\n" + cm.nameToString(true)
+                            + " has been transported off of the starship.";
                 } else {
                     popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been added to the away team.";
                 }
@@ -467,7 +496,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
-    private void removeAwayTeamMemberAction() { //TODO fix message
+    private void removeAwayTeamMemberAction() { //TODO shorter message?
         int[] awayTeamIndices = list2.getSelectedIndices();
         String popupMessage = "";
 
@@ -478,9 +507,11 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             l2.removeElementAt(n);
 
             if (starship.getCurrentAwayMission().getIsActive()) {
-                popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been transported back to the starship.";
+                popupMessage = popupMessage + "\n" + cm.nameToString(true)
+                        + " has been transported back to the starship.";
             } else {
-                popupMessage = popupMessage + "\n" + cm.nameToString(true) +  " has been removed from the away team.";
+                popupMessage = popupMessage + "\n" + cm.nameToString(true)
+                        +  " has been removed from the away team.";
             }
         }
 
@@ -527,7 +558,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             } else {
                 s = "incomplete";
             }
-            awayMissionLog = awayMissionLog + "\nMission ID: " + am.getAwayMissionID() + "\nStardate: " + starship.stardateToString(am.getStardate()) + "\nObjective " + s + "\n";
+            awayMissionLog = awayMissionLog + "\nMission ID: " + am.getAwayMissionID() + "\nStardate: "
+                    + starship.stardateToString(am.getStardate()) + "\nObjective " + s + "\n";
         }
         return awayMissionLog;
     }
@@ -539,7 +571,9 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
         for (int i : crewIndices) {
             CrewMember cm = starship.getCrewMembers().get(i);
-            crewMemberStats = crewMemberStats + cm.nameToString(false) + "\nRank: " + cm.getRank().name() + "\nDivision: " + cm.getDivision().name() + "\nHealth Status: " + cm.getHealthStatus().name() + "\n\n";
+            crewMemberStats = crewMemberStats + cm.nameToString(false) + "\nRank: " + cm.getRank().name()
+                    + "\nDivision: " + cm.getDivision().name() + "\nHealth Status: " + cm.getHealthStatus().name()
+                    + "\n\n";
         }
         return crewMemberStats;
     }
@@ -550,10 +584,12 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             jsonWriter.open();
             jsonWriter.write(starship);
             jsonWriter.close();
-            JOptionPane.showMessageDialog(desktop, "Saved starship data for " + starship.getShipName() + " (" + starship.getShipID()
+            JOptionPane.showMessageDialog(desktop, "Saved starship data for " + starship.getShipName()
+                    + " (" + starship.getShipID()
                     + ") to " + JSON_STARSHIP);
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(desktop, "Unable to write to file " + JSON_STARSHIP, "Alert", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(desktop, "Unable to write to file " + JSON_STARSHIP, "Alert",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -569,7 +605,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             }
             welcomeCaptain();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(desktop, "Unable to read from file: " + JSON_STARSHIP, "Alert", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(desktop, "Unable to read from file: " + JSON_STARSHIP, "Alert",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
