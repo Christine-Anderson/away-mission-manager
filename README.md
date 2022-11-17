@@ -25,11 +25,23 @@ As the Captain, I want to be able to:
 
 # Instructions for Grader
 
-- You can generate the first required event related to adding Xs to a Y by... 
-- You can generate the second required event related to adding Xs to a Y by... must also allow the user to generate at least two events related to those Xs and Y
+- You can generate the first required event related to adding Xs to a Y by:
+  - First, in the load window either click the "yes" button to load the starship data or the "no" button to progress to
+  the Captain's name window. Input your name and click the "enter" button.
+  - Then click the "create mission" button to create a new away mission. Note that if you loaded previous starship data
+  with a current away mission, this menu will be skipped. This will generate the crew manager and mission manager menus.
+  - In the crew manager window, the left panel displays the list current crew members. Select crew member(s) from 
+  the list by clicking their names (holding shift to select multiple crew members) and click the "add" button to add 
+  them to the away team (right panel).
+- You can generate the second required event related to adding Xs to a Y by:
+  - First navigate to the crew manager menu as above.
+  - Crew members may be removed from the away team by selecting crew member(s) in the away team panel following a
+  similar procedure as above and clicking the "remove" button.
+  - As well, selecting crew member(s) from the crew member (left) panel as above and clicking the "stats" button will
+  generate a window displaying stats on the selected crew member(s)
 - You can locate my visual component by starting the program. The load window will display an image of the starship.
-- You can save the state of my application by clicking the close button which will bring up the save window with the 
-option to save. Click the "yes" button to save.
+- You can save the state of my application by clicking the close button at any time which will bring up the save window.
+Click the "yes" button to save and exit the program. Click the "no" button to exit without saving.
 - You can reload the state of my application by clicking the "yes" button in the load window when you start the program.
 
 #### Citations
