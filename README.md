@@ -23,13 +23,14 @@ As the Captain, I want to be able to:
 - have the option to save the current starship data when I select the quit option from the application menu 
 - have the option to load the previous starship data when I start the application
 
-# Instructions for Grader //TODO
+# Instructions for Grader
 
-- You can generate the first required event related to adding Xs to a Y by...
-- You can generate the second required event related to adding Xs to a Y by...
-- You can locate my visual component by...
-- You can save the state of my application by...
-- You can reload the state of my application by...
+- You can generate the first required event related to adding Xs to a Y by... 
+- You can generate the second required event related to adding Xs to a Y by... must also allow the user to generate at least two events related to those Xs and Y
+- You can locate my visual component by starting the program. The load window will display an image of the starship.
+- You can save the state of my application by clicking the close button which will bring up the save window with the 
+option to save. Click the "yes" button to save.
+- You can reload the state of my application by clicking the "yes" button in the load window when you start the program.
 
 #### Citations
 1. The AwayMissionManagerApp Class console interface is based on code from the TellerApp project provided in class 
