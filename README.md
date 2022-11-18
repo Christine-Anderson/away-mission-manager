@@ -30,12 +30,12 @@ As the Captain, I want to be able to:
   the Captain's name window. Input your name and click the "enter" button.
   - Then click the "create mission" button to create a new away mission. Note that if you loaded previous starship data
   with a current away mission, this menu will be skipped. This will generate the crew manager and mission manager menus.
-  - In the crew manager window, the left panel displays the list current crew members. Select crew member(s) from 
+  - In the crew manager window, the left panel displays the list of current crew members. Select crew member(s) from 
   the list by clicking their names (holding shift to select multiple crew members) and click the "add" button to add 
   them to the away team (right panel).
 - You can generate the second required event related to adding Xs to a Y by:
   - First navigate to the crew manager menu as above.
-  - Crew members may be removed from the away team by selecting crew member(s) in the away team panel following a
+  - Crew member(s) may be removed from the away team by selecting crew member(s) in the away team panel following a
   similar procedure as above and clicking the "remove" button.
   - As well, selecting crew member(s) from the crew member (left) panel as above and clicking the "stats" button will
   generate a window displaying stats on the selected crew member(s)
