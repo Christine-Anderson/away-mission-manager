@@ -85,8 +85,10 @@ public class AwayMission implements Writable {
     public void addCrewMemberToAwayTeam(CrewMember crewMember) {
         if (!this.awayTeam.contains(crewMember) && crewMember.getHealthStatus() != HealthStatus.DEAD) {
             this.awayTeam.add(crewMember);
+            EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true) + " added to the Away Team."));
             if (this.isActive) {
                 crewMember.setIsOnStarship(false);
+                EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true) + " transported off of the Starship."));
             }
         }
     }

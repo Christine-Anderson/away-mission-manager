@@ -6,7 +6,7 @@
             "lastName": "Riker",
             "healthStatus": "HEALTHY",
             "isOnStarship": true,
-            "hasRedShirt": true,
+            "hasRedShirt": false,
             "rank": "COMMANDER",
             "hasPlotArmour": true
         },
@@ -25,7 +25,7 @@
             "firstName": "Data",
             "lastName": "",
             "healthStatus": "HEALTHY",
-            "isOnStarship": true,
+            "isOnStarship": false,
             "hasRedShirt": true,
             "rank": "COMMANDER",
             "hasPlotArmour": false
@@ -35,18 +35,18 @@
             "firstName": "Reginald",
             "lastName": "Baclay",
             "healthStatus": "HEALTHY",
-            "isOnStarship": false,
+            "isOnStarship": true,
             "hasRedShirt": false,
             "rank": "LIEUTENANT",
-            "hasPlotArmour": false
+            "hasPlotArmour": true
         },
         {
             "division": "COMMAND",
             "firstName": "Keiko",
             "lastName": "O'Brien",
-            "healthStatus": "INJURED",
-            "isOnStarship": false,
-            "hasRedShirt": false,
+            "healthStatus": "HEALTHY",
+            "isOnStarship": true,
+            "hasRedShirt": true,
             "rank": "CIVILIAN",
             "hasPlotArmour": true
         },
@@ -55,8 +55,8 @@
             "firstName": "Jadzia",
             "lastName": "Dax",
             "healthStatus": "HEALTHY",
-            "isOnStarship": true,
-            "hasRedShirt": false,
+            "isOnStarship": false,
+            "hasRedShirt": true,
             "rank": "LIEUTENANT",
             "hasPlotArmour": true
         },
@@ -66,7 +66,7 @@
             "lastName": "Bashir",
             "healthStatus": "HEALTHY",
             "isOnStarship": false,
-            "hasRedShirt": false,
+            "hasRedShirt": true,
             "rank": "LIEUTENANT",
             "hasPlotArmour": false
         },
@@ -76,16 +76,16 @@
             "lastName": "Troi",
             "healthStatus": "HEALTHY",
             "isOnStarship": false,
-            "hasRedShirt": true,
+            "hasRedShirt": false,
             "rank": "CIVILIAN",
-            "hasPlotArmour": false
+            "hasPlotArmour": true
         },
         {
             "division": "OTHER",
             "firstName": "Tribble",
             "lastName": "",
             "healthStatus": "HEALTHY",
-            "isOnStarship": true,
+            "isOnStarship": false,
             "hasRedShirt": true,
             "rank": "OTHER",
             "hasPlotArmour": false
@@ -95,10 +95,10 @@
             "firstName": "Morn",
             "lastName": "",
             "healthStatus": "HEALTHY",
-            "isOnStarship": true,
+            "isOnStarship": false,
             "hasRedShirt": true,
             "rank": "CIVILIAN",
-            "hasPlotArmour": false
+            "hasPlotArmour": true
         },
         {
             "division": "OTHER",
@@ -106,9 +106,9 @@
             "lastName": "Garak",
             "healthStatus": "HEALTHY",
             "isOnStarship": true,
-            "hasRedShirt": true,
+            "hasRedShirt": false,
             "rank": "CIVILIAN",
-            "hasPlotArmour": true
+            "hasPlotArmour": false
         },
         {
             "division": "COMMAND",
@@ -118,7 +118,7 @@
             "isOnStarship": true,
             "hasRedShirt": false,
             "rank": "LIEUTENANT_COMMANDER",
-            "hasPlotArmour": true
+            "hasPlotArmour": false
         },
         {
             "division": "OTHER",
@@ -126,7 +126,7 @@
             "lastName": "",
             "healthStatus": "HEALTHY",
             "isOnStarship": true,
-            "hasRedShirt": false,
+            "hasRedShirt": true,
             "rank": "CIVILIAN",
             "hasPlotArmour": false
         },
@@ -136,7 +136,7 @@
             "lastName": "",
             "healthStatus": "HEALTHY",
             "isOnStarship": true,
-            "hasRedShirt": true,
+            "hasRedShirt": false,
             "rank": "CIVILIAN",
             "hasPlotArmour": true
         },
@@ -148,14 +148,14 @@
             "isOnStarship": true,
             "hasRedShirt": true,
             "rank": "LIEUTENANT",
-            "hasPlotArmour": false
+            "hasPlotArmour": true
         },
         {
             "division": "COMMAND",
             "firstName": "Tom",
             "lastName": "Paris",
             "healthStatus": "HEALTHY",
-            "isOnStarship": true,
+            "isOnStarship": false,
             "hasRedShirt": true,
             "rank": "ENSIGN",
             "hasPlotArmour": true
@@ -165,17 +165,17 @@
             "firstName": "Harry",
             "lastName": "Kim",
             "healthStatus": "HEALTHY",
-            "isOnStarship": true,
-            "hasRedShirt": true,
+            "isOnStarship": false,
+            "hasRedShirt": false,
             "rank": "ENSIGN",
-            "hasPlotArmour": true
+            "hasPlotArmour": false
         },
         {
             "division": "MEDICAL",
             "firstName": "The",
             "lastName": "Doctor",
             "healthStatus": "HEALTHY",
-            "isOnStarship": true,
+            "isOnStarship": false,
             "hasRedShirt": true,
             "rank": "OTHER",
             "hasPlotArmour": false
@@ -188,7 +188,7 @@
             "isOnStarship": true,
             "hasRedShirt": false,
             "rank": "CIVILIAN",
-            "hasPlotArmour": true
+            "hasPlotArmour": false
         },
         {
             "division": "SCIENCES",
@@ -198,7 +198,7 @@
             "isOnStarship": true,
             "hasRedShirt": false,
             "rank": "CADET",
-            "hasPlotArmour": true
+            "hasPlotArmour": false
         },
         {
             "division": "OTHER",
@@ -206,99 +206,112 @@
             "lastName": "Spock",
             "healthStatus": "HEALTHY",
             "isOnStarship": true,
-            "hasRedShirt": true,
+            "hasRedShirt": false,
             "rank": "OTHER",
-            "hasPlotArmour": false
+            "hasPlotArmour": true
         }
     ],
-    "firstNameOfCaptain": "Hi",
-    "awayMissionID": "14268716",
-    "lastNameOfCaptain": "there",
-    "currentStardate": "41027",
-    "missionLog": [{
-        "isObjectiveComplete": true,
-        "stardate": "41026",
-        "awayTeam": [
-            {
-                "division": "COMMAND",
-                "firstName": "Keiko",
-                "lastName": "O'Brien",
-                "healthStatus": "INJURED",
-                "isOnStarship": false,
-                "hasRedShirt": false,
-                "rank": "CIVILIAN",
-                "hasPlotArmour": true
-            },
-            {
-                "division": "MEDICAL",
-                "firstName": "Jadzia",
-                "lastName": "Dax",
-                "healthStatus": "HEALTHY",
-                "isOnStarship": true,
-                "hasRedShirt": false,
-                "rank": "LIEUTENANT",
-                "hasPlotArmour": true
-            },
-            {
-                "division": "MEDICAL",
-                "firstName": "Julian",
-                "lastName": "Bashir",
-                "healthStatus": "HEALTHY",
-                "isOnStarship": false,
-                "hasRedShirt": false,
-                "rank": "LIEUTENANT",
-                "hasPlotArmour": false
-            }
-        ],
-        "awayMissionID": "14268714",
-        "isActive": false
-    }],
+    "firstNameOfCaptain": "First Name",
+    "awayMissionID": "14268715",
+    "lastNameOfCaptain": "Last Name",
+    "currentStardate": "41026",
+    "missionLog": [],
     "currentAwayMission": {
         "isObjectiveComplete": false,
-        "stardate": "41027",
+        "stardate": "41026",
         "awayTeam": [
-            {
-                "division": "ENGINEERING",
-                "firstName": "Reginald",
-                "lastName": "Baclay",
-                "healthStatus": "HEALTHY",
-                "isOnStarship": false,
-                "hasRedShirt": false,
-                "rank": "LIEUTENANT",
-                "hasPlotArmour": false
-            },
-            {
-                "division": "COMMAND",
-                "firstName": "Keiko",
-                "lastName": "O'Brien",
-                "healthStatus": "INJURED",
-                "isOnStarship": false,
-                "hasRedShirt": false,
-                "rank": "CIVILIAN",
-                "hasPlotArmour": true
-            },
-            {
-                "division": "MEDICAL",
-                "firstName": "Julian",
-                "lastName": "Bashir",
-                "healthStatus": "HEALTHY",
-                "isOnStarship": false,
-                "hasRedShirt": false,
-                "rank": "LIEUTENANT",
-                "hasPlotArmour": false
-            },
             {
                 "division": "OTHER",
                 "firstName": "Lwaxana",
                 "lastName": "Troi",
                 "healthStatus": "HEALTHY",
                 "isOnStarship": false,
+                "hasRedShirt": false,
+                "rank": "CIVILIAN",
+                "hasPlotArmour": true
+            },
+            {
+                "division": "COMMAND",
+                "firstName": "Data",
+                "lastName": "",
+                "healthStatus": "HEALTHY",
+                "isOnStarship": false,
+                "hasRedShirt": true,
+                "rank": "COMMANDER",
+                "hasPlotArmour": false
+            },
+            {
+                "division": "MEDICAL",
+                "firstName": "Jadzia",
+                "lastName": "Dax",
+                "healthStatus": "HEALTHY",
+                "isOnStarship": false,
+                "hasRedShirt": true,
+                "rank": "LIEUTENANT",
+                "hasPlotArmour": true
+            },
+            {
+                "division": "MEDICAL",
+                "firstName": "Julian",
+                "lastName": "Bashir",
+                "healthStatus": "HEALTHY",
+                "isOnStarship": false,
+                "hasRedShirt": true,
+                "rank": "LIEUTENANT",
+                "hasPlotArmour": false
+            },
+            {
+                "division": "OTHER",
+                "firstName": "Tribble",
+                "lastName": "",
+                "healthStatus": "HEALTHY",
+                "isOnStarship": false,
+                "hasRedShirt": true,
+                "rank": "OTHER",
+                "hasPlotArmour": false
+            },
+            {
+                "division": "OTHER",
+                "firstName": "Morn",
+                "lastName": "",
+                "healthStatus": "HEALTHY",
+                "isOnStarship": false,
                 "hasRedShirt": true,
                 "rank": "CIVILIAN",
+                "hasPlotArmour": true
+            },
+            {
+                "division": "COMMAND",
+                "firstName": "Tom",
+                "lastName": "Paris",
+                "healthStatus": "HEALTHY",
+                "isOnStarship": false,
+                "hasRedShirt": true,
+                "rank": "ENSIGN",
+                "hasPlotArmour": true
+            },
+            {
+                "division": "COMMAND",
+                "firstName": "Harry",
+                "lastName": "Kim",
+                "healthStatus": "HEALTHY",
+                "isOnStarship": false,
+                "hasRedShirt": false,
+                "rank": "ENSIGN",
+                "hasPlotArmour": false
+            },
+            {
+                "division": "MEDICAL",
+                "firstName": "The",
+                "lastName": "Doctor",
+                "healthStatus": "HEALTHY",
+                "isOnStarship": false,
+                "hasRedShirt": true,
+                "rank": "OTHER",
                 "hasPlotArmour": false
             }
         ],
-        "awayMissionID": "14268715",
+        "awayMissionID": "14268714",
         "isActive": true
     }
 }

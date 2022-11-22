@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -331,57 +332,47 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     // EFFECTS: Calls the appropriate action command method when a JButton is clicked
     @SuppressWarnings("methodlength")
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("loadFile")) {
-            loadFileAction();
-        }
-
-        if (e.getActionCommand().equals("doNotLoadFile")) {
-            doNotLoadFileAction();
-        }
-
-        if (e.getActionCommand().equals("setCaptainName")) {
-            setCaptainNameAction();
-        }
-
-        if (e.getActionCommand().equals("create mission")) {
-            createMissionAction();
-        }
-
-        if (e.getActionCommand().equals("start mission")) {
-            startMissionAction();
-        }
-
-        if (e.getActionCommand().equals("end mission")) {
-            endMissionAction();
-        }
-
-        if (e.getActionCommand().equals("emergency beam out")) {
-            emergencyBeamOutAction();
-        }
-
-        if (e.getActionCommand().equals("print mission log")) {
-            printMissionLogAction();
-        }
-
-        if (e.getActionCommand().equals("addAwayTeamMember")) {
-            addAwayTeamMemberAction();
-        }
-
-        if (e.getActionCommand().equals("statsCrewMember")) {
-            createCrewMemberStats();
-        }
-
-        if (e.getActionCommand().equals("removeAwayTeamMember")) {
-            removeAwayTeamMemberAction();
-        }
-
-        if (e.getActionCommand().equals("saveFile")) {
-            saveStarship();
-            System.exit(0);
-        }
-
-        if (e.getActionCommand().equals("doNotSaveFile")) {
-            System.exit(0);
+        switch (e.getActionCommand()) {
+            case "loadFile":
+                loadFileAction();
+                break;
+            case "doNotLoadFile":
+                doNotLoadFileAction();
+                break;
+            case "setCaptainName":
+                setCaptainNameAction();
+                break;
+            case "create mission":
+                createMissionAction();
+                break;
+            case "start mission":
+                startMissionAction();
+                break;
+            case "end mission":
+                endMissionAction();
+                break;
+            case "emergency beam out":
+                emergencyBeamOutAction();
+                break;
+            case "print mission log":
+                printMissionLogAction();
+                break;
+            case "addAwayTeamMember":
+                addAwayTeamMemberAction();
+                break;
+            case "statsCrewMember":
+                createCrewMemberStats();
+                break;
+            case "removeAwayTeamMember":
+                removeAwayTeamMemberAction();
+                break;
+            case "saveFile":
+                saveFileAction();
+            case "doNotSaveFile":
+                doNotSaveFileAction();
+            default:
+                JOptionPane.showMessageDialog(desktop, "Button not handled.", "Error",
+                        JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -441,8 +432,8 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
 
     // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: if the current away mission is not active and the away team is not empty, starts away mission
-    //          if the current away mission is active creates a pop up warning
-    //          otherwise, creates creates a pop up warning
+    //          if the current away mission is active creates a pop-up warning
+    //          otherwise, creates creates a pop-up warning
     private void startMissionAction() {
         if (!starship.getCurrentAwayMission().getIsActive()
                 && !starship.getCurrentAwayMission().getAwayTeam().isEmpty()) {
@@ -459,7 +450,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: if the current away mission is active, ends away mission, updates the away team Jlist and creates the
     //          mission creation window
-    //          otherwise, creates creates a pop up warning
+    //          otherwise, creates a pop-up warning
     private void endMissionAction() {
         if (starship.getCurrentAwayMission().getIsActive()) {
             starship.endAwayMission();
@@ -477,7 +468,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: if the current away mission is active, emergency beams out the away team, updates the away team Jlist,
     //          and creates the mission creation window
-    //          otherwise, creates a pop up warning
+    //          otherwise, creates a pop-up warning
     private void emergencyBeamOutAction() {
         if (starship.getCurrentAwayMission().getIsActive()) {
             starship.emergencyBeamOut();
@@ -493,7 +484,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: if the mission log is empty, creates a pop up warning
+    // EFFECTS: if the mission log is empty, creates a pop-up warning
     //          otherwise, creates a mission log print out window
     private void printMissionLogAction() {
         if (starship.getMissionLog().isEmpty()) {
@@ -504,14 +495,14 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this, Starship, AwayMission, CrewMember
-    // EFFECTS: if the crew member is dead, creates a pop up warning
+    // EFFECTS: if the crew member is dead, creates a pop-up warning
     //          if the away team does not contain the crew member(s) to add, add the crew member(s) to the away team and
     //          the away team JList
-    //          if the away team is active, create a pop up that crew member(s) have been transported off the ship
-    //          otherwise, creates a pop up warning that crew member(s) have been added to the away team
+    //          if the away team is active, create a pop-up that crew member(s) have been transported off the ship
+    //          otherwise, creates a pop-up warning that crew member(s) have been added to the away team
     private void addAwayTeamMemberAction() {
         int[] crewIndices = list1.getSelectedIndices();
-        String popupMessage = "";
+//        String popupMessage = "";
 
         for (int i : crewIndices) {
             CrewMember cm = starship.getCrewMembers().get(i);
@@ -524,27 +515,27 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
                     starship.getCurrentAwayMission().addCrewMemberToAwayTeam(cm);
                 }
 
-                if (starship.getCurrentAwayMission().getIsActive()) { //TODO make these messages shorter/combined?
-                    popupMessage = popupMessage + "\n" + cm.nameToString(true)
-                            + " has been transported off of the starship.";
-                } else {
-                    popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been added to the away team.";
-                }
+//                if (starship.getCurrentAwayMission().getIsActive()) { //TODO remove pop-up messages
+//                    popupMessage = popupMessage + "\n" + cm.nameToString(true)
+//                            + " has been transported off of the starship.";
+//                } else {
+//                    popupMessage = popupMessage + "\n" + cm.nameToString(true) + " has been added to the away team.";
+//                }
             }
         }
 
-        if (crewIndices.length > 0) {
-            JOptionPane.showMessageDialog(desktop, popupMessage);
-        }
+//        if (crewIndices.length > 0) {
+//            JOptionPane.showMessageDialog(desktop, popupMessage);
+//        }
     }
 
     // MODIFIES: this, Starship, AwayMission, CrewMember
     // EFFECTS: removes the crew member(s) from the away team and the away team JList
-    //          if the away team is active, create a pop up that crew member(s) have been transported back to the ship
-    //          otherwise, creates a pop up warning that crew member(s) have been removed from the away team
-    private void removeAwayTeamMemberAction() { //TODO shorter message?
+    //          if the away team is active, create a pop-up that crew member(s) have been transported back to the ship
+    //          otherwise, creates a pop-up warning that crew member(s) have been removed from the away team
+    private void removeAwayTeamMemberAction() {
         int[] awayTeamIndices = list2.getSelectedIndices();
-        String popupMessage = "";
+//        String popupMessage = ""; //TODO remove pop-ups
 
         for (int i = awayTeamIndices.length - 1; i >= 0; i--) {
             int n = awayTeamIndices[i];
@@ -553,23 +544,34 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
             starship.getCurrentAwayMission().removeCrewMemberFromAwayTeam(cm);
             l2.removeElementAt(n);
 
-            if (starship.getCurrentAwayMission().getIsActive()) {
-                popupMessage = popupMessage + "\n" + cm.nameToString(true)
-                        + " has been transported back to the starship.";
-            } else {
-                popupMessage = popupMessage + "\n" + cm.nameToString(true)
-                        + " has been removed from the away team.";
-            }
+//            if (starship.getCurrentAwayMission().getIsActive()) {
+//                popupMessage = popupMessage + "\n" + cm.nameToString(true)
+//                        + " has been transported back to the starship.";
+//            } else {
+//                popupMessage = popupMessage + "\n" + cm.nameToString(true)
+//                        + " has been removed from the away team.";
+//            }
         }
 
-        if (awayTeamIndices.length > 0) {
-            JOptionPane.showMessageDialog(desktop, popupMessage);
-        }
+//        if (awayTeamIndices.length > 0) {
+//            JOptionPane.showMessageDialog(desktop, popupMessage);
+//        }
+    }
+
+    private void saveFileAction() {
+        saveStarship();
+        printLog(EventLog.getInstance());
+        System.exit(0);
+    }
+
+    private void doNotSaveFileAction() {
+        printLog(EventLog.getInstance());
+        System.exit(0);
     }
 
     // MODIFIES: this, Starship, CrewMember
     // EFFECTS: initializes crew
-    private void initializeCrew() {
+    private void initializeCrew() {  //TODO input from JSON?
         List<CrewMember> crewMembers = new ArrayList<>();
         crewMembers.add(new CrewMember("William", "Riker", Rank.COMMANDER, Division.COMMAND));
         crewMembers.add(new CrewMember("Geordi", "La Forge", Rank.LIEUTENANT_COMMANDER, Division.ENGINEERING));
@@ -656,7 +658,13 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
-    // EFFECTS: Creates a welcome Caption pop up window
+    private void printLog(EventLog eventLog) {
+        for (Event next : eventLog) {
+            System.out.println(next.toString());
+        }
+    }
+
+    // EFFECTS: Creates a welcome Caption pop-up window
     private void welcomeCaptain() {
         JOptionPane.showMessageDialog(desktop, "Welcome Captain " + starship.getLastNameOfCaptain());
     }

@@ -64,3 +64,5 @@ in class
    1. These classes were taken directly from the project and only the test classes were modified
    2. 
    3. //TODO fix this citation
+7. The LogPrinterTest Class is based on code from https://stackoverflow.com/questions/1119385/junit-test-for-system-out-println
+   1. I used these examples to write a unit test for the printLog method which prints to the console
