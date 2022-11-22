@@ -59,3 +59,8 @@ tutorials
    1. I used these examples to learn how to make, adjust, and use lists and scroll panes
 5. The AwayMissionManagerGUI Class is based on example code from https://stackoverflow.com/questions/6578205/swing-jlabel-text-change-on-the-running-application
     1. I used this example to learn how to use event handling
+6. The EventLog, Event, EventLogTest, and EventTest Classes are all based on code from the AlarmSystem project provided 
+in class
+   1. These classes were taken directly from the project and only the test classes were modified
+   2. 
+   3. //TODO fix this citation
