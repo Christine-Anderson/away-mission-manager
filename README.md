@@ -118,7 +118,6 @@ Mission 14268715 added to the Away Mission Log.
 If I had more time to work on the project, I would do the following refactoring to improve my design:
 - use a HashMap instead of an ArrayList as my data structure for the lists of crew members on the starship and on the
 away team as I am working with unordered sets with no duplicates
-- use the Singleton design pattern for my Starship class?? //TODO learn about this in class
 - three of my classes have low cohesion
   - this is evident in the UML diagram for Starship which is maintaining a single AwayMission, a list of AwayMission,
   and a list of CrewMember
