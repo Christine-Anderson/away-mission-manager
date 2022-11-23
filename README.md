@@ -45,77 +45,102 @@ Click the "yes" button to save and exit the program. Click the "no" button to ex
 - You can reload the state of my application by clicking the "yes" button in the load window when you start the program.
 
 ### Phase 4: Task 2
+
 A representative sample of the events that occur when my program runs:
 
-Tue Nov 22 16:12:47 PST 2022
-Created new Away Mission 14268714 on stardate 4102.6.
-Tue Nov 22 16:12:52 PST 2022
-William Riker added to the Away Team.
-Tue Nov 22 16:12:52 PST 2022
-Geordi La Forge added to the Away Team.
-Tue Nov 22 16:12:52 PST 2022
-Data added to the Away Team.
-Tue Nov 22 16:12:52 PST 2022
-Reginald Baclay added to the Away Team.
-Tue Nov 22 16:12:54 PST 2022
-Reginald Baclay removed from the Away Team.
-Tue Nov 22 16:12:55 PST 2022
-Mission 14268714 started.
-Tue Nov 22 16:12:55 PST 2022
-Away Team transported off of the Starship.
-Tue Nov 22 16:12:57 PST 2022
-Tribble added to the Away Team.
-Tue Nov 22 16:12:57 PST 2022
-Tribble transported off of the Starship.
-Tue Nov 22 16:12:59 PST 2022
-Tribble removed from the Away Team.
-Tue Nov 22 16:12:59 PST 2022
-Tribble transported to the Starship.
-Tue Nov 22 16:12:59 PST 2022
-Tribble returned injured.
-Tue Nov 22 16:13:00 PST 2022
-Mission 14268714 objective complete.
-Tue Nov 22 16:13:00 PST 2022
-Mission 14268714 ended.
-Tue Nov 22 16:13:00 PST 2022
-Away Team transported to the Starship.
-Tue Nov 22 16:13:00 PST 2022
-William Riker returned dead.
-Tue Nov 22 16:13:00 PST 2022
-Geordi La Forge returned injured.
-Tue Nov 22 16:13:00 PST 2022
-Data returned healthy.
-Tue Nov 22 16:13:00 PST 2022
-Mission 14268714 added to the Away Mission Log.
-Tue Nov 22 16:13:02 PST 2022
-Created new Away Mission 14268715 on stardate 4102.7.
-Tue Nov 22 16:13:05 PST 2022
-Tom Paris added to the Away Team.
-Tue Nov 22 16:13:09 PST 2022
-Harry Kim added to the Away Team.
-Tue Nov 22 16:13:13 PST 2022
-Seven of Nine added to the Away Team.
-Tue Nov 22 16:13:16 PST 2022
-Mission 14268715 started.
-Tue Nov 22 16:13:16 PST 2022
-Away Team transported off of the Starship.
-Tue Nov 22 16:13:18 PST 2022
-Mission 14268715 ended.
-Tue Nov 22 16:13:18 PST 2022
-Away Team transported to the Starship.
-Tue Nov 22 16:13:18 PST 2022
-Tom Paris returned dead.
-Tue Nov 22 16:13:18 PST 2022
-Harry Kim returned dead.
-Tue Nov 22 16:13:18 PST 2022
-Seven of Nine returned injured.
-Tue Nov 22 16:13:18 PST 2022
-Mission 14268715 added to the Away Mission Log.
+Tue Nov 22 16:12:47 PST 2022  
+Created new Away Mission 14268714 on stardate 4102.6.  
+Tue Nov 22 16:12:52 PST 2022  
+William Riker added to the Away Team.  
+Tue Nov 22 16:12:52 PST 2022  
+Geordi La Forge added to the Away Team.  
+Tue Nov 22 16:12:52 PST 2022  
+Data added to the Away Team.  
+Tue Nov 22 16:12:52 PST 2022  
+Reginald Baclay added to the Away Team.  
+Tue Nov 22 16:12:54 PST 2022  
+Reginald Baclay removed from the Away Team.  
+Tue Nov 22 16:12:55 PST 2022  
+Mission 14268714 started.  
+Tue Nov 22 16:12:55 PST 2022  
+Away Team transported off of the Starship.  
+Tue Nov 22 16:12:57 PST 2022  
+Tribble added to the Away Team.  
+Tue Nov 22 16:12:57 PST 2022  
+Tribble transported off of the Starship.  
+Tue Nov 22 16:12:59 PST 2022  
+Tribble removed from the Away Team.  
+Tue Nov 22 16:12:59 PST 2022  
+Tribble transported to the Starship.  
+Tue Nov 22 16:12:59 PST 2022  
+Tribble returned injured.  
+Tue Nov 22 16:13:00 PST 2022  
+Mission 14268714 objective complete.  
+Tue Nov 22 16:13:00 PST 2022  
+Mission 14268714 ended.  
+Tue Nov 22 16:13:00 PST 2022  
+Away Team transported to the Starship.  
+Tue Nov 22 16:13:00 PST 2022  
+William Riker returned dead.  
+Tue Nov 22 16:13:00 PST 2022  
+Geordi La Forge returned injured.  
+Tue Nov 22 16:13:00 PST 2022  
+Data returned healthy.  
+Tue Nov 22 16:13:00 PST 2022  
+Mission 14268714 added to the Away Mission Log.  
+Tue Nov 22 16:13:02 PST 2022  
+Created new Away Mission 14268715 on stardate 4102.7.  
+Tue Nov 22 16:13:05 PST 2022  
+Tom Paris added to the Away Team.  
+Tue Nov 22 16:13:09 PST 2022  
+Harry Kim added to the Away Team.  
+Tue Nov 22 16:13:13 PST 2022  
+Seven of Nine added to the Away Team.  
+Tue Nov 22 16:13:16 PST 2022  
+Mission 14268715 started.  
+Tue Nov 22 16:13:16 PST 2022  
+Away Team transported off of the Starship.  
+Tue Nov 22 16:13:18 PST 2022  
+Mission 14268715 ended.  
+Tue Nov 22 16:13:18 PST 2022  
+Away Team transported to the Starship.  
+Tue Nov 22 16:13:18 PST 2022  
+Tom Paris returned dead.  
+Tue Nov 22 16:13:18 PST 2022  
+Harry Kim returned dead.  
+Tue Nov 22 16:13:18 PST 2022  
+Seven of Nine returned injured.  
+Tue Nov 22 16:13:18 PST 2022  
+Mission 14268715 added to the Away Mission Log.  
 
 ### Phase 4: Task 3
-If I had more time to work on the project, I would do the following refactoring to improve my design?
--
--
+
+If I had more time to work on the project, I would do the following refactoring to improve my design:
+- use a HashMap instead of an ArrayList as my data structure for the lists of crew members on the starship and on the
+away team as I am working with unordered sets with no duplicates
+- use the Singleton design pattern for my Starship class?? //TODO learn about this in class
+- three of my classes have low cohesion
+  - this is evident in the UML diagram for Starship which is maintaining a single AwayMission, a list of AwayMission,
+  and a list of CrewMember
+- they be broken up into smaller classes as follows:
+1. **AwayMissionManagerGUI** would have several classes representing different parts of the UI:  
+for example, missionCreationWindow, missionManagerWindow, and crewManagerWindow
+2. **Starship** would have fields name, ship ID, and one of each of the following classes:
+   | Class  | Select fields and methods |
+   | ------------- |:-------------:|
+   | Captain      | firstName, LastName     |
+   | CrewManger      | set of CrewMember, add, remove     |
+   | CurrentAwayMissionManager      | currentAwayMission, awayMissionID, create, start, end, emergencyBeamOut     |
+   | MissionLog      | list of (previous) AwayMission, add, toString     | 
+   | Stardate      | currentStardate, updateStardate, toString     | 
+   | EventGenerator      | see 4     |
+3. **AwayMission** would have awayMissionID, stardate, isActive, and isObjectiveComplete; 
+   | Class  | Select fields and methods |
+   | ------------- |:-------------:|
+   | AwayTeam      | set of CrewMembers, add, remove, transport     |
+   | EventGenerator      | see 4     |
+4. Create an EventGenerator class to add events to the eventLog for both classes above to improve cohesion and reduce 
+code duplication
 
 #### Citations
 1. The AwayMissionManagerApp Class console interface is based on code from the TellerApp project provided in class 
