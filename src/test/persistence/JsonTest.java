@@ -51,7 +51,7 @@ public class JsonTest {
         assertEquals(fn, starship.getFirstNameOfCaptain());
         assertEquals(ln, starship.getLastNameOfCaptain());
         assertEquals(stardate, starship.getCurrentStardate());
-        assertEquals(awayMissionID, starship.getAwayMissionID());
+        assertEquals(awayMissionID, starship.getNextAwayMissionID());
     }
 
 

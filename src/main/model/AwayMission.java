@@ -85,10 +85,12 @@ public class AwayMission implements Writable {
     public void addCrewMemberToAwayTeam(CrewMember crewMember) {
         if (!this.awayTeam.contains(crewMember) && crewMember.getHealthStatus() != HealthStatus.DEAD) {
             this.awayTeam.add(crewMember);
-            EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true) + " added to the Away Team."));
+            EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
+                    + " added to the Away Team."));
             if (this.isActive) {
                 crewMember.setIsOnStarship(false);
-                EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true) + " transported off of the Starship."));
+                EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
+                        + " transported off of the Starship."));
             }
         }
     }
@@ -100,9 +102,15 @@ public class AwayMission implements Writable {
     public void removeCrewMemberFromAwayTeam(CrewMember crewMember) {
         if (this.awayTeam.contains(crewMember)) {
             this.awayTeam.remove(crewMember);
+            EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
+                    + " removed from the Away Team."));
             if (this.isActive) {
                 crewMember.updateHealthStatus();
                 crewMember.setIsOnStarship(true);
+                EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
+                        + " transported to the Starship."));
+                EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
+                        + " returned " + crewMember.getHealthStatus().name().toLowerCase() + "."));
             }
         }
     }
@@ -113,6 +121,7 @@ public class AwayMission implements Writable {
         for (CrewMember cm : awayTeam) {
             cm.setIsOnStarship(true);
         }
+        EventLog.getInstance().logEvent(new Event("Away Team transported to the Starship."));
     }
 
     // MODIFIES: this, CrewMember
@@ -121,6 +130,7 @@ public class AwayMission implements Writable {
         for (CrewMember cm : awayTeam) {
             cm.setIsOnStarship(false);
         }
+        EventLog.getInstance().logEvent(new Event("Away Team transported off of the Starship."));
     }
 
     // EFFECTS: writes away mission to a JSON object
@@ -139,7 +149,7 @@ public class AwayMission implements Writable {
     private JSONArray awayTeamToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (CrewMember cm: awayTeam) {
+        for (CrewMember cm : awayTeam) {
             jsonArray.put(cm.toJson());
         }
 

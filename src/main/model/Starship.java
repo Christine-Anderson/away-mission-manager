@@ -20,7 +20,7 @@ public class Starship implements Writable {
     private String firstNameOfCaptain;
     private String lastNameOfCaptain;
     private int currentStardate;
-    private int awayMissionID;
+    private int nextAwayMissionID;
     private List<CrewMember> crewMembers;
     private List<AwayMission> missionLog;
     private AwayMission currentAwayMission;
@@ -31,7 +31,7 @@ public class Starship implements Writable {
         this.firstNameOfCaptain = firstNameOfCaptain;
         this.lastNameOfCaptain = lastNameOfCaptain;
         this.currentStardate = INITIAL_STARDATE;
-        this.awayMissionID = INITIAL_AWAY_MISSION_ID;
+        this.nextAwayMissionID = INITIAL_AWAY_MISSION_ID;
         this.currentAwayMission = null;
         crewMembers = new ArrayList<>();
         missionLog = new ArrayList<>();
@@ -39,10 +39,10 @@ public class Starship implements Writable {
 
     // EFFECTS: Constructs the Starship USS Intrepid (NCC-74600) with given captain name, stardate, and away mission ID,
     //          an empty list of crew members, and an empty mission log
-    public Starship(String firstNameOfCaptain, String lastNameOfCaptain, int currentStardate, int awayMissionID) {
+    public Starship(String firstNameOfCaptain, String lastNameOfCaptain, int currentStardate, int nextAwayMissionID) {
         this(firstNameOfCaptain, lastNameOfCaptain);
         this.currentStardate = currentStardate;
-        this.awayMissionID = awayMissionID;
+        this.nextAwayMissionID = nextAwayMissionID;
     }
 
     //getters
@@ -66,8 +66,8 @@ public class Starship implements Writable {
         return currentStardate;
     }
 
-    public int getAwayMissionID() {
-        return awayMissionID;
+    public int getNextAwayMissionID() {
+        return nextAwayMissionID;
     }
 
     public AwayMission getCurrentAwayMission() {
@@ -95,8 +95,8 @@ public class Starship implements Writable {
         this.currentStardate = currentStardate;
     }
 
-    public void setAwayMissionID(int awayMissionID) {
-        this.awayMissionID = awayMissionID;
+    public void setNextAwayMissionID(int nextAwayMissionID) {
+        this.nextAwayMissionID = nextAwayMissionID;
     }
 
     public void setCurrentAwayMission(AwayMission currentAwayMission) {
@@ -131,7 +131,10 @@ public class Starship implements Writable {
     //          mission ID
     public void createAwayMission() {
         updateCurrentStardate();
-        currentAwayMission = new AwayMission(this.awayMissionID, this.currentStardate);
+        currentAwayMission = new AwayMission(this.nextAwayMissionID, this.currentStardate);
+        EventLog.getInstance().logEvent(new Event("Created new Away Mission "
+                + this.getCurrentAwayMission().getAwayMissionID() + " on stardate "
+                + this.stardateToString(this.getCurrentAwayMission().getStardate()) + "."));
         updateAwayMissionID();
     }
 
@@ -142,6 +145,8 @@ public class Starship implements Writable {
     public void startAwayMission() {
         if (!this.currentAwayMission.getIsActive() && !this.currentAwayMission.getAwayTeam().isEmpty()) {
             this.currentAwayMission.setIsActive(true);
+            EventLog.getInstance().logEvent(new Event("Mission "
+                    + this.getCurrentAwayMission().getAwayMissionID() + " started."));
             this.currentAwayMission.transportAwayTeamOffOfStarship();
         }
     }
@@ -154,9 +159,13 @@ public class Starship implements Writable {
     public void emergencyBeamOut() {
         if (this.currentAwayMission.getIsActive()) {
             this.currentAwayMission.setIsActive(false);
+            EventLog.getInstance().logEvent(new Event("Mission "
+                    + this.getCurrentAwayMission().getAwayMissionID() + " ended."));
             this.currentAwayMission.transportAwayTeamToStarship();
             for (CrewMember cm : this.currentAwayMission.getAwayTeam()) {
                 cm.updateHealthStatus();
+                EventLog.getInstance().logEvent(new Event(cm.nameToString(true)
+                        + " returned " + cm.getHealthStatus().name().toLowerCase() + "."));
             }
             addCurrentAwayMissionToMissionLog();
             this.currentAwayMission = null;
@@ -171,6 +180,8 @@ public class Starship implements Writable {
     public void endAwayMission() {
         if (this.currentAwayMission.getIsActive()) {
             this.currentAwayMission.setIsObjectiveComplete(true);
+            EventLog.getInstance().logEvent(new Event("Mission "
+                    + this.getCurrentAwayMission().getAwayMissionID() + " objective complete."));
             emergencyBeamOut();
         }
     }
@@ -179,6 +190,8 @@ public class Starship implements Writable {
     // EFFECTS: adds current away mission to the mission log
     public void addCurrentAwayMissionToMissionLog() {
         this.missionLog.add(this.currentAwayMission);
+        EventLog.getInstance().logEvent(new Event("Mission " + this.getCurrentAwayMission().getAwayMissionID()
+                + " added to the Away Mission Log."));
     }
 
     // EFFECTS: returns true if a crew member of the same name is already on board
@@ -186,7 +199,7 @@ public class Starship implements Writable {
     public boolean isAlreadyOnBoard(CrewMember crewMember) {
         boolean isOnBoard = false;
 
-        for (CrewMember cm: crewMembers) {
+        for (CrewMember cm : crewMembers) {
             if (cm.getLastName().equals(crewMember.getLastName())
                     && cm.getFirstName().equals(crewMember.getFirstName())) {
                 isOnBoard = true;
@@ -208,7 +221,7 @@ public class Starship implements Writable {
     // MODIFIES: this
     // EFFECTS: increments away mission ID
     public void updateAwayMissionID() {
-        this.awayMissionID = this.awayMissionID + 1;
+        this.nextAwayMissionID = this.nextAwayMissionID + 1;
     }
 
     // REQUIRES: a stardate with 5 digits
@@ -225,7 +238,7 @@ public class Starship implements Writable {
         json.put("firstNameOfCaptain", this.firstNameOfCaptain);
         json.put("lastNameOfCaptain", this.lastNameOfCaptain);
         json.put("currentStardate", Integer.toString(this.currentStardate));
-        json.put("awayMissionID", Integer.toString(this.awayMissionID));
+        json.put("awayMissionID", Integer.toString(this.nextAwayMissionID));
         json.put("crewMembers", crewMembersToJson());
         json.put("missionLog", missionLogToJson());
         if (this.currentAwayMission == null) {
@@ -241,7 +254,7 @@ public class Starship implements Writable {
     private JSONArray crewMembersToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (CrewMember cm: crewMembers) {
+        for (CrewMember cm : crewMembers) {
             jsonArray.put(cm.toJson());
         }
 
@@ -252,7 +265,7 @@ public class Starship implements Writable {
     private JSONArray missionLogToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (AwayMission awayMission: missionLog) {
+        for (AwayMission awayMission : missionLog) {
             jsonArray.put(awayMission.toJson());
         }
 
