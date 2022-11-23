@@ -112,6 +112,11 @@ Seven of Nine returned injured.
 Tue Nov 22 16:13:18 PST 2022
 Mission 14268715 added to the Away Mission Log.
 
+### Phase 4: Task 3
+If I had more time to work on the project, I would do the following refactoring to improve my design?
+-
+-
+
 #### Citations
 1. The AwayMissionManagerApp Class console interface is based on code from the TellerApp project provided in class 
    1. I based the structure of methods processing user input, processing user command, and printing menu options on this 
