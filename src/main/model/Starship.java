@@ -24,6 +24,7 @@ public class Starship implements Writable {
     private List<CrewMember> crewMembers;
     private List<AwayMission> missionLog;
     private AwayMission currentAwayMission;
+    private EventGenerator eventGenerator;
 
     // EFFECTS: Constructs the Starship USS Intrepid (NCC-74600) on stardate 41025 with given captain name, an initial
     //          away mission ID of 142687, an empty list of crew members, and an empty mission log
@@ -35,6 +36,7 @@ public class Starship implements Writable {
         this.currentAwayMission = null;
         crewMembers = new ArrayList<>();
         missionLog = new ArrayList<>();
+        eventGenerator = new EventGenerator();
     }
 
     // EFFECTS: Constructs the Starship USS Intrepid (NCC-74600) with given captain name, stardate, and away mission ID,
@@ -132,9 +134,8 @@ public class Starship implements Writable {
     public void createAwayMission() {
         updateCurrentStardate();
         currentAwayMission = new AwayMission(this.nextAwayMissionID, this.currentStardate);
-        EventLog.getInstance().logEvent(new Event("Created new Away Mission "
-                + this.getCurrentAwayMission().getAwayMissionID() + " on stardate "
-                + this.stardateToString(this.getCurrentAwayMission().getStardate()) + "."));
+        this.eventGenerator.createAwayMissionEvent(this.getCurrentAwayMission().getAwayMissionID(),
+                this.stardateToString(this.getCurrentAwayMission().getStardate()));
         updateAwayMissionID();
     }
 
@@ -145,8 +146,7 @@ public class Starship implements Writable {
     public void startAwayMission() {
         if (!this.currentAwayMission.getIsActive() && !this.currentAwayMission.getAwayTeam().isEmpty()) {
             this.currentAwayMission.setIsActive(true);
-            EventLog.getInstance().logEvent(new Event("Mission "
-                    + this.getCurrentAwayMission().getAwayMissionID() + " started."));
+            this.eventGenerator.startAwayMissionEvent(this.getCurrentAwayMission().getAwayMissionID());
             this.currentAwayMission.transportAwayTeamOffOfStarship();
         }
     }
@@ -159,13 +159,12 @@ public class Starship implements Writable {
     public void emergencyBeamOut() {
         if (this.currentAwayMission.getIsActive()) {
             this.currentAwayMission.setIsActive(false);
-            EventLog.getInstance().logEvent(new Event("Mission "
-                    + this.getCurrentAwayMission().getAwayMissionID() + " ended."));
+            this.eventGenerator.endAwayMissionEvent(this.getCurrentAwayMission().getAwayMissionID());
             this.currentAwayMission.transportAwayTeamToStarship();
             for (CrewMember cm : this.currentAwayMission.getAwayTeam()) {
                 cm.updateHealthStatus();
-                EventLog.getInstance().logEvent(new Event(cm.nameToString(true)
-                        + " returned " + cm.getHealthStatus().name().toLowerCase() + "."));
+                this.eventGenerator.updateHealthStatusEvent(cm.nameToString(true),
+                        cm.getHealthStatus().name().toLowerCase());
             }
             addCurrentAwayMissionToMissionLog();
             this.currentAwayMission = null;
@@ -180,8 +179,7 @@ public class Starship implements Writable {
     public void endAwayMission() {
         if (this.currentAwayMission.getIsActive()) {
             this.currentAwayMission.setIsObjectiveComplete(true);
-            EventLog.getInstance().logEvent(new Event("Mission "
-                    + this.getCurrentAwayMission().getAwayMissionID() + " objective complete."));
+            this.eventGenerator.completeAwayMissionObjectiveEvent(this.getCurrentAwayMission().getAwayMissionID());
             emergencyBeamOut();
         }
     }
@@ -190,8 +188,7 @@ public class Starship implements Writable {
     // EFFECTS: adds current away mission to the mission log
     public void addCurrentAwayMissionToMissionLog() {
         this.missionLog.add(this.currentAwayMission);
-        EventLog.getInstance().logEvent(new Event("Mission " + this.getCurrentAwayMission().getAwayMissionID()
-                + " added to the Away Mission Log."));
+        this.eventGenerator.addCurrentAwayMissionToMissionLogEvent(this.getCurrentAwayMission().getAwayMissionID());
     }
 
     // EFFECTS: returns true if a crew member of the same name is already on board
