@@ -48,70 +48,38 @@ Click the "yes" button to save and exit the program. Click the "no" button to ex
 
 A representative sample of the events that occur when my program runs:
 
-Tue Nov 22 16:12:47 PST 2022  
-Created new Away Mission 14268714 on stardate 4102.6.  
-Tue Nov 22 16:12:52 PST 2022  
-William Riker added to the Away Team.  
-Tue Nov 22 16:12:52 PST 2022  
-Geordi La Forge added to the Away Team.  
-Tue Nov 22 16:12:52 PST 2022  
-Data added to the Away Team.  
-Tue Nov 22 16:12:52 PST 2022  
-Reginald Baclay added to the Away Team.  
-Tue Nov 22 16:12:54 PST 2022  
-Reginald Baclay removed from the Away Team.  
-Tue Nov 22 16:12:55 PST 2022  
-Mission 14268714 started.  
-Tue Nov 22 16:12:55 PST 2022  
-Away Team transported off of the Starship.  
-Tue Nov 22 16:12:57 PST 2022  
-Tribble added to the Away Team.  
-Tue Nov 22 16:12:57 PST 2022  
-Tribble transported off of the Starship.  
-Tue Nov 22 16:12:59 PST 2022  
-Tribble removed from the Away Team.  
-Tue Nov 22 16:12:59 PST 2022  
-Tribble transported to the Starship.  
-Tue Nov 22 16:12:59 PST 2022  
-Tribble returned injured.  
-Tue Nov 22 16:13:00 PST 2022  
-Mission 14268714 objective complete.  
-Tue Nov 22 16:13:00 PST 2022  
-Mission 14268714 ended.  
-Tue Nov 22 16:13:00 PST 2022  
-Away Team transported to the Starship.  
-Tue Nov 22 16:13:00 PST 2022  
-William Riker returned dead.  
-Tue Nov 22 16:13:00 PST 2022  
-Geordi La Forge returned injured.  
-Tue Nov 22 16:13:00 PST 2022  
-Data returned healthy.  
-Tue Nov 22 16:13:00 PST 2022  
-Mission 14268714 added to the Away Mission Log.  
-Tue Nov 22 16:13:02 PST 2022  
-Created new Away Mission 14268715 on stardate 4102.7.  
-Tue Nov 22 16:13:05 PST 2022  
-Tom Paris added to the Away Team.  
-Tue Nov 22 16:13:09 PST 2022  
-Harry Kim added to the Away Team.  
-Tue Nov 22 16:13:13 PST 2022  
-Seven of Nine added to the Away Team.  
-Tue Nov 22 16:13:16 PST 2022  
-Mission 14268715 started.  
-Tue Nov 22 16:13:16 PST 2022  
-Away Team transported off of the Starship.  
-Tue Nov 22 16:13:18 PST 2022  
-Mission 14268715 ended.  
-Tue Nov 22 16:13:18 PST 2022  
-Away Team transported to the Starship.  
-Tue Nov 22 16:13:18 PST 2022  
-Tom Paris returned dead.  
-Tue Nov 22 16:13:18 PST 2022  
-Harry Kim returned dead.  
-Tue Nov 22 16:13:18 PST 2022  
-Seven of Nine returned injured.  
-Tue Nov 22 16:13:18 PST 2022  
-Mission 14268715 added to the Away Mission Log.  
+Sun Nov 27 12:17:42 PST 2022
+Created new away mission 14268714 on stardate 4102.6.
+Sun Nov 27 12:17:46 PST 2022
+William Riker added to the away team.
+Sun Nov 27 12:17:49 PST 2022
+Geordi La Forge added to the away team.
+Sun Nov 27 12:17:51 PST 2022
+Geordi La Forge removed from the away team.
+Sun Nov 27 12:17:53 PST 2022
+Mission 14268714 started.
+Sun Nov 27 12:17:53 PST 2022
+Away team transported off of the starship.
+Sun Nov 27 12:17:57 PST 2022
+Data added to the away team.
+Sun Nov 27 12:17:57 PST 2022
+Data transported off of the starship.
+Sun Nov 27 12:18:00 PST 2022
+Data removed from the away team.
+Sun Nov 27 12:18:00 PST 2022
+Data transported to the starship.
+Sun Nov 27 12:18:00 PST 2022
+Data returned dead.
+Sun Nov 27 12:18:02 PST 2022
+Mission 14268714 objective complete.
+Sun Nov 27 12:18:02 PST 2022
+Mission 14268714 ended.
+Sun Nov 27 12:18:02 PST 2022
+Away team transported to the starship.
+Sun Nov 27 12:18:02 PST 2022
+William Riker returned healthy.
+Sun Nov 27 12:18:02 PST 2022
+Mission 14268714 added to the away mission Log.
 
 ### Phase 4: Task 3
 
