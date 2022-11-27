@@ -49,6 +49,7 @@ public class EventGenerator {
     public void transportOffOfStarshipEvent(String name) {
         logEvent(name + " transported off of the starship.");
     }
+
     // EFFECTS: generates event description for a remove crew member from away team event and logs event
     public void removeCrewMemberFromAwayTeamEvent(String name) {
         logEvent(name + " removed from the away team.");

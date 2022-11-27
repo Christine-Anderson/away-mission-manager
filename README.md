@@ -131,15 +131,11 @@ for example, missionCreationWindow, missionManagerWindow, and crewManagerWindow
    | CrewManger      | set of CrewMember, add, remove     |
    | CurrentAwayMissionManager      | currentAwayMission, awayMissionID, create, start, end, emergencyBeamOut     |
    | MissionLog      | list of (previous) AwayMission, add, toString     | 
-   | Stardate      | currentStardate, updateStardate, toString     | 
-   | EventGenerator      | see 4     |
+   | Stardate      | currentStardate, updateStardate, toString     |
 3. **AwayMission** would have awayMissionID, stardate, isActive, and isObjectiveComplete; 
    | Class  | Select fields and methods |
    | ------------- |:-------------:|
    | AwayTeam      | set of CrewMembers, add, remove, transport     |
-   | EventGenerator      | see 4     |
-4. Create an EventGenerator class to add events to the eventLog for both classes above to improve cohesion and reduce 
-code duplication
 
 #### Citations
 1. The AwayMissionManagerApp Class console interface is based on code from the TellerApp project provided in class 
