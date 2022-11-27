@@ -12,7 +12,7 @@ public class EventGenerator {
 
     // EFFECTS: generates event description for a create away mission event and logs event
     public void createAwayMissionEvent(int awayMissionID, String stardate) {
-        logEvent("Created new Away Mission " + awayMissionID + " on stardate " + stardate + ".");
+        logEvent("Created new away mission " + awayMissionID + " on stardate " + stardate + ".");
     }
 
     // EFFECTS: generates event description for a start away mission event and logs event
@@ -37,6 +37,25 @@ public class EventGenerator {
 
     // EFFECTS: generates event description for an add current away mission to the mission log event and logs event
     public void addCurrentAwayMissionToMissionLogEvent(int awayMissionID) {
-        logEvent("Mission " + awayMissionID + " added to the Away Mission Log.");
+        logEvent("Mission " + awayMissionID + " added to the away mission Log.");
+    }
+
+    // EFFECTS: generates event description for an add crew member to away team event and logs event
+    public void addCrewMemberToAwayTeamEvent(String name) {
+        logEvent(name + " added to the away team.");
+    }
+
+    // EFFECTS: generates event description for a transport off of starship event and logs event
+    public void transportOffOfStarshipEvent(String name) {
+        logEvent(name + " transported off of the starship.");
+    }
+    // EFFECTS: generates event description for a remove crew member from away team event and logs event
+    public void removeCrewMemberFromAwayTeamEvent(String name) {
+        logEvent(name + " removed from the away team.");
+    }
+
+    // EFFECTS: generates event description for a transport to starship event and logs event
+    public void transportToStarshipEvent(String name) {
+        logEvent(name + " transported to the starship.");
     }
 }

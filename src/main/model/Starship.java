@@ -34,9 +34,9 @@ public class Starship implements Writable {
         this.currentStardate = INITIAL_STARDATE;
         this.nextAwayMissionID = INITIAL_AWAY_MISSION_ID;
         this.currentAwayMission = null;
-        crewMembers = new ArrayList<>();
-        missionLog = new ArrayList<>();
-        eventGenerator = new EventGenerator();
+        this.crewMembers = new ArrayList<>();
+        this.missionLog = new ArrayList<>();
+        this.eventGenerator = new EventGenerator();
     }
 
     // EFFECTS: Constructs the Starship USS Intrepid (NCC-74600) with given captain name, stardate, and away mission ID,

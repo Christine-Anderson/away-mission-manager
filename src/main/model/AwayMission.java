@@ -16,6 +16,7 @@ public class AwayMission implements Writable {
     private boolean isActive;
     private boolean isObjectiveComplete;
     private List<CrewMember> awayTeam;
+    private EventGenerator eventGenerator;
 
 
     // EFFECTS: Constructs an inactive, incomplete away mission with a given away mission ID, given stardate, and an
@@ -26,6 +27,7 @@ public class AwayMission implements Writable {
         this.isActive = false;
         this.isObjectiveComplete = false;
         this.awayTeam = new ArrayList<>();
+        this.eventGenerator = new EventGenerator();
     }
 
     // EFFECTS: Constructs an away mission with a given away mission ID, stardate, active status, and objective status
@@ -85,12 +87,11 @@ public class AwayMission implements Writable {
     public void addCrewMemberToAwayTeam(CrewMember crewMember) {
         if (!this.awayTeam.contains(crewMember) && crewMember.getHealthStatus() != HealthStatus.DEAD) {
             this.awayTeam.add(crewMember);
-            EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
-                    + " added to the Away Team."));
+            String name = crewMember.nameToString(true);
+            this.eventGenerator.addCrewMemberToAwayTeamEvent(name);
             if (this.isActive) {
                 crewMember.setIsOnStarship(false);
-                EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
-                        + " transported off of the Starship."));
+                this.eventGenerator.transportOffOfStarshipEvent(name);
             }
         }
     }
@@ -102,15 +103,13 @@ public class AwayMission implements Writable {
     public void removeCrewMemberFromAwayTeam(CrewMember crewMember) {
         if (this.awayTeam.contains(crewMember)) {
             this.awayTeam.remove(crewMember);
-            EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
-                    + " removed from the Away Team."));
+            this.eventGenerator.removeCrewMemberFromAwayTeamEvent(crewMember.nameToString(true));
             if (this.isActive) {
                 crewMember.updateHealthStatus();
                 crewMember.setIsOnStarship(true);
-                EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
-                        + " transported to the Starship."));
-                EventLog.getInstance().logEvent(new Event(crewMember.nameToString(true)
-                        + " returned " + crewMember.getHealthStatus().name().toLowerCase() + "."));
+                String name = crewMember.nameToString(true);
+                this.eventGenerator.transportToStarshipEvent(name);
+                this.eventGenerator.updateHealthStatusEvent(name, crewMember.getHealthStatus().name().toLowerCase());
             }
         }
     }
@@ -121,7 +120,7 @@ public class AwayMission implements Writable {
         for (CrewMember cm : awayTeam) {
             cm.setIsOnStarship(true);
         }
-        EventLog.getInstance().logEvent(new Event("Away Team transported to the Starship."));
+        this.eventGenerator.transportToStarshipEvent("Away team");;
     }
 
     // MODIFIES: this, CrewMember
@@ -130,7 +129,7 @@ public class AwayMission implements Writable {
         for (CrewMember cm : awayTeam) {
             cm.setIsOnStarship(false);
         }
-        EventLog.getInstance().logEvent(new Event("Away Team transported off of the Starship."));
+        this.eventGenerator.transportOffOfStarshipEvent("Away team");
     }
 
     // EFFECTS: writes away mission to a JSON object
