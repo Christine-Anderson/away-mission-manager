@@ -528,12 +528,14 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: saves the Starship data, prints the EventLog to console, and closes the program
     private void saveFileAction() {
         saveStarship();
         printLog(EventLog.getInstance());
         System.exit(0);
     }
 
+    // EFFECTS: prints the EventLog to console and closes the program
     private void doNotSaveFileAction() {
         printLog(EventLog.getInstance());
         System.exit(0);
@@ -628,6 +630,7 @@ public class AwayMissionManagerGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: prints the EventLog to the console
     private void printLog(EventLog eventLog) {
         for (Event next : eventLog) {
             System.out.println(next.toString());
