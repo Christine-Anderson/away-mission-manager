@@ -16,7 +16,7 @@ As the Captain, I want to be able to:
 - create a new away mission
 - end an away mission
 - view previous missions in the mission log
-- assign crew members (X) to away mission (Y)
+- assign crew members to away mission
 - remove crew members from the away mission team
 - select a crew member and get stats on the crew member, for example, rank and division
 - emergency beam out the away team 
