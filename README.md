@@ -23,7 +23,7 @@ As the Captain, I want to be able to:
 - have the option to save the current starship data when I select the quit option from the application menu 
 - have the option to load the previous starship data when I start the application
 
-### Phase 4: Task 3
+### To Do
 
 If I had more time to work on the project, I would do the following refactoring to improve my design:
 - use a HashMap instead of an ArrayList as my data structure for the lists of crew members on the starship and on the
