@@ -23,29 +23,74 @@ As the Captain, I want to be able to:
 - have the option to save the current starship data when I select the quit option from the application menu 
 - have the option to load the previous starship data when I start the application
 
-### To Do
+### Away Mission Manager Demo
 
-If I had more time to work on the project, I would do the following refactoring to improve my design:
-- use a HashMap instead of an ArrayList as my data structure for the lists of crew members on the starship and on the
-away team as I am working with unordered sets with no duplicates
-- three of my classes have low cohesion
-  - this is evident in the UML diagram for Starship which is maintaining a single AwayMission, a list of AwayMission,
-  and a list of CrewMember
-- they be broken up into smaller classes as follows:
-1. **AwayMissionManagerGUI** would have several classes representing different parts of the UI:  
-for example, missionCreationWindow, missionManagerWindow, and crewManagerWindow
-2. **Starship** would have fields name, ship ID, and one of each of the following classes:
-   | Class  | Select fields and methods |
-   | ------------- |:-------------:|
-   | Captain      | firstName, LastName     |
-   | CrewManger      | set of CrewMember, add, remove     |
-   | CurrentAwayMissionManager      | currentAwayMission, awayMissionID, create, start, end, emergencyBeamOut     |
-   | MissionLog      | list of (previous) AwayMission, add, toString     | 
-   | Stardate      | currentStardate, updateStardate, toString     |
-3. **AwayMission** would have awayMissionID, stardate, isActive, and isObjectiveComplete; 
-   | Class  | Select fields and methods |
-   | ------------- |:-------------:|
-   | AwayTeam      | set of CrewMembers, add, remove, transport     |
+![Away Mission Manager Demo](images/Away_Mission_Manager_Demo.gif)
+
+### Event Log Demo
+
+Sat Aug 19 15:08:45 PDT 2023  
+Created new away mission 14268714 on stardate 4102.6.  
+Sat Aug 19 15:09:06 PDT 2023  
+Data added to the away team.  
+Sat Aug 19 15:09:09 PDT 2023  
+Reginald Baclay added to the away team.  
+Sat Aug 19 15:09:13 PDT 2023  
+Lwaxana Troi added to the away team.  
+Sat Aug 19 15:09:16 PDT 2023  
+Tribble added to the away team.  
+Sat Aug 19 15:09:22 PDT 2023  
+Mission 14268714 started.  
+Sat Aug 19 15:09:22 PDT 2023  
+Away team transported off of the starship.  
+Sat Aug 19 15:09:31 PDT 2023  
+Reginald Baclay removed from the away team.  
+Sat Aug 19 15:09:31 PDT 2023  
+Reginald Baclay transported to the starship.  
+Sat Aug 19 15:09:31 PDT 2023  
+Reginald Baclay returned dead.  
+Sat Aug 19 15:09:37 PDT 2023  
+Mission 14268714 objective complete.  
+Sat Aug 19 15:09:37 PDT 2023  
+Mission 14268714 ended.  
+Sat Aug 19 15:09:37 PDT 2023  
+Away team transported to the starship.  
+Sat Aug 19 15:09:37 PDT 2023  
+Data returned healthy.  
+Sat Aug 19 15:09:37 PDT 2023  
+Lwaxana Troi returned injured.  
+Sat Aug 19 15:09:37 PDT 2023  
+Tribble returned healthy. 
+Sat Aug 19 15:09:37 PDT 2023  
+Mission 14268714 added to the away mission Log.  
+Sat Aug 19 15:09:43 PDT 2023  
+Created new away mission 14268715 on stardate 4102.7.  
+Sat Aug 19 15:10:19 PDT 2023  
+Worf Rozhenko added to the away team.  
+Sat Aug 19 15:10:24 PDT 2023  
+The Doctor added to the away team.  
+Sat Aug 19 15:10:27 PDT 2023  
+Giant Spock added to the away team.  
+Sat Aug 19 15:10:31 PDT 2023  
+Giant Spock removed from the away team.  
+Sat Aug 19 15:10:35 PDT 2023  
+Mission 14268715 started.  
+Sat Aug 19 15:10:35 PDT 2023  
+Away team transported off of the starship.  
+Sat Aug 19 15:10:43 PDT 2023  
+Mission 14268715 ended.  
+Sat Aug 19 15:10:43 PDT 2023  
+Away team transported to the starship.  
+Sat Aug 19 15:10:43 PDT 2023  
+Worf Rozhenko returned injured.  
+Sat Aug 19 15:10:43 PDT 2023  
+The Doctor returned injured.  
+Sat Aug 19 15:10:43 PDT 2023  
+Mission 14268715 added to the away mission Log.  
+
+### UML Design Diagram
+
+![UML diagram](images/UML_Design_Diagram.png?raw=true)
 
 #### Citations
 1. The AwayMissionManagerApp Class console interface is based on code from the TellerApp project provided in class 
