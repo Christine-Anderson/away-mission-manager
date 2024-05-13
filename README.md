@@ -96,7 +96,7 @@ Mission 14268715 added to the away mission Log.
 1. The AwayMissionManagerApp Class console interface is based on code from the TellerApp project provided in class 
    1. I based the structure of methods processing user input, processing user command, and printing menu options on this 
        example
-2. The classes in the persistence package, tests in the persistence package, and JSon writing methods in the Starship, 
+2. The classes in the persistence package, tests in the persistence package, and Json writing methods in the Starship, 
    AwayMission, and CrewMember classes are based on code from the JsonSerializationDemo project provided in class 
    1. I based the structure of the classes on the example and used it to learn how to read and write JSon files
 3. The AwayMissionManagerGUI Class is based on example code from www.javatpoint.com tutorials on Java Swing and Layout 
